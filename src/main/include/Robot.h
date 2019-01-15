@@ -7,6 +7,7 @@
 #include <frc/smartdashboard/SendableChooser.h>
 #include <DriveBaseSubsystem.h>
 
+#include <team2655/autonomous.hpp>
 #include <team2655/joystick.hpp>
 
 using namespace team2655;
@@ -34,6 +35,7 @@ class Robot : public frc::TimedRobot {
   DriveBaseSubsystem driveBase;
 
   static Robot *currentRobot;
+  AutoManager manager;
 
   jshelper::AxisConfig driveAxisConfig, rotateAxisConfig;
 };

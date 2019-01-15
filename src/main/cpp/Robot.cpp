@@ -3,6 +3,8 @@
 #include <iostream>
 #include <team2655/joystick.hpp>
 
+#include <AutoCommands.h>
+
 #include <frc/smartdashboard/SmartDashboard.h>
 
 Robot *Robot::currentRobot = NULL;
@@ -23,26 +25,19 @@ void Robot::RobotInit() {
   Robot::currentRobot->leftMaster.SetInverted(true);
   Robot::currentRobot->leftSlave1.SetInverted(true);
   Robot::currentRobot->leftSlave2.SetInverted(true);
-}
 
-void Robot::TestInit(){
-  Robot::currentRobot->leftMaster.SetNeutralMode(NeutralMode::Brake);
-  Robot::currentRobot->leftSlave1.SetNeutralMode(NeutralMode::Brake);
-  Robot::currentRobot->leftSlave2.SetNeutralMode(NeutralMode::Brake);
-  Robot::currentRobot->rightMaster.SetNeutralMode(NeutralMode::Brake);
-  Robot::currentRobot->rightSlave1.SetNeutralMode(NeutralMode::Brake);
-  Robot::currentRobot->rightSlave2.SetNeutralMode(NeutralMode::Brake);
-
+  // Register commands
+  manager.registerCommand(CommandCreator<DriveCommand>, std::vector<std::string>({"DriveForward", "DriveBackward"}));
 }
 
 void Robot::RobotPeriodic() {}
 
 void Robot::AutonomousInit() {
-  
+  // Load (or add) script
 }
 
 void Robot::AutonomousPeriodic() {
-  
+  // Process auto manager
 }
 
 void Robot::TeleopInit() {
