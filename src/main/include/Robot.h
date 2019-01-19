@@ -13,15 +13,13 @@
 using namespace team2655;
 
 class Robot : public frc::TimedRobot {
- public:
+public:
   void RobotInit() override;
   void RobotPeriodic() override;
   void AutonomousInit() override;
   void AutonomousPeriodic() override;
-  void TestInit();
   void TeleopInit() override;
   void TeleopPeriodic() override;
-  void TestPeriodic() override;  
 
   WPI_TalonSRX leftMaster {1};
   WPI_TalonSRX leftSlave1 {2};
