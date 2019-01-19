@@ -33,11 +33,13 @@ void Robot::RobotInit() {
 void Robot::RobotPeriodic() {}
 
 void Robot::AutonomousInit() {
-  // Load (or add) script
+    manager.addCommand("driveforward", {"1"});
+    manager.addCommand("drivebackward", {"2"});
 }
 
 void Robot::AutonomousPeriodic() {
   // Process auto manager
+  manager.process();
 }
 
 void Robot::TeleopInit() {

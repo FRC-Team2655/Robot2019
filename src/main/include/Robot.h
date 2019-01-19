@@ -35,7 +35,6 @@ class Robot : public frc::TimedRobot {
   DriveBaseSubsystem driveBase;
 
   static Robot *currentRobot;
-  AutoManager manager;
-
+  
   jshelper::AxisConfig driveAxisConfig, rotateAxisConfig;
 };
