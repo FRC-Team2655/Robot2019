@@ -1,14 +1,17 @@
 #pragma once
 
 #include <string>
-#include <ctre/Phoenix.h>
+#include <rev/CANSparkMax.h>
 #include <frc/Joystick.h>
 #include <frc/TimedRobot.h>
+#include<frc/Compressor.h>
 #include <frc/smartdashboard/SendableChooser.h>
 #include <DriveBaseSubsystem.h>
 
 #include <team2655/autonomous.hpp>
 #include <team2655/joystick.hpp>
+
+using MotorType = rev::CANSparkMax::MotorType;
 
 using namespace team2655;
 
@@ -21,18 +24,26 @@ public:
   void TeleopInit() override;
   void TeleopPeriodic() override;
 
-  WPI_TalonSRX leftMaster {1};
-  WPI_TalonSRX leftSlave1 {2};
-  WPI_TalonSRX leftSlave2 {3};
+  rev::CANSparkMax leftMaster {1, MotorType::kBrushless};
+  rev::CANSparkMax leftSlave {2, MotorType::kBrushless};
 
-  WPI_TalonSRX rightMaster {5};
-  WPI_TalonSRX rightSlave1 {4};
-  WPI_TalonSRX rightSlave2 {6};
+  rev::CANSparkMax rightMaster {3, MotorType::kBrushless};
+  rev::CANSparkMax rightSlave {4, MotorType::kBrushless};
+
+  rev::CANEncoder leftEnc = leftMaster.GetEncoder();
+  rev::CANEncoder rightEnc = rightMaster.GetEncoder();
+
+  rev::CANPIDController leftPID = leftMaster.GetPIDController();
+  rev::CANPIDController rightPID = rightMaster.GetPIDController();
   
   frc::Joystick js0 {0};
+  
+  frc::Compressor compressor {0};
   DriveBaseSubsystem driveBase;
 
   static Robot *currentRobot;
-  
+
   jshelper::AxisConfig driveAxisConfig, rotateAxisConfig;
+
+  double leftStartRevolutions;
 };

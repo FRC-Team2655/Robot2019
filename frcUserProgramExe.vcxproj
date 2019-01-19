@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build" ToolsVersion="14.0">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|Win32">
+      <Configuration>debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|Win32">
+      <Configuration>release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <Keyword>MakeFileProj</Keyword>
+    <ProjectGUID>{2976230E-6224-3957-B9DD-DDD36091D54B}</ProjectGUID>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props"/>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='release|Win32'">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <OutDir>.vs\frcUserProgramExe\$(Configuration)</OutDir>
+    <IntDir>.vs\frcUserProgramExe\$(Configuration)</IntDir>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">
+    <ConfigurationType>Makefile</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <OutDir>.vs\frcUserProgramExe\$(Configuration)</OutDir>
+    <IntDir>.vs\frcUserProgramExe\$(Configuration)</IntDir>
+    <PlatformToolset>v140</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props"/>
+  <PropertyGroup Label="UserMacros"/>
+  <PropertyGroup Label="NMakeConfiguration" Condition="'$(Configuration)|$(Platform)'=='release|Win32'">
+    <NMakeBuildCommandLine>"gradlew.bat" :installFrcUserProgramReleaseExecutable</NMakeBuildCommandLine>
+    <NMakeCleanCommandLine>"gradlew.bat" :clean</NMakeCleanCommandLine>
+    <NMakeReBuildCommandLine>"gradlew.bat" :clean :installFrcUserProgramReleaseExecutable</NMakeReBuildCommandLine>
+    <NMakePreprocessorDefinitions></NMakePreprocessorDefinitions>
+    <NMakeIncludeSearchPath>src\main\include;build\tmp\expandedArchives\wpilibc-cpp-2019.2.1-headers.zip_c5f7002a6c1dfda8aa2899e2594d01fe;build\tmp\expandedArchives\hal-cpp-2019.2.1-headers.zip_c1e3733a98824778ae9dc4369a7c5066;build\tmp\expandedArchives\wpiutil-cpp-2019.2.1-headers.zip_961601eb64e5456d71ed70c0f9da8e94;build\tmp\expandedArchives\ntcore-cpp-2019.2.1-headers.zip_bb0cec940e93e7a2ed066107bd22e12e;build\tmp\expandedArchives\cscore-cpp-2019.2.1-headers.zip_3d9a26a763eb0e1008d349ec462fd509;build\tmp\expandedArchives\cameraserver-cpp-2019.2.1-headers.zip_6d5c4a8bf55973d76d90eeb158bc5c66;build\tmp\expandedArchives\opencv-cpp-3.4.4-4-headers.zip_ed19d56be47d37c8193b8f0377a9cfe6;build\tmp\expandedArchives\chipobject-2019.12.1-headers.zip_45012665afb78c4c4816a3a35e8fe8aa;build\tmp\expandedArchives\netcomm-2019.12.1-headers.zip_97d07b8af9f28e0504c6dc239ac1f176;build\tmp\expandedArchives\wpiapi-cpp-5.12.1-headers.zip_97f59bce4d16b98c31d785272d2cbf90;build\tmp\expandedArchives\api-cpp-5.12.1-headers.zip_e986b26473fb15f3bc8719ff3984c310;build\tmp\expandedArchives\cci-5.12.1-headers.zip_ac01d991886b7cad435836f8b648e3f3;build\tmp\expandedArchives\core-5.12.1-headers.zip_a0ce3d09c679775751593f941c53f00d;build\tmp\expandedArchives\SparkMax-cpp-1.0.27-headers.zip_6ab8224d8acabd8ef524cb19990140fc</NMakeIncludeSearchPath>
+    <NMakeOutput>build\install\frcUserProgram\release\lib\frcUserProgram</NMakeOutput>
+  </PropertyGroup>
+  <PropertyGroup Label="NMakeConfiguration" Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">
+    <NMakeBuildCommandLine>"gradlew.bat" :installFrcUserProgramDebugExecutable</NMakeBuildCommandLine>
+    <NMakeCleanCommandLine>"gradlew.bat" :clean</NMakeCleanCommandLine>
+    <NMakeReBuildCommandLine>"gradlew.bat" :clean :installFrcUserProgramDebugExecutable</NMakeReBuildCommandLine>
+    <NMakePreprocessorDefinitions>DEBUG</NMakePreprocessorDefinitions>
+    <NMakeIncludeSearchPath>src\main\include;build\tmp\expandedArchives\wpilibc-cpp-2019.2.1-headers.zip_c5f7002a6c1dfda8aa2899e2594d01fe;build\tmp\expandedArchives\hal-cpp-2019.2.1-headers.zip_c1e3733a98824778ae9dc4369a7c5066;build\tmp\expandedArchives\wpiutil-cpp-2019.2.1-headers.zip_961601eb64e5456d71ed70c0f9da8e94;build\tmp\expandedArchives\ntcore-cpp-2019.2.1-headers.zip_bb0cec940e93e7a2ed066107bd22e12e;build\tmp\expandedArchives\cscore-cpp-2019.2.1-headers.zip_3d9a26a763eb0e1008d349ec462fd509;build\tmp\expandedArchives\cameraserver-cpp-2019.2.1-headers.zip_6d5c4a8bf55973d76d90eeb158bc5c66;build\tmp\expandedArchives\opencv-cpp-3.4.4-4-headers.zip_ed19d56be47d37c8193b8f0377a9cfe6;build\tmp\expandedArchives\chipobject-2019.12.1-headers.zip_45012665afb78c4c4816a3a35e8fe8aa;build\tmp\expandedArchives\netcomm-2019.12.1-headers.zip_97d07b8af9f28e0504c6dc239ac1f176;build\tmp\expandedArchives\wpiapi-cpp-5.12.1-headers.zip_97f59bce4d16b98c31d785272d2cbf90;build\tmp\expandedArchives\api-cpp-5.12.1-headers.zip_e986b26473fb15f3bc8719ff3984c310;build\tmp\expandedArchives\cci-5.12.1-headers.zip_ac01d991886b7cad435836f8b648e3f3;build\tmp\expandedArchives\core-5.12.1-headers.zip_a0ce3d09c679775751593f941c53f00d;build\tmp\expandedArchives\SparkMax-cpp-1.0.27-headers.zip_6ab8224d8acabd8ef524cb19990140fc</NMakeIncludeSearchPath>
+    <NMakeOutput>build\install\frcUserProgram\debug\lib\frcUserProgram</NMakeOutput>
+  </PropertyGroup>
+  <ItemGroup Label="Sources">
+    <ClCompile Include="src\main\cpp\DriveBaseSubsystem.cpp"/>
+    <ClCompile Include="src\main\cpp\Robot.cpp"/>
+    <ClCompile Include="src\main\cpp\team2655\autonomous.cpp"/>
+    <ClCompile Include="src\main\cpp\team2655\joystick.cpp"/>
+    <ClCompile Include="build.gradle"/>
+  </ItemGroup>
+  <ItemGroup Label="Headers">
+    <ClInclude Include="src\main\include\DriveBaseSubsystem.h"/>
+    <ClInclude Include="src\main\include\Robot.h"/>
+    <ClInclude Include="src\main\include\team2655\autonomous.hpp"/>
+    <ClInclude Include="src\main\include\team2655\joystick.hpp"/>
+  </ItemGroup>
+  <ItemGroup Label="References"/>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
+</Project>

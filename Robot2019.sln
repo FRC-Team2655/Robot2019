@@ -1,0 +1,20 @@
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual C++ Express 2010
+
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "frcUserProgramExe", "C:\Users\Platypi\Documents\FRCProjects\Robot2019\frcUserProgramExe.vcxproj", "{2976230E-6224-3957-B9DD-DDD36091D54B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		debug|Win32=debug|Win32
+		release|Win32=release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2976230E-6224-3957-B9DD-DDD36091D54B}.debug|Win32.ActiveCfg = debug|Win32
+		{2976230E-6224-3957-B9DD-DDD36091D54B}.debug|Win32.Build.0 = debug|Win32
+		{2976230E-6224-3957-B9DD-DDD36091D54B}.release|Win32.ActiveCfg = release|Win32
+		{2976230E-6224-3957-B9DD-DDD36091D54B}.release|Win32.Build.0 = release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

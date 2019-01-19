@@ -1,16 +1,55 @@
 #include <DriveBaseSubsystem.h>
 #include <Robot.h>
 
+#include <cmath>
+
+#define MaxVelocity 5850
+
 DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {}
 void DriveBaseSubsystem::drivePercentage(double speed, double rotation){
 	std::array<double, 2> speeds = arcadeDrive(speed, rotation);
-	Robot::currentRobot->leftMaster.Set(ControlMode::PercentOutput, speeds[0]);
-	Robot::currentRobot->rightMaster.Set(ControlMode::PercentOutput, speeds[1]);
+	Robot::currentRobot->leftMaster.Set(speeds[0]);
+	Robot::currentRobot->rightMaster.Set(speeds[1]);
+}
+void DriveBaseSubsystem::driveVelocity(double speed, double rotation) {
+	std::array<double, 2> speeds = arcadeDrive(speed, rotation);
+	speeds[0] *= MaxVelocity;
+	speeds[1] *= MaxVelocity;
+	driveTankVelocity(speeds[0], speeds[1]);
+}
+void DriveBaseSubsystem::driveTankVelocity(double lVel, double rVel) {
+	if (lVel == 0) {
+		Robot::currentRobot->leftMaster.Set(0);
+	}else {
+		Robot::currentRobot->leftPID.SetReference(lVel, rev::ControlType::kVelocity);
+	}
+
+	if (rVel == 0) {
+		Robot::currentRobot->rightMaster.Set(0);
+	}
+	else {
+		Robot::currentRobot->rightPID.SetReference(rVel, rev::ControlType::kVelocity);
+	}
 }
 void DriveBaseSubsystem::InitDefaultCommand() {
-  
-  
+   
 }
+double DriveBaseSubsystem::getLeftPosition() {
+	return Robot::currentRobot->leftEnc.GetPosition();
+
+}
+double DriveBaseSubsystem::getRightPosition() {
+	return -1 * Robot::currentRobot->rightEnc.GetPosition();
+}
+
+double DriveBaseSubsystem::getLeftVelocity() {
+	return Robot::currentRobot->leftEnc.GetVelocity();
+}
+
+double DriveBaseSubsystem::getRightVelocity() {
+	return -1 * Robot::currentRobot->rightEnc.GetVelocity();
+}
+
 std::array<double, 2> DriveBaseSubsystem::arcadeDrive(double xSpeed, double zRotation) {
 
 	double leftMotorOutput;
