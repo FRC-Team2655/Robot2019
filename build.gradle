@@ -2,6 +2,7 @@ plugins {
     id "cpp"
     id "google-test-test-suite"
     id "edu.wpi.first.GradleRIO" version "2019.2.1"
+    id 'visual-studio'
 }
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
