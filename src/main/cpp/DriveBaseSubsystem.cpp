@@ -3,8 +3,6 @@
 
 #include <cmath>
 
-#define MaxVelocity 5850
-
 DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {}
 void DriveBaseSubsystem::drivePercentage(double speed, double rotation){
 	std::array<double, 2> speeds = arcadeDrive(speed, rotation);
@@ -24,12 +22,15 @@ void DriveBaseSubsystem::driveTankVelocity(double lVel, double rVel) {
 		Robot::currentRobot->leftPID.SetReference(lVel, rev::ControlType::kVelocity);
 	}
 
+	std::cout << lVel << std::endl;
 	if (rVel == 0) {
 		Robot::currentRobot->rightMaster.Set(0);
 	}
 	else {
 		Robot::currentRobot->rightPID.SetReference(rVel, rev::ControlType::kVelocity);
 	}
+	std::cout << rVel << std::endl;
+	std::cout << "------------------------------------" << std::endl;
 }
 void DriveBaseSubsystem::InitDefaultCommand() {
    
@@ -82,4 +83,25 @@ std::array<double, 2> DriveBaseSubsystem::arcadeDrive(double xSpeed, double zRot
 	}
 
 	return { leftMotorOutput, rightMotorOutput };
+}
+
+double DriveBaseSubsystem::getLeftOutputPosition() {
+	return getLeftPosition() / GearRatio;
+}
+
+double DriveBaseSubsystem::getRightOutputPosition() {
+	return getRightPosition() / GearRatio;
+}
+
+double DriveBaseSubsystem::getLeftOutputVelocity() {
+	return getLeftVelocity() / GearRatio;
+}
+
+
+double DriveBaseSubsystem::getRightOutputVelocity() {
+	return getRightVelocity() / GearRatio;
+}
+
+double DriveBaseSubsystem::getIMUAngle() {
+	Robot::currentRobot->imu.GetAngleZ();
 }

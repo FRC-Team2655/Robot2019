@@ -2,8 +2,9 @@
 #include <frc/Joystick.h>
 #include <iostream>
 #include <team2655/joystick.hpp>
-#include <LiveWindow/LiveWindow.h>
+#include <frc/livewindow/LiveWindow.h>
 #include <frc/smartdashboard/SmartDashboard.h>
+#include <AutoCommands.h>
 
 using IdleMode = rev::CANSparkMax::IdleMode;
 
@@ -12,29 +13,33 @@ Robot *Robot::currentRobot = NULL;
 using namespace team2655;
 
 void Robot::RobotInit() {
-  Robot::currentRobot = this;
+	Robot::currentRobot = this;
 
-  driveAxisConfig = jshelper::createAxisConfig(.1, 0, .5);
-  rotateAxisConfig = jshelper::createAxisConfig(.1);
+	driveAxisConfig = jshelper::createAxisConfig(.1, 0, .5);
+	rotateAxisConfig = jshelper::createAxisConfig(.1);
 
-  leftSlave.Follow(leftMaster);
-  rightSlave.Follow(rightMaster);
 
-  rightMaster.SetInverted(true);
+	leftSlave.Follow(leftMaster);
+	rightSlave.Follow(rightMaster);
 
-  leftPID.SetP(5e-5);
-  leftPID.SetI(1e-6);
-  leftPID.SetD(0);
-  leftPID.SetFF(0);
-  leftPID.SetIZone(0);
-  leftPID.SetOutputRange(-1, 1);
+	rightMaster.SetInverted(true);
+	rightSlave.SetInverted(true);
 
-  rightPID.SetP(5e-5);
-  rightPID.SetI(1e-6);
-  rightPID.SetD(0);
-  rightPID.SetFF(0);
-  rightPID.SetIZone(0);
-  rightPID.SetOutputRange(-1, 1);
+	leftPID.SetP(0);
+	leftPID.SetI(0);
+	leftPID.SetD(0);
+	leftPID.SetFF(1.0/LMaxVelocity);
+	leftPID.SetIZone(0);
+	leftPID.SetOutputRange(-1, 1);
+
+	rightPID.SetP(0);
+	rightPID.SetI(0);
+	rightPID.SetD(0);
+	rightPID.SetFF(1.0/RMaxVelocity);
+	rightPID.SetIZone(0);
+	rightPID.SetOutputRange(-1, 1);
+
+	mgr.registerCommand(team2655::CommandCreator<DriveCommand>, "Drive");
 }
 
 void Robot::RobotPeriodic() {
@@ -57,15 +62,13 @@ void Robot::AutonomousInit() {
 
 	rightMaster.SetIdleMode(IdleMode::kBrake);
 	rightMaster.SetIdleMode(IdleMode::kBrake);
+
+	mgr.clearCommands();
+	mgr.addCommand("Drive", { "0.5", "1" });
 }
 
 void Robot::AutonomousPeriodic() {
-	//if (driveBase.getLeftPosition() - leftStartRevolutions < (20 * 12 * 9.47) / (6 * 3.141592)) {
-		driveBase.drivePercentage(100, 0.01);
-	/*}
-	else {
-		driveBase.drivePercentage(0, 0);
-	}*/
+	mgr.process();
 }
 
 void Robot::TeleopInit() {
@@ -74,19 +77,19 @@ void Robot::TeleopInit() {
 
 	rightMaster.SetIdleMode(IdleMode::kCoast);
 	rightMaster.SetIdleMode(IdleMode::kCoast);
-	
-	compressor.SetClosedLoopControl(false);
-	compressor.SetClosedLoopControl(true);
+
+	//compressor.SetClosedLoopControl(false);
+	//compressor.SetClosedLoopControl(true);
 
 }
 
-void Robot::TeleopPeriodic(){
-	
+void Robot::TeleopPeriodic() {
 
-  double power = -1 * jshelper::getAxisValue(driveAxisConfig, js0.GetRawAxis(1));
-  double rotate = .5 * jshelper::getAxisValue(rotateAxisConfig, js0.GetRawAxis(2));
-  // driveBase.drivePercentage(power, rotate);
-  driveBase.driveVelocity(power, rotate);
+
+	double power = -1 * jshelper::getAxisValue(driveAxisConfig, js0.GetRawAxis(1));
+	double rotate = .5 * jshelper::getAxisValue(rotateAxisConfig, js0.GetRawAxis(2));
+	// driveBase.drivePercentage(power, rotate);
+	driveBase.driveVelocity(power, rotate);
 }
 
 #ifndef RUNNING_FRC_TESTS

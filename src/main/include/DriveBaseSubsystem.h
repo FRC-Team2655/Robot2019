@@ -18,4 +18,9 @@ class DriveBaseSubsystem : public frc::Subsystem {
   double getRightPosition();
   double getLeftVelocity();
   double getRightVelocity();
+  double getLeftOutputPosition();
+  double getRightOutputPosition();
+  double getLeftOutputVelocity();
+  double getRightOutputVelocity();
+  double getIMUAngle();
 };
