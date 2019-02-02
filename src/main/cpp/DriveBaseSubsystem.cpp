@@ -15,6 +15,10 @@ void DriveBaseSubsystem::driveVelocity(double speed, double rotation) {
 	speeds[1] *= MaxVelocity;
 	driveTankVelocity(speeds[0], speeds[1]);
 }
+void DriveBaseSubsystem::driveTankPercentage(double leftPercentage, double rightPercentage) {
+	Robot::currentRobot->leftMaster.Set(leftPercentage);
+	Robot::currentRobot->rightMaster.Set(rightPercentage);
+}
 void DriveBaseSubsystem::driveTankVelocity(double lVel, double rVel) {
 	if (lVel == 0) {
 		Robot::currentRobot->leftMaster.Set(0);

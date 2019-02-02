@@ -25,14 +25,14 @@ void Robot::RobotInit() {
 	rightMaster.SetInverted(true);
 	rightSlave.SetInverted(true);
 
-	leftPID.SetP(0);
+	leftPID.SetP(0.0005);
 	leftPID.SetI(0);
 	leftPID.SetD(0);
 	leftPID.SetFF(1.0/LMaxVelocity);
 	leftPID.SetIZone(0);
 	leftPID.SetOutputRange(-1, 1);
 
-	rightPID.SetP(0);
+	rightPID.SetP(0.0005);
 	rightPID.SetI(0);
 	rightPID.SetD(0);
 	rightPID.SetFF(1.0/RMaxVelocity);
@@ -40,6 +40,7 @@ void Robot::RobotInit() {
 	rightPID.SetOutputRange(-1, 1);
 
 	mgr.registerCommand(team2655::CommandCreator<DriveCommand>, "Drive");
+	mgr.registerCommand(team2655::CommandCreator<PathCommand>, "Path");
 }
 
 void Robot::RobotPeriodic() {
@@ -61,14 +62,15 @@ void Robot::AutonomousInit() {
 	leftSlave.SetIdleMode(IdleMode::kBrake);
 
 	rightMaster.SetIdleMode(IdleMode::kBrake);
-	rightMaster.SetIdleMode(IdleMode::kBrake);
+	rightSlave.SetIdleMode(IdleMode::kBrake);
 
 	mgr.clearCommands();
-	mgr.addCommand("Drive", { "0.5", "1" });
+	//mgr.addCommand("Path", {"path"});
 }
 
 void Robot::AutonomousPeriodic() {
-	mgr.process();
+	//mgr.process();
+	Robot::currentRobot->driveBase.driveTankVelocity(.60 * MaxVelocity, .60 * MaxVelocity);
 }
 
 void Robot::TeleopInit() {
@@ -76,7 +78,7 @@ void Robot::TeleopInit() {
 	leftSlave.SetIdleMode(IdleMode::kCoast);
 
 	rightMaster.SetIdleMode(IdleMode::kCoast);
-	rightMaster.SetIdleMode(IdleMode::kCoast);
+	rightSlave.SetIdleMode(IdleMode::kCoast);
 
 	//compressor.SetClosedLoopControl(false);
 	//compressor.SetClosedLoopControl(true);
@@ -84,12 +86,13 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
-
-
 	double power = -1 * jshelper::getAxisValue(driveAxisConfig, js0.GetRawAxis(1));
 	double rotate = .5 * jshelper::getAxisValue(rotateAxisConfig, js0.GetRawAxis(2));
 	// driveBase.drivePercentage(power, rotate);
 	driveBase.driveVelocity(power, rotate);
+
+	frc::SmartDashboard::PutNumber("Left Velocity", Robot::currentRobot->driveBase.getLeftVelocity());
+	frc::SmartDashboard::PutNumber("Right Velocity", Robot::currentRobot->driveBase.getRightVelocity());
 }
 
 #ifndef RUNNING_FRC_TESTS

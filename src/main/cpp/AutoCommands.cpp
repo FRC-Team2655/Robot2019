@@ -39,10 +39,10 @@ void PathCommand::start(std::string commandname, std::vector<std::string> args) 
 	double leftStartPos = Robot::currentRobot->driveBase.getLeftOutputPosition();
 	double rightStartPos = Robot::currentRobot->driveBase.getRightOutputPosition();
 
-	leftConfig = {leftStartPos, 1, WheelDiameter * 3.141592, 
-					1.0, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
-	rightConfig = {rightStartPos, 1, WheelDiameter * 3.141592, 
-					1.0, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
+	leftConfig = {(int)leftStartPos, 1, WheelDiameter * 3.141592, 
+					0.4, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
+	rightConfig = {(int)rightStartPos, 1, WheelDiameter * 3.141592, 
+					0.4, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
 }
 
 void PathCommand::process() {
@@ -56,12 +56,12 @@ void PathCommand::process() {
 	double angle_difference = desired_heading - gyro_heading;
 	double turn = 0.8 * (-1.0/80) * angle_difference;
 
-	l += turn;
-	r -= turn;
+	//l += turn;
+	//r -= turn;
 
-	Robot::currentRobot->driveBase.driveTankVelocity(l * MaxVelocity, r * MaxVelocity);
+	Robot::currentRobot->driveBase.driveTankPercentage(l, r);
 }
 
 void PathCommand::handleComplete() {
-	Robot::currentRobot->driveBase.driveTankVelocity(0, 0);
+	Robot::currentRobot->driveBase.driveTankPercentage(0.0, 0.0);
 }

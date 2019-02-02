@@ -13,6 +13,7 @@ class DriveBaseSubsystem : public frc::Subsystem {
   void drivePercentage(double speed, double rotation);
   void driveVelocity(double speed, double rotation);
   void driveTankVelocity(double lVel, double rVel);
+  void driveTankPercentage(double leftPercentage, double rightPercentage);
   std::array<double, 2> arcadeDrive(double xSpeed, double zRotation);
   double getLeftPosition();
   double getRightPosition();

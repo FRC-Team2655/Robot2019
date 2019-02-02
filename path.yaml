@@ -1,0 +1,35 @@
+---
+unit: inches
+width: 648
+height: 324
+pathfindersettings:
+  timestep: 0.02
+  velocity: 187.43
+  acceleration: 118.11
+  jerk: 2362.2
+  fitmethod: cubic
+  samplerate: high
+  wheelbasewidth: 25
+  wheelbasedepth: 0
+  drivetrain: tank
+measurements:
+- RedWallToCargoShip: 100
+- ScoringTableWallToCargoShip: 100
+angles:
+- RedCargoShip: 2
+reflines:
+- RedCargoShipFront:
+    x: RedWallToCargoShip
+    y: ScoringTableWallToCargoShip
+    length: 57.74
+    orientation: vertical
+paths:
+- path:
+    waypoints:
+      - x: 0
+        y: 0
+        heading: 0
+      - x: 120
+        y: 0
+        heading: 0
+    
