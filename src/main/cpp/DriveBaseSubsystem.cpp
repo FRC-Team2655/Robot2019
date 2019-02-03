@@ -6,8 +6,7 @@
 DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {}
 void DriveBaseSubsystem::drivePercentage(double speed, double rotation){
 	std::array<double, 2> speeds = arcadeDrive(speed, rotation);
-	Robot::currentRobot->leftMaster.Set(speeds[0]);
-	Robot::currentRobot->rightMaster.Set(speeds[1]);
+	driveTankPercentage(speeds[0], speeds[1]);
 }
 void DriveBaseSubsystem::driveVelocity(double speed, double rotation) {
 	std::array<double, 2> speeds = arcadeDrive(speed, rotation);

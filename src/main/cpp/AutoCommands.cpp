@@ -39,17 +39,17 @@ void PathCommand::start(std::string commandname, std::vector<std::string> args) 
 	double leftStartPos = Robot::currentRobot->driveBase.getLeftOutputPosition();
 	double rightStartPos = Robot::currentRobot->driveBase.getRightOutputPosition();
 
-	leftConfig = {(int)leftStartPos, 1, WheelDiameter * 3.141592, 
+	leftConfig = {(int)(leftStartPos * 4096), 4096, WheelDiameter * 3.141592, 
 					0.4, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
-	rightConfig = {(int)rightStartPos, 1, WheelDiameter * 3.141592, 
+	rightConfig = {(int)(rightStartPos * 4096), 4096, WheelDiameter * 3.141592, 
 					0.4, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
 }
 
 void PathCommand::process() {
 	double l = pathfinder_follow_encoder(leftConfig, &leftFollower, leftTrajectory, leftLength, 
-										Robot::currentRobot->driveBase.getLeftOutputPosition());
+									4096 * Robot::currentRobot->driveBase.getLeftOutputPosition());
 	double r = pathfinder_follow_encoder(rightConfig, &rightFollower, rightTrajectory, rightLength, 
-										Robot::currentRobot->driveBase.getRightOutputPosition());
+									4096 * Robot::currentRobot->driveBase.getRightOutputPosition());
 
 	double gyro_heading = Robot::currentRobot->driveBase.getIMUAngle();
 	double desired_heading = r2d(leftFollower.heading);

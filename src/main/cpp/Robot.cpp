@@ -65,12 +65,11 @@ void Robot::AutonomousInit() {
 	rightSlave.SetIdleMode(IdleMode::kBrake);
 
 	mgr.clearCommands();
-	//mgr.addCommand("Path", {"path"});
+	mgr.addCommand("Path", {"path"});
 }
 
 void Robot::AutonomousPeriodic() {
-	//mgr.process();
-	Robot::currentRobot->driveBase.driveTankVelocity(.60 * MaxVelocity, .60 * MaxVelocity);
+	mgr.process();
 }
 
 void Robot::TeleopInit() {
@@ -93,6 +92,8 @@ void Robot::TeleopPeriodic() {
 
 	frc::SmartDashboard::PutNumber("Left Velocity", Robot::currentRobot->driveBase.getLeftVelocity());
 	frc::SmartDashboard::PutNumber("Right Velocity", Robot::currentRobot->driveBase.getRightVelocity());
+
+	std::cout << PathfinderMaxVelocity << std::endl;
 }
 
 #ifndef RUNNING_FRC_TESTS

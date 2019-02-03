@@ -4,7 +4,7 @@ width: 648
 height: 324
 pathfindersettings:
   timestep: 0.02
-  velocity: 187.43
+  velocity: 192.409449
   acceleration: 118.11
   jerk: 2362.2
   fitmethod: cubic
