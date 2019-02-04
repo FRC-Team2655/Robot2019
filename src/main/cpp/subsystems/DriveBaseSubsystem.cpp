@@ -46,8 +46,10 @@ void DriveBaseSubsystem::driveTankPercentage(double leftPercentage, double right
 }
 void DriveBaseSubsystem::driveTankVelocity(double lVel, double rVel) {
 	if (lVel == 0) {
+		// If target velocity is 0 do not use PID to get to 0 just cut power (0%)
 		leftMaster.Set(0);
 	}else {
+		// Drive the left side in velocity closed loop mode (set pid reference = setpoint for PID)
 		leftPID.SetReference(lVel, rev::ControlType::kVelocity);
 	}
 
