@@ -5,6 +5,7 @@
 
 #include <team2655/autonomous.hpp>
 #include <commands/DriveTimeCommand.h>
+#include <commands/ExecutePathCommand.h>
 
 OI Robot::oi;
 DriveBaseSubsystem Robot::driveBase;
@@ -12,6 +13,7 @@ DriveBaseSubsystem Robot::driveBase;
 void Robot::RobotInit() {
     // Register auto commands
     autoManager.registerCommand(team2655::CommandCreator<DriveTimeCommand>, false, "DRIVE");
+    autoManager.registerCommand(team2655::CommandCreator<ExecutePathCommand>, false, "PATH");
 }
 
 void Robot::RobotPeriodic() {}
@@ -26,12 +28,7 @@ void Robot::AutonomousInit() {
     autoManager.clearCommands();
     autoManager.addCommand("DRIVE", {"0.25", "1"});
     autoCommandPtr = autoManager.getScriptCommand();
-    std::cout << "Cmd count: " << autoCommandPtr.get()->GetSize() << std::endl;
-    /*team2655::AutoCommand *cmd = new DriveTimeCommand();
-    cmd->startedFromAutoManager = true;
-    cmd->commandName = "DRIVE";
-    cmd->arguments = {"0.1", "1"};
-    cmd->Start();*/
+    autoCommandPtr.get()->Start();
 }
 
 void Robot::AutonomousPeriodic() { frc::Scheduler::GetInstance()->Run(); }
