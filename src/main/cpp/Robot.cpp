@@ -16,7 +16,10 @@ void Robot::RobotInit() {
     autoManager.registerCommand(team2655::CommandCreator<ExecutePathCommand>, false, "PATH");
 }
 
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic() {
+    frc::SmartDashboard::PutNumber(LeftVelocity, driveBase.getLeftVelocity());
+    frc::SmartDashboard::PutNumber(RightVelocity, driveBase.getRightVelocity());
+}
 
 void Robot::DisabledInit() {}
 

@@ -61,19 +61,19 @@ void DriveBaseSubsystem::driveTankVelocity(double lVel, double rVel) {
 	}
 }
 double DriveBaseSubsystem::getLeftPosition() {
-	return leftEnc.GetPosition();
+	return -1 * leftEnc.GetPosition();
 
 }
 double DriveBaseSubsystem::getRightPosition() {
-	return -1 * rightEnc.GetPosition();
+	return rightEnc.GetPosition();
 }
 
 double DriveBaseSubsystem::getLeftVelocity() {
-	return leftEnc.GetVelocity();
+	return -1 * leftEnc.GetVelocity();
 }
 
 double DriveBaseSubsystem::getRightVelocity() {
-	return -1 * rightEnc.GetVelocity();
+	return rightEnc.GetVelocity();
 }
 
 std::array<double, 2> DriveBaseSubsystem::arcadeDrive(double xSpeed, double zRotation) {

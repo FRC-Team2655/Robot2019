@@ -1,5 +1,9 @@
 #pragma once
 
+// SmartDashboard keys
+#define LeftVelocity "LeftVelocity"
+#define RightVelocity "RightVelocity"
+
 #define MINVAL(x, y) (((x) > (y)) ? (x) : (y)) // Get the minimum of two values (macro)
 
 #define RMaxVelocity 5800.0 //5950.0      // motor revolutions / min
