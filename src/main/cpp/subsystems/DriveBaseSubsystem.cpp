@@ -1,9 +1,35 @@
-#include <DriveBaseSubsystem.h>
-#include <Robot.h>
+#include <subsystems/DriveBaseSubsystem.h>
+#include <RobotMap.h>
 
-#include <cmath>
+#include <commands/DriveJoystickCommand.h>
 
-DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {}
+using IdleMode = rev::CANSparkMax::IdleMode;
+
+DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {
+  leftSlave.Follow(leftMaster);
+  rightSlave.Follow(rightMaster);
+
+  leftMaster.SetInverted(true);
+
+  leftPID.SetP(0.0005);
+  leftPID.SetI(0);
+  leftPID.SetD(0);
+  leftPID.SetFF(1.0/LMaxVelocity);
+  leftPID.SetIZone(0);
+  leftPID.SetOutputRange(-1, 1);
+
+  rightPID.SetP(0.0005);
+  rightPID.SetI(0);
+  rightPID.SetD(0);
+  rightPID.SetFF(1.0/RMaxVelocity);
+  rightPID.SetIZone(0);
+  rightPID.SetOutputRange(-1, 1);
+}
+
+void DriveBaseSubsystem::InitDefaultCommand() {
+	SetDefaultCommand(new DriveJoystickCommand());
+}
+
 void DriveBaseSubsystem::drivePercentage(double speed, double rotation){
 	std::array<double, 2> speeds = arcadeDrive(speed, rotation);
 	driveTankPercentage(speeds[0], speeds[1]);
@@ -15,43 +41,37 @@ void DriveBaseSubsystem::driveVelocity(double speed, double rotation) {
 	driveTankVelocity(speeds[0], speeds[1]);
 }
 void DriveBaseSubsystem::driveTankPercentage(double leftPercentage, double rightPercentage) {
-	Robot::currentRobot->leftMaster.Set(leftPercentage);
-	Robot::currentRobot->rightMaster.Set(rightPercentage);
+	leftMaster.Set(leftPercentage);
+	rightMaster.Set(rightPercentage);
 }
 void DriveBaseSubsystem::driveTankVelocity(double lVel, double rVel) {
 	if (lVel == 0) {
-		Robot::currentRobot->leftMaster.Set(0);
+		leftMaster.Set(0);
 	}else {
-		Robot::currentRobot->leftPID.SetReference(lVel, rev::ControlType::kVelocity);
+		leftPID.SetReference(lVel, rev::ControlType::kVelocity);
 	}
 
-	std::cout << lVel << std::endl;
 	if (rVel == 0) {
-		Robot::currentRobot->rightMaster.Set(0);
+		rightMaster.Set(0);
 	}
 	else {
-		Robot::currentRobot->rightPID.SetReference(rVel, rev::ControlType::kVelocity);
+		rightPID.SetReference(rVel, rev::ControlType::kVelocity);
 	}
-	std::cout << rVel << std::endl;
-	std::cout << "------------------------------------" << std::endl;
-}
-void DriveBaseSubsystem::InitDefaultCommand() {
-   
 }
 double DriveBaseSubsystem::getLeftPosition() {
-	return Robot::currentRobot->leftEnc.GetPosition();
+	return leftEnc.GetPosition();
 
 }
 double DriveBaseSubsystem::getRightPosition() {
-	return -1 * Robot::currentRobot->rightEnc.GetPosition();
+	return -1 * rightEnc.GetPosition();
 }
 
 double DriveBaseSubsystem::getLeftVelocity() {
-	return Robot::currentRobot->leftEnc.GetVelocity();
+	return leftEnc.GetVelocity();
 }
 
 double DriveBaseSubsystem::getRightVelocity() {
-	return -1 * Robot::currentRobot->rightEnc.GetVelocity();
+	return -1 * rightEnc.GetVelocity();
 }
 
 std::array<double, 2> DriveBaseSubsystem::arcadeDrive(double xSpeed, double zRotation) {
@@ -106,5 +126,21 @@ double DriveBaseSubsystem::getRightOutputVelocity() {
 }
 
 double DriveBaseSubsystem::getIMUAngle() {
-	Robot::currentRobot->imu.GetAngleZ();
+	imu.GetAngleZ();
+}
+
+void DriveBaseSubsystem::setCoastMode() {
+	leftMaster.SetIdleMode(IdleMode::kCoast);
+	leftSlave.SetIdleMode(IdleMode::kCoast);
+
+	rightMaster.SetIdleMode(IdleMode::kCoast);
+	rightSlave.SetIdleMode(IdleMode::kCoast);
+}
+
+void DriveBaseSubsystem::setBrakeMode() {
+	leftMaster.SetIdleMode(IdleMode::kBrake);
+	leftSlave.SetIdleMode(IdleMode::kBrake);
+
+	rightMaster.SetIdleMode(IdleMode::kBrake);
+	rightSlave.SetIdleMode(IdleMode::kBrake);
 }

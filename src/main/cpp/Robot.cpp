@@ -1,100 +1,50 @@
-#include <Robot.h>
-#include <frc/Joystick.h>
-#include <iostream>
-#include <team2655/joystick.hpp>
-#include <frc/livewindow/LiveWindow.h>
+#include "Robot.h"
+
+#include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
-#include <AutoCommands.h>
 
-using IdleMode = rev::CANSparkMax::IdleMode;
+#include <team2655/autonomous.hpp>
+#include <commands/DriveTimeCommand.h>
 
-Robot *Robot::currentRobot = NULL;
-
-using namespace team2655;
+OI Robot::oi;
+DriveBaseSubsystem Robot::driveBase;
 
 void Robot::RobotInit() {
-	Robot::currentRobot = this;
-
-	driveAxisConfig = jshelper::createAxisConfig(.1, 0, .5);
-	rotateAxisConfig = jshelper::createAxisConfig(.1);
-
-
-	leftSlave.Follow(leftMaster);
-	rightSlave.Follow(rightMaster);
-
-	rightMaster.SetInverted(true);
-	rightSlave.SetInverted(true);
-
-	leftPID.SetP(0.0005);
-	leftPID.SetI(0);
-	leftPID.SetD(0);
-	leftPID.SetFF(1.0/LMaxVelocity);
-	leftPID.SetIZone(0);
-	leftPID.SetOutputRange(-1, 1);
-
-	rightPID.SetP(0.0005);
-	rightPID.SetI(0);
-	rightPID.SetD(0);
-	rightPID.SetFF(1.0/RMaxVelocity);
-	rightPID.SetIZone(0);
-	rightPID.SetOutputRange(-1, 1);
-
-	mgr.registerCommand(team2655::CommandCreator<DriveCommand>, "Drive");
-	mgr.registerCommand(team2655::CommandCreator<PathCommand>, "Path");
+    // Register auto commands
+    autoManager.registerCommand(team2655::CommandCreator<DriveTimeCommand>, false, "DRIVE");
 }
 
-void Robot::RobotPeriodic() {
-	frc::SmartDashboard::PutNumber("Right Encoder", driveBase.getRightPosition());
-	frc::SmartDashboard::PutNumber("Left Encoder", driveBase.getLeftPosition());
-	frc::SmartDashboard::PutNumber("Right Velocity", driveBase.getRightVelocity());
-	frc::SmartDashboard::PutNumber("Left Velocity", driveBase.getLeftVelocity());
+void Robot::RobotPeriodic() {}
 
-	frc::SmartDashboard::PutNumber("Left Faults: ", leftMaster.GetFaults());
-	frc::SmartDashboard::PutNumber("Right Faults: ", rightMaster.GetFaults());
-	frc::SmartDashboard::PutString("Left Error: ", leftMaster.GetError().GetMessage());
-	frc::SmartDashboard::PutString("Right Error: ", rightMaster.GetError().GetMessage());
-}
+void Robot::DisabledInit() {}
+
+void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::AutonomousInit() {
-	leftStartRevolutions = driveBase.getLeftPosition();
+    driveBase.setBrakeMode();
 
-	leftMaster.SetIdleMode(IdleMode::kBrake);
-	leftSlave.SetIdleMode(IdleMode::kBrake);
-
-	rightMaster.SetIdleMode(IdleMode::kBrake);
-	rightSlave.SetIdleMode(IdleMode::kBrake);
-
-	mgr.clearCommands();
-	mgr.addCommand("Path", {"path"});
+    autoManager.clearCommands();
+    autoManager.addCommand("DRIVE", {"0.25", "1"});
+    autoCommandPtr = autoManager.getScriptCommand();
+    std::cout << "Cmd count: " << autoCommandPtr.get()->GetSize() << std::endl;
+    /*team2655::AutoCommand *cmd = new DriveTimeCommand();
+    cmd->startedFromAutoManager = true;
+    cmd->commandName = "DRIVE";
+    cmd->arguments = {"0.1", "1"};
+    cmd->Start();*/
 }
 
-void Robot::AutonomousPeriodic() {
-	mgr.process();
-}
+void Robot::AutonomousPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::TeleopInit() {
-	leftMaster.SetIdleMode(IdleMode::kCoast);
-	leftSlave.SetIdleMode(IdleMode::kCoast);
-
-	rightMaster.SetIdleMode(IdleMode::kCoast);
-	rightSlave.SetIdleMode(IdleMode::kCoast);
-
-	//compressor.SetClosedLoopControl(false);
-	//compressor.SetClosedLoopControl(true);
-
+    driveBase.setCoastMode();
 }
 
-void Robot::TeleopPeriodic() {
-	double power = -1 * jshelper::getAxisValue(driveAxisConfig, js0.GetRawAxis(1));
-	double rotate = .5 * jshelper::getAxisValue(rotateAxisConfig, js0.GetRawAxis(2));
-	// driveBase.drivePercentage(power, rotate);
-	driveBase.driveVelocity(power, rotate);
-
-	frc::SmartDashboard::PutNumber("Left Velocity", Robot::currentRobot->driveBase.getLeftVelocity());
-	frc::SmartDashboard::PutNumber("Right Velocity", Robot::currentRobot->driveBase.getRightVelocity());
-
-	std::cout << PathfinderMaxVelocity << std::endl;
+void Robot::TeleopPeriodic() { 
+    frc::Scheduler::GetInstance()->Run();
 }
+
+void Robot::TestPeriodic() {}
 
 #ifndef RUNNING_FRC_TESTS
 int main() { return frc::StartRobot<Robot>(); }
