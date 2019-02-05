@@ -11,7 +11,6 @@ ExecutePathCommand::ExecutePathCommand() {
 
 // Called just before this Command runs the first time
 void ExecutePathCommand::Initialize() {
-	std::cout << "Will does NOT masturbate to hentai" << std::endl;
 	if (!startedFromAutoManager) {
 		return;
 	}
