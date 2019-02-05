@@ -11,15 +11,16 @@ ExecutePathCommand::ExecutePathCommand() {
 
 // Called just before this Command runs the first time
 void ExecutePathCommand::Initialize() {
+	std::cout << "Will does NOT masturbate to hentai" << std::endl;
 	if (!startedFromAutoManager) {
 		return;
 	}
 
 	// If there are not enough arguments, exit the function.
-  if (arguments.size() < 2) {
+  /*if (arguments.size() < 2) {
     std::cout << "Not enough arguments" << std::endl;
     return;
-  }
+  }*/
 
 	// Load the paths from the roborio.
   FILE *leftFile = fopen(("/auto-paths/" + arguments[0] + "_left.csv").c_str(), "r");
@@ -48,16 +49,16 @@ void ExecutePathCommand::Initialize() {
 	// initialEncoderPos, ticksPerRevolutions, WheelCircumference,
   //  kp, ki, kd, kv, ka
 	leftConfig = {(int)(leftStartPos * T_PER_REV), T_PER_REV, WheelDiameter * 3.141592, 
-					0.4, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
+					1.0, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
 	rightConfig = {(int)(rightStartPos * T_PER_REV), T_PER_REV, WheelDiameter * 3.141592, 
-					0.4, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
+					1.0, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
 }
 
 // Called repeatedly when this Command is scheduled to run
 void ExecutePathCommand::Execute() {	
 	// Get current power (as percentage) for L and R sides 
 	//       based on current position and calculated trajectories
-  double l = pathfinder_follow_encoder(leftConfig, &leftFollower, leftTrajectory, leftLength, 
+	double l = pathfinder_follow_encoder(leftConfig, &leftFollower, leftTrajectory, leftLength, 
 									T_PER_REV * Robot::driveBase.getLeftOutputPosition());
 	double r = pathfinder_follow_encoder(rightConfig, &rightFollower, rightTrajectory, rightLength, 
 									T_PER_REV * Robot::driveBase.getRightOutputPosition());
@@ -70,7 +71,8 @@ void ExecutePathCommand::Execute() {
 	//l += turn;
 	//r -= turn;
 
-	Robot::driveBase.driveTankVelocity(l, r);
+	Robot::driveBase.driveTankVelocity(l * MaxVelocity, r * MaxVelocity);
+	
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -88,3 +90,4 @@ void ExecutePathCommand::End() {
 void ExecutePathCommand::Interrupted() {
 	End();
 }
+

@@ -3,6 +3,8 @@
 
 #include <commands/DriveJoystickCommand.h>
 
+#include <iostream>
+
 using IdleMode = rev::CANSparkMax::IdleMode;
 
 DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {
@@ -11,14 +13,14 @@ DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {
 
   leftMaster.SetInverted(true);
 
-  leftPID.SetP(0.0005);
+  leftPID.SetP(0);
   leftPID.SetI(0);
   leftPID.SetD(0);
-  leftPID.SetFF(1.0/LMaxVelocity);
-  leftPID.SetIZone(0);
+  leftPID.SetFF(0);
+  leftPID.SetIZone(1.0/LMaxVelocity);
   leftPID.SetOutputRange(-1, 1);
 
-  rightPID.SetP(0.0005);
+  rightPID.SetP(0);
   rightPID.SetI(0);
   rightPID.SetD(0);
   rightPID.SetFF(1.0/RMaxVelocity);

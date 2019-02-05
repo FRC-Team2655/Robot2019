@@ -6,6 +6,8 @@
 
 /**
  * Load csv files from the Roborio to drive the path. It must be executed from the auto manager.
+ * Arguments:
+ * 0 = path name
  */
 class ExecutePathCommand : public team2655::AutoCommand {
 public:

@@ -28,13 +28,18 @@ void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 void Robot::AutonomousInit() {
     driveBase.setBrakeMode();
 
-    autoManager.clearCommands();
-    autoManager.addCommand("DRIVE", {"0.25", "1"});
+    /*autoManager.clearCommands();
+    //autoManager.addCommand("DRIVE", {"0.25", "1"});
+    autoManager.addCommandToScript("PATH", {"path"});
     autoCommandPtr = autoManager.getScriptCommand();
-    autoCommandPtr.get()->Start();
+    autoCommandPtr.get()->Start();*/
 }
 
-void Robot::AutonomousPeriodic() { frc::Scheduler::GetInstance()->Run(); }
+void Robot::AutonomousPeriodic() { 
+    frc::Scheduler::GetInstance()->Run(); 
+    Robot::driveBase.driveTankVelocity(3000, 3000);
+}
+
 
 void Robot::TeleopInit() {
     driveBase.setCoastMode();
