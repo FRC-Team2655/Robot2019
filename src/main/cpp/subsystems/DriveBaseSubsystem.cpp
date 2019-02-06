@@ -11,21 +11,22 @@ DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {
   leftSlave.Follow(leftMaster);
   rightSlave.Follow(rightMaster);
 
-  leftMaster.SetInverted(true);
+  rightMaster.SetInverted(true);
 
-  leftPID.SetP(0);
+  leftPID.SetP(2e-5);
   leftPID.SetI(0);
   leftPID.SetD(0);
-  leftPID.SetFF(0);
-  leftPID.SetIZone(1.0/LMaxVelocity);
+  leftPID.SetFF(1/LMaxVelocity);
+  leftPID.SetIZone(0);
   leftPID.SetOutputRange(-1, 1);
 
-  rightPID.SetP(0);
+  rightPID.SetP(2e-5);
   rightPID.SetI(0);
   rightPID.SetD(0);
-  rightPID.SetFF(1.0/RMaxVelocity);
+  rightPID.SetFF(1/RMaxVelocity);
   rightPID.SetIZone(0);
   rightPID.SetOutputRange(-1, 1);
+
 }
 
 void DriveBaseSubsystem::InitDefaultCommand() {
@@ -63,7 +64,7 @@ void DriveBaseSubsystem::driveTankVelocity(double lVel, double rVel) {
 	}
 }
 double DriveBaseSubsystem::getLeftPosition() {
-	return -1 * leftEnc.GetPosition();
+	return leftEnc.GetPosition();
 
 }
 double DriveBaseSubsystem::getRightPosition() {
@@ -71,7 +72,7 @@ double DriveBaseSubsystem::getRightPosition() {
 }
 
 double DriveBaseSubsystem::getLeftVelocity() {
-	return -1 * leftEnc.GetVelocity();
+	return leftEnc.GetVelocity();
 }
 
 double DriveBaseSubsystem::getRightVelocity() {

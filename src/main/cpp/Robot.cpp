@@ -26,7 +26,7 @@ void Robot::DisabledInit() {}
 void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::AutonomousInit() {
-    driveBase.setBrakeMode();
+   // driveBase.setBrakeMode();
 
     /*autoManager.clearCommands();
     //autoManager.addCommand("DRIVE", {"0.25", "1"});
