@@ -9,5 +9,5 @@ OI::OI() {
   js0 = new frc::Joystick(0);
   frc::JoystickButton *xBtn = new frc::JoystickButton(js0, 2);
 
-  xBtn->WhenPressed(new MoveIntakeArmCommand(500));
+  xBtn->WhenPressed(new MoveIntakeArmCommand(2048));
 }

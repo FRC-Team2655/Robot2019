@@ -5,17 +5,25 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/BallIntakeArmSubsystem.h"
+#include <subsystems/BallIntakeArmSubsystem.h>
+
+#include <iostream>
 
 BallIntakeArmSubsystem::BallIntakeArmSubsystem() : Subsystem("BallIntakeArmSubsystem") {
+
+  armMotor.SetNeutralMode(NeutralMode::Brake);
+
+  armMotor.ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative);
+  armMotor.SetSelectedSensorPosition(0);
+
   armMotor.ConfigNominalOutputForward(0);
   armMotor.ConfigNominalOutputReverse(0);
-  armMotor.ConfigPeakOutputForward(0.5);
-  armMotor.ConfigPeakOutputReverse(-0.5);
+  armMotor.ConfigPeakOutputForward(1);
+  armMotor.ConfigPeakOutputReverse(-1);
 
   armMotor.Config_kF(0, 0.0);
 	armMotor.Config_kP(0, 0.1);
-	armMotor.Config_kI(0, 0.0);
+	armMotor.Config_kI(0, 0);
   armMotor.Config_kD(0, 0.0);
 }
 
@@ -25,6 +33,10 @@ void BallIntakeArmSubsystem::stopArm(){
 
 int BallIntakeArmSubsystem::getArmPosition(){
   return armMotor.GetSelectedSensorPosition();
+}
+
+double BallIntakeArmSubsystem::getArmSpeed(){
+  return armMotor.Get();
 }
 
 void BallIntakeArmSubsystem::InitDefaultCommand() {

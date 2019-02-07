@@ -22,10 +22,6 @@ void MoveIntakeArmCommand::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool MoveIntakeArmCommand::IsFinished() { 
-  int currentPos = Robot::ballIntakeArm.getArmPosition();
-  if(std::abs(currentPos - position) <= 10){
-    return true;
-  }
   return false;
 }
 

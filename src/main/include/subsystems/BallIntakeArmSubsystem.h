@@ -21,4 +21,5 @@ public:
   void movePosition(double ticks);
   void stopArm();
   int getArmPosition();
+  double getArmSpeed();
 };

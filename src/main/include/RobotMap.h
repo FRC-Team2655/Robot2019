@@ -3,6 +3,8 @@
 // SmartDashboard keys
 #define LeftVelocity "LeftVelocity"
 #define RightVelocity "RightVelocity"
+#define ArmPosition "Intake Arm Position"
+#define ArmSpeed "Intake Arm Output Power"
 
 #define MINVAL(x, y) (((x) > (y)) ? (x) : (y)) // Get the minimum of two values (macro)
 
