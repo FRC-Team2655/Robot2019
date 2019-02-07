@@ -6,12 +6,14 @@
 
 #include <OI.h>
 #include <subsystems/DriveBaseSubsystem.h>
+#include <subsystems/BallIntakeArmSubsystem.h>
 #include <team2655/autonomous.hpp>
 
 class Robot : public frc::TimedRobot {
 public:
   static OI oi;
   static DriveBaseSubsystem driveBase;
+  static BallIntakeArmSubsystem ballIntakeArm;
 
   void RobotInit() override;
   void RobotPeriodic() override;
@@ -25,5 +27,5 @@ public:
 
 private:
   team2655::AutoManager autoManager;
-   std::unique_ptr<frc::CommandGroup> autoCommandPtr;
+  std::unique_ptr<frc::CommandGroup> autoCommandPtr;
 };

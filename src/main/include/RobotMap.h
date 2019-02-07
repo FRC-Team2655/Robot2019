@@ -8,12 +8,18 @@
 
 #define RMaxVelocity 5800.0 //5950.0      // motor revolutions / min
 #define LMaxVelocity 5700.0 //5580.0      
-#define GearRatio 9.47 / 1       // 9.47 motor revolutions to 1 output revolution
+#define GearRatio 9.47 / 1.0       // 9.47 motor revolutions to 1 output revolution
 #define WheelDiameter .1524      // wheel diameter in meters (6")
 #define MaxVelocity MINVAL(LMaxVelocity, RMaxVelocity)
 #define PathfinderMaxVelocity MaxVelocity / GearRatio / 60 * WheelDiameter * 3.141592
 
+#define IntakeArmGearRatio 100.0/1.0
+
+// SPARK MAX IDs
 #define LMaster 1
 #define LSlave 2
 #define RMaster 3
 #define RSlave 4
+
+// Talon SRX IDs
+#define IntakeArmMotor 1

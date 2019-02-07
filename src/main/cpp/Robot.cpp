@@ -9,6 +9,7 @@
 
 OI Robot::oi;
 DriveBaseSubsystem Robot::driveBase;
+BallIntakeArmSubsystem Robot::ballIntakeArm;
 
 void Robot::RobotInit() {
     // Register auto commands
