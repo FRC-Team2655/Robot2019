@@ -149,3 +149,12 @@ void DriveBaseSubsystem::setBrakeMode() {
 	rightMaster.SetIdleMode(IdleMode::kBrake);
 	rightSlave.SetIdleMode(IdleMode::kBrake);
 }
+
+void DriveBaseSubsystem::resetEncoders(){
+	leftEnc.SetPosition(0);
+	rightEnc.SetPosition(0);
+}
+
+void DriveBaseSubsystem::resetIMU(){
+	imu.Reset();
+}

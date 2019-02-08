@@ -8,18 +8,22 @@
 #pragma once
 
 #include <frc/commands/Subsystem.h>
-#include <ctre/Phoenix.h>
 #include <frc/WPILib.h>
 #include <RobotMap.h>
+#include <rev/CANSparkMax.h>
 
 class BallIntakeArmSubsystem : public frc::Subsystem {
 private:
-  WPI_TalonSRX armMotor { IntakeArmMotor };
+  rev::CANSparkMax armMotor {IntakeArmMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  rev::CANEncoder armEncoder = armMotor.GetEncoder();
+  rev::CANPIDController armPid = armMotor.GetPIDController();
 public:
   BallIntakeArmSubsystem();
   void InitDefaultCommand() override;
-  void movePosition(double ticks);
+  void moveArmSpeed(double percentage);
+  void moveToPosition(double ticks);
   void stopArm();
-  int getArmPosition();
-  double getArmSpeed();
+  double getArmPosition();
+  double getArmVelocity();
+  void resetPosition();
 };

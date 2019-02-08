@@ -10,41 +10,53 @@
 #include <iostream>
 
 BallIntakeArmSubsystem::BallIntakeArmSubsystem() : Subsystem("BallIntakeArmSubsystem") {
+  armMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 
-  armMotor.SetNeutralMode(NeutralMode::Brake);
+  resetPosition();
 
-  armMotor.ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative);
-  armMotor.SetSelectedSensorPosition(0);
+  // PID Settings
+  armPid.SetP(0.0004);
+  armPid.SetI(0.0000000001);
+  armPid.SetD(0.0001);
+  armPid.SetFF(0);
+  armPid.SetIZone(0);
+  armPid.SetOutputRange(-1, 1);
 
-  armMotor.ConfigNominalOutputForward(0);
-  armMotor.ConfigNominalOutputReverse(0);
-  armMotor.ConfigPeakOutputForward(1);
-  armMotor.ConfigPeakOutputReverse(-1);
+  // Setup for Smart Motion
+  armPid.SetSmartMotionAccelStrategy(rev::CANPIDController::AccelStrategy::kTrapezoidal);
+  armPid.SetSmartMotionAllowedClosedLoopError(IntakeArmAllowedError);
+  armPid.SetSmartMotionMaxAccel(IntakeArmMaxA);
+  armPid.SetSmartMotionMaxVelocity(IntakeArmMaxV);
+  armPid.SetSmartMotionMinOutputVelocity(IntakeArmMinV);
+}
 
-  armMotor.Config_kF(0, 0.0);
-	armMotor.Config_kP(0, 0.1);
-	armMotor.Config_kI(0, 0);
-  armMotor.Config_kD(0, 0.0);
+void BallIntakeArmSubsystem::moveArmSpeed(double percentage){
+  armMotor.Set(percentage);
 }
 
 void BallIntakeArmSubsystem::stopArm(){
   armMotor.Set(0);
 }
 
-int BallIntakeArmSubsystem::getArmPosition(){
-  return armMotor.GetSelectedSensorPosition();
+double BallIntakeArmSubsystem::getArmPosition(){
+  return armEncoder.GetPosition();
 }
 
-double BallIntakeArmSubsystem::getArmSpeed(){
-  return armMotor.Get();
+double BallIntakeArmSubsystem::getArmVelocity(){
+  return armEncoder.GetVelocity();
 }
 
 void BallIntakeArmSubsystem::InitDefaultCommand() {
   
 }
 
-void BallIntakeArmSubsystem::movePosition(double ticks){
-  armMotor.Set(ControlMode::Position, ticks * IntakeArmGearRatio);
+void BallIntakeArmSubsystem::resetPosition() {
+  armEncoder.SetPosition(0);
+}
+
+void BallIntakeArmSubsystem::moveToPosition(double revolutions){
+  // For now use position will use smart motion
+  armPid.SetReference(revolutions * IntakeArmGearRatio, rev::ControlType::kSmartMotion);
 }
 
 

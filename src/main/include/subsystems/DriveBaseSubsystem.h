@@ -63,6 +63,10 @@ public:
   // Setting brake mode for the motors.
   void setBrakeMode();
 
+  void resetIMU();
+  void resetEncoders();
+  
+
 private:
   rev::CANSparkMax leftMaster {LMaster, MotorType::kBrushless};
   rev::CANSparkMax leftSlave {LSlave, MotorType::kBrushless};

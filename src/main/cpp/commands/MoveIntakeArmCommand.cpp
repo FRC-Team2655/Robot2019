@@ -8,7 +8,7 @@
 #include <commands/MoveIntakeArmCommand.h>
 #include <Robot.h>
 
-MoveIntakeArmCommand::MoveIntakeArmCommand(int position) : position(position) {
+MoveIntakeArmCommand::MoveIntakeArmCommand(double position) : position(position) {
   Requires(&Robot::ballIntakeArm);
 }
 
@@ -17,7 +17,7 @@ void MoveIntakeArmCommand::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void MoveIntakeArmCommand::Execute() {
-  Robot::ballIntakeArm.movePosition(position);
+  Robot::ballIntakeArm.moveToPosition(position);
 }
 
 // Make this return true when this Command no longer needs to run execute()
