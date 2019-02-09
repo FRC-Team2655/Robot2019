@@ -6,15 +6,22 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
-
+//set up ballintake system
 #include <frc/commands/Subsystem.h>
+#include <rev/CANSparkMax.h>
 
 class LandingGearArmSubsystem : public frc::Subsystem {
  private:
-  // It's desirable that everything possible under private except
-  // for methods that implement subsystem capabilities
+  rev::CANSparkMax landingGearArmMotor{1, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  rev::CANEncoder landingGearArmEncoder = landingGearArmMotor.GetEncoder();
+  rev::CANPIDController landingGearArmPid = landingGearArmMotor.GetPIDController();
 
  public:
   LandingGearArmSubsystem();
   void InitDefaultCommand() override;
+  void moveLandingArmSpeed(double percentage);
+  void moveLandingArmToPosition(double ticks);
+  void stopLandingArm();
+  double getLandingArmPosition();
+  void resetLandingArmPosition();
 };

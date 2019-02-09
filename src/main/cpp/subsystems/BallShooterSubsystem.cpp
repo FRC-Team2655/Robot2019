@@ -7,12 +7,20 @@
 
 #include "subsystems/BallShooterSubsystem.h"
 
-BallShooterSubsystem::BallShooterSubsystem() : Subsystem("ExampleSubsystem") {}
+BallShooterSubsystem::BallShooterSubsystem() : Subsystem("BallShooterSubsystem") {}
 
 void BallShooterSubsystem::InitDefaultCommand() {
-  // Set the default command for a subsystem here.
-  // SetDefaultCommand(new MySpecialCommand());
+ 
 }
 
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
+void BallShooterSubsystem::MoveTalonSpeed(double speed){
+    ballShooterMotor.Set(speed);
+}
+
+void BallShooterSubsystem::ExtendPiston(){
+    ballShooterSolenoid.Set(frc::DoubleSolenoid::Value::kForward);
+}
+
+void BallShooterSubsystem::RetractPiston(){
+    ballShooterSolenoid.Set(frc::DoubleSolenoid::Value::kReverse);
+}

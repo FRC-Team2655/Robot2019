@@ -5,14 +5,45 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/LandingGearArmSubsystem.h"
+#include <subsystems/LandingGearArmSubsystem.h>
 
-LandingGearArmSubsystem::LandingGearArmSubsystem() : Subsystem("ExampleSubsystem") {}
+LandingGearArmSubsystem::LandingGearArmSubsystem() : Subsystem("ExampleSubsystem") {
+  landingGearArmMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 
-void LandingGearArmSubsystem::InitDefaultCommand() {
-  // Set the default command for a subsystem here.
-  // SetDefaultCommand(new MySpecialCommand());
+  //resetPosition();
+
+  // PID Settings
+  landingGearArmPid.SetP(0.0);
+  landingGearArmPid.SetI(0.0);
+  landingGearArmPid.SetD(0.0);
+  landingGearArmPid.SetFF(0);
+  landingGearArmPid.SetIZone(0);
+  landingGearArmPid.SetOutputRange(-1, 1);
+
+  // Setup for Smart Motion
+  /*landingGearArmPid.SetSmartMotionAccelStrategy(rev::CANPIDController::AccelStrategy::kTrapezoidal);
+  landingGearArmPid.SetSmartMotionAllowedClosedLoopError();
+  landingGearArmPid.SetSmartMotionMaxAccel();
+  landingGearArmPid.SetSmartMotionMaxVelocity();
+  landingGearArmPid.SetSmartMotionMinOutputVelocity();*/
 }
 
-// Put methods for controlling this subsystem
-// here. Call these from Commands.
+void LandingGearArmSubsystem::moveLandingArmSpeed(double percentage){
+  landingGearArmMotor.Set(percentage);
+}
+void LandingGearArmSubsystem::moveLandingArmToPosition(double ticks){
+  landingGearArmMotor.Set(ticks);
+}
+void LandingGearArmSubsystem::stopLandingArm(){
+  landingGearArmMotor.Set(0);
+}
+double LandingGearArmSubsystem::getLandingArmPosition(){
+  return landingGearArmEncoder.GetPosition();
+}
+void LandingGearArmSubsystem::resetLandingArmPosition(){
+  landingGearArmEncoder.SetPosition(0);
+}
+
+void LandingGearArmSubsystem::InitDefaultCommand() {
+  
+}

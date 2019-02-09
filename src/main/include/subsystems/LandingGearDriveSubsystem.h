@@ -8,13 +8,21 @@
 #pragma once
 
 #include <frc/commands/Subsystem.h>
+#include <rev/CANSparkMax.h>
 
 class LandingGearDriveSubsystem : public frc::Subsystem {
  private:
-  // It's desirable that everything possible under private except
-  // for methods that implement subsystem capabilities
+  rev::CANSparkMax landingGearMotor{1, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  rev::CANEncoder landingGearEncoder = landingGearMotor.GetEncoder();
+  rev::CANPIDController landingGearPID = landingGearMotor.GetPIDController();
 
  public:
   LandingGearDriveSubsystem();
+  void moveLandingGearSpeed(double percentage);
+  void moveLandingGearToPosition(double ticks);
+  void stopLandingGear();
+  double getLandingGearPosition();
+  void resetLandingGearPosition();
   void InitDefaultCommand() override;
+  void moveLandingGearSpeed(double speed);
 };

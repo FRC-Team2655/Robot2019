@@ -8,12 +8,21 @@
 #include <subsystems/DriveBaseSubsystem.h>
 #include <subsystems/BallIntakeArmSubsystem.h>
 #include <team2655/autonomous.hpp>
+#include <subsystems/BallShooterSubsystem.h>
+#include <subsystems/HatchPanelSubsystem.h>
+#include <subsystems/LandingGearArmSubsystem.h>
+#include <subsystems/LandingGearDriveSubsystem.h>
 
 class Robot : public frc::TimedRobot {
 public:
   static OI oi;
   static DriveBaseSubsystem driveBase;
   static BallIntakeArmSubsystem ballIntakeArm;
+  static BallShooterSubsystem ballShooter;
+  static HatchPanelSubsystem hatchPanel;
+  static HatchPanelSubsystem hatchMover;
+  static LandingGearArmSubsystem landingGearArm;
+  static LandingGearDriveSubsystem landingGearDrive;
 
   void RobotInit() override;
   void RobotPeriodic() override;

@@ -10,6 +10,10 @@
 OI Robot::oi;
 DriveBaseSubsystem Robot::driveBase;
 BallIntakeArmSubsystem Robot::ballIntakeArm;
+BallShooterSubsystem Robot::ballShooter;
+HatchPanelSubsystem Robot::hatchPanel;
+LandingGearArmSubsystem Robot::landingGearArm;
+LandingGearDriveSubsystem Robot::landingGearDrive;
 
 void Robot::RobotInit() {
     // Register auto commands
