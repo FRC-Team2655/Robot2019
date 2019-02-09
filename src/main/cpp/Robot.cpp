@@ -44,7 +44,7 @@ void Robot::AutonomousPeriodic() {
 
 
 void Robot::TeleopInit() {
-    driveBase.setCoastMode();
+    driveBase.setBrakeMode();
 }
 
 void Robot::TeleopPeriodic() { 
