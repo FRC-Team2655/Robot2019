@@ -42,10 +42,6 @@ double BallIntakeArmSubsystem::getArmPosition(){
   return armEncoder.GetPosition();
 }
 
-double BallIntakeArmSubsystem::getArmVelocity(){
-  return armEncoder.GetVelocity();
-}
-
 void BallIntakeArmSubsystem::InitDefaultCommand() {
   
 }

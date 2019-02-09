@@ -31,3 +31,4 @@
 #define IntakeArmMotor 3
 
 // Talon SRX IDs
+#define BallShooter 1

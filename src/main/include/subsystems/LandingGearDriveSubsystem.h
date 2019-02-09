@@ -8,21 +8,13 @@
 #pragma once
 
 #include <frc/commands/Subsystem.h>
-#include <frc/WPILib.h>
-#include <RobotMap.h>
-#include <rev/CANSparkMax.h>
 
-class BallIntakeArmSubsystem : public frc::Subsystem {
-private:
-  rev::CANSparkMax armMotor {IntakeArmMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
-  rev::CANEncoder armEncoder = armMotor.GetEncoder();
-  rev::CANPIDController armPid = armMotor.GetPIDController();
-public:
-  BallIntakeArmSubsystem();
+class LandingGearDriveSubsystem : public frc::Subsystem {
+ private:
+  // It's desirable that everything possible under private except
+  // for methods that implement subsystem capabilities
+
+ public:
+  LandingGearDriveSubsystem();
   void InitDefaultCommand() override;
-  void moveArmSpeed(double percentage);
-  void moveToPosition(double ticks);
-  void stopArm();
-  double getArmPosition();
-  void resetPosition();
 };
