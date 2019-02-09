@@ -26,8 +26,8 @@
 // SPARK MAX IDs
 #define LMaster 1
 #define LSlave 2
-#define RMaster 5
+#define RMaster 3
 #define RSlave 4
-#define IntakeArmMotor 3
+#define IntakeArmMotor 5
 
 // Talon SRX IDs
