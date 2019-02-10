@@ -17,6 +17,7 @@ public:
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+
 private:
   double position;
 };

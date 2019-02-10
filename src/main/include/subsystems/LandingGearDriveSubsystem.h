@@ -9,20 +9,24 @@
 
 #include <frc/commands/Subsystem.h>
 #include <rev/CANSparkMax.h>
+#include <RobotMap.h>
 
 class LandingGearDriveSubsystem : public frc::Subsystem {
- private:
-  rev::CANSparkMax landingGearMotor{1, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+private:
+  rev::CANSparkMax landingGearMotor{LandingGearDriveMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::CANEncoder landingGearEncoder = landingGearMotor.GetEncoder();
   rev::CANPIDController landingGearPID = landingGearMotor.GetPIDController();
 
- public:
+  const double gearRatio = 40.0 / 1.0;
+  const double kp = 0, ki = 0, kd = 0, kf = 0, izone = 0, minOut = -1, maxOut = 1;
+  const double allowedError = 0, maxAccel = 0, minVelocity = 0, maxVelocity = 0;
+
+public:
   LandingGearDriveSubsystem();
-  void moveLandingGearSpeed(double percentage);
-  void moveLandingGearToPosition(double ticks);
-  void stopLandingGear();
-  double getLandingGearPosition();
-  void resetLandingGearPosition();
+  void moveSpeed(double percentage);
+  void movePosition(double ticks);
+  void stop();
+  double getPosition();
+  void resetPosition();
   void InitDefaultCommand() override;
-  void moveLandingGearSpeed(double speed);
 };

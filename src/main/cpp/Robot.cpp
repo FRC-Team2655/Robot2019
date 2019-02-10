@@ -11,7 +11,7 @@ OI Robot::oi;
 DriveBaseSubsystem Robot::driveBase;
 BallIntakeArmSubsystem Robot::ballIntakeArm;
 BallShooterSubsystem Robot::ballShooter;
-HatchPanelSubsystem Robot::hatchPanel;
+HatchPanelClawSubsystem Robot::hatchPanelClaw;
 LandingGearArmSubsystem Robot::landingGearArm;
 LandingGearDriveSubsystem Robot::landingGearDrive;
 
@@ -48,7 +48,7 @@ void Robot::AutonomousPeriodic() {
 
 
 void Robot::TeleopInit() {
-    driveBase.setBrakeMode();
+    driveBase.setCoastMode();
 }
 
 void Robot::TeleopPeriodic() { 

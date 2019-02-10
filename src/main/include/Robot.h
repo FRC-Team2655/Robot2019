@@ -9,7 +9,7 @@
 #include <subsystems/BallIntakeArmSubsystem.h>
 #include <team2655/autonomous.hpp>
 #include <subsystems/BallShooterSubsystem.h>
-#include <subsystems/HatchPanelSubsystem.h>
+#include <subsystems/HatchPanelClawSubsystem.h>
 #include <subsystems/LandingGearArmSubsystem.h>
 #include <subsystems/LandingGearDriveSubsystem.h>
 
@@ -19,8 +19,7 @@ public:
   static DriveBaseSubsystem driveBase;
   static BallIntakeArmSubsystem ballIntakeArm;
   static BallShooterSubsystem ballShooter;
-  static HatchPanelSubsystem hatchPanel;
-  static HatchPanelSubsystem hatchMover;
+  static HatchPanelClawSubsystem hatchPanelClaw;
   static LandingGearArmSubsystem landingGearArm;
   static LandingGearDriveSubsystem landingGearDrive;
 

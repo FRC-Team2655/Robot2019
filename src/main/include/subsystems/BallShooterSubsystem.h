@@ -6,12 +6,16 @@
 #include <frc/DoubleSolenoid.h>
 
 class BallShooterSubsystem : public frc::Subsystem {
- public:
+public:
   BallShooterSubsystem();
-  void MoveTalonSpeed(double speed);
-  void ExtendPiston();
-  void RetractPiston();
+  void moveSpeed(double speed);
+  void intake(double speed);
+  void output(double speed);
+  void extendPiston();
+  void retractPiston();
   void InitDefaultCommand() override;
+
+private:
   WPI_TalonSRX ballShooterMotor{BallShooter};
-  frc::DoubleSolenoid ballShooterSolenoid{0,1,2};
+  frc::DoubleSolenoid ballShooterSolenoid { ShooterSolenoidA, ShooterSolenoidB };
 };

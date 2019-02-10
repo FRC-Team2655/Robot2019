@@ -11,13 +11,16 @@
 #include <subsystems/BallShooterSubsystem.h>
 #include <Robot.h>
 
-class ShootersPercetnageCommand : public frc::Command {
+class MoveShooterWheelsCommand : public frc::Command {
  public:
-  ShootersPercetnageCommand();
+  MoveShooterWheelsCommand(double percentage, bool intake);
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
-  
+
+private:
+  double percentage;
+  bool intake;
 };

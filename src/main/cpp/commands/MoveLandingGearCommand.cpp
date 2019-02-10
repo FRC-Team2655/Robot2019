@@ -5,27 +5,30 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/MoveLandingArmPositionCommand.h"
+#include "commands/MoveLandingGearCommand.h"
+#include <Robot.h>
 
-MoveLandingArmPositionCommand::MoveLandingArmPositionCommand() {
-  // Use Requires() here to declare subsystem dependencies
-  // eg. Requires(Robot::chassis.get());
+MoveLandingGearCommand::MoveLandingGearCommand(double value, bool positionMode) : value(value), positionMode(positionMode) {
+  Requires(&Robot::landingGearArm);
 }
 
 // Called just before this Command runs the first time
-void MoveLandingArmPositionCommand::Initialize() {}
+void MoveLandingGearCommand::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void MoveLandingArmPositionCommand::Execute() {
-  Robot::landingGearArmMotor.moveLandingArmToPosition(double ticks);
+void MoveLandingGearCommand::Execute() {
+  if(positionMode)
+    Robot::landingGearArm.moveArmPosition(value);
+  else
+    Robot::landingGearArm.moveArmSpeed(value);
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool MoveLandingArmPositionCommand::IsFinished() { return false; }
+bool MoveLandingGearCommand::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void MoveLandingArmPositionCommand::End() {}
+void MoveLandingGearCommand::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void MoveLandingArmPositionCommand::Interrupted() {}
+void MoveLandingGearCommand::Interrupted() {}

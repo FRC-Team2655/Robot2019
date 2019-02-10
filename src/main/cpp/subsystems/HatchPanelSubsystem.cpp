@@ -5,33 +5,29 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/HatchPanelSubsystem.h"
+#include "subsystems/HatchPanelClawSubsystem.h"
 
-HatchPanelSubsystem::HatchPanelSubsystem() : Subsystem("ExampleSubsystem") {}
+HatchPanelClawSubsystem::HatchPanelClawSubsystem() : Subsystem("HatchPanelClawSubsystem") {}
 
-void HatchPanelSubsystem::InitDefaultCommand() {
+void HatchPanelClawSubsystem::InitDefaultCommand() {
 }
 
-#pragma once
-
-#include <frc/commands/Subsystem.h>
-#include <frc/DoubleSolenoid.h>
-
-void InitDefaultCommand(){
-
+void HatchPanelClawSubsystem::openClaw(){
+  if(isExtended())
+    clawSol.Set(frc::DoubleSolenoid::Value::kForward);
 }
-void HatchPanelSubsystem::OpenHatch(){
-  hatchPanal.Set(frc::DoubleSolenoid::Value::kForward);
+void HatchPanelClawSubsystem::closeClaw(){
+  clawSol.Set(frc::DoubleSolenoid::Value::kReverse);
 }
-void HatchPanelSubsystem::CloseHatch(){
-  hatchPanal.Set(frc::DoubleSolenoid::Value::kReverse);
+void HatchPanelClawSubsystem::extendClaw(){
+  extenderSol.Set(frc::DoubleSolenoid::Value::kReverse);
 }
-void HatchPanelSubsystem::ExtendHatch(){
-  hatchMover.Set(frc::DoubleSolenoid::Value::kForward);
-}
-void HatchPanelSubsystem::RetractHatch(){
-  hatchMover.Set(frc::DoubleSolenoid::Value::kReverse);
+void HatchPanelClawSubsystem::retractClaw(){
+  extenderSol.Set(frc::DoubleSolenoid::Value::kForward);
 }
 
+bool HatchPanelClawSubsystem::isExtended(){
+  return extenderSol.Get() == frc::DoubleSolenoid::Value::kReverse;
+}
 
 

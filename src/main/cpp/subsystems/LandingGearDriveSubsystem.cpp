@@ -1,57 +1,47 @@
 #include "subsystems/LandingGearDriveSubsystem.h"
 #include <subsystems/DriveBaseSubsystem.h>
 
-LandingGearDriveSubsystem::LandingGearDriveSubsystem() : Subsystem("ExampleSubsystem") {}
-
 void LandingGearDriveSubsystem::InitDefaultCommand() {
 }
 
 LandingGearDriveSubsystem::LandingGearDriveSubsystem() : Subsystem("LandingGearDriveSubsystem") {
-  landingGearMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  landingGearMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
 
-  //resetPosition();
+  resetPosition();
 
   // PID Settings
-  landingGearPID.SetP(0.0004);
-  landingGearPID.SetI(0.0000000001);
-  landingGearPID.SetD(0.0001);
-  landingGearPID.SetFF(0);
-  landingGearPID.SetIZone(0);
-  landingGearPID.SetOutputRange(-1, 1);
+  landingGearPID.SetP(kp);
+  landingGearPID.SetI(ki);
+  landingGearPID.SetD(kd);
+  landingGearPID.SetFF(kf);
+  landingGearPID.SetIZone(izone);
+  landingGearPID.SetOutputRange(minOut, maxOut);
 
   // Setup for Smart Motion
   landingGearPID.SetSmartMotionAccelStrategy(rev::CANPIDController::AccelStrategy::kTrapezoidal);
-  landingGearPID.SetSmartMotionAllowedClosedLoopError(IntakeArmAllowedError);
-  landingGearPID.SetSmartMotionMaxAccel(IntakeArmMaxA);
-  landingGearPID.SetSmartMotionMaxVelocity(IntakeArmMaxV);
-  landingGearPID.SetSmartMotionMinOutputVelocity(IntakeArmMinV);
+  landingGearPID.SetSmartMotionAllowedClosedLoopError(allowedError);
+  landingGearPID.SetSmartMotionMaxAccel(maxAccel);
+  landingGearPID.SetSmartMotionMaxVelocity(maxVelocity);
+  landingGearPID.SetSmartMotionMinOutputVelocity(minVelocity);
 }
 
-void LandingGearDriveSubsystem::moveLandingGearSpeed(double percentage){
+void LandingGearDriveSubsystem::moveSpeed(double percentage){
   landingGearMotor.Set(percentage);
 }
 
-void LandingGearDriveSubsystem::stopLandingGear(){
+void LandingGearDriveSubsystem::stop(){
   landingGearMotor.Set(0);
 }
 
-double LandingGearDriveSubsystem::getLandingGearPosition(){
+double LandingGearDriveSubsystem::getPosition(){
   return landingGearEncoder.GetPosition();
 }
 
-void LandingGearDriveSubsystem::InitDefaultCommand() {
-  
-}
-
-void LandingGearDriveSubsystem::resetLandingGearPosition() {
+void LandingGearDriveSubsystem::resetPosition() {
   landingGearEncoder.SetPosition(0);
 }
 
-void LandingGearDriveSubsystem::moveLandingGearToPosition(double ticks){
+void LandingGearDriveSubsystem::movePosition(double ticks){
   // For now use position will use smart motion
-  landingGearPID.SetReference(ticks * IntakeArmGearRatio, rev::ControlType::kSmartMotion);
-}
-
-void LandingGearDriveSubsystem::moveLandingGearSpeed(double speed){
-  landingGearMotor.Set(speed);
+  landingGearPID.SetReference(ticks * gearRatio, rev::ControlType::kSmartMotion);
 }

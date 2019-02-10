@@ -5,21 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#pragma once
+#include "commands/LandingGearArmTimeCG.h"
+#include <commands/MoveLandingGearCommand.h>
+#include <commands/StopLandingGearArmCommand.h>
+#include <frc/commands/WaitCommand.h>
 
-#include <frc/commands/Command.h>
-#include <subsystems/BallShooterSubsystem.h>
-#include <Robot.h>
-
-class FireShooterPistonCommand : public frc::Command {
-public:
-  FireShooterPistonCommand(bool shouldExtend);
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
-
-private:
-  bool shouldExtend;
-};
+LandingGearArmTimeCG::LandingGearArmTimeCG(double speed, double timeSec) {
+  MoveLandingGearCommand *command = new MoveLandingGearCommand(speed, false);
+  AddParallel(command);
+  AddSequential(new frc::WaitCommand(timeSec));
+  AddSequential(new StopLandingGearArmCommand());
+}

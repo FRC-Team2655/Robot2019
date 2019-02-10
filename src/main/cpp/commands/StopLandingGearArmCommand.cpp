@@ -5,34 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/FireShooterPistonCommand.h"
+#include "commands/StopLandingGearArmCommand.h"
+#include <Robot.h>
 
-FireShooterPistonCommand::FireShooterPistonCommand(bool shouldExtend) : shouldExtend(shouldExtend) {
-  // Use Requires() here to declare subsystem dependencies
-  // eg. Requires(Robot::chassis.get());
+StopLandingGearArmCommand::StopLandingGearArmCommand() {
+  Requires(&Robot::landingGearArm);
 }
 
 // Called just before this Command runs the first time
-void FireShooterPistonCommand::Initialize() {
-  if (shouldExtend) {
-    Robot::ballShooter.extendPiston();
-  }else{
-    Robot::ballShooter.retractPiston();
-  }
+void StopLandingGearArmCommand::Initialize() {
+  Robot::landingGearArm.stopArm();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void FireShooterPistonCommand::Execute() {
-  
-}
+void StopLandingGearArmCommand::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool FireShooterPistonCommand::IsFinished() { return true; }
+bool StopLandingGearArmCommand::IsFinished() { return true; }
 
 // Called once after isFinished returns true
-void FireShooterPistonCommand::End() {}
+void StopLandingGearArmCommand::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void FireShooterPistonCommand::Interrupted() {}
-
+void StopLandingGearArmCommand::Interrupted() {}

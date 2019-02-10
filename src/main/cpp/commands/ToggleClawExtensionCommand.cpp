@@ -5,34 +5,31 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/FireShooterPistonCommand.h"
+#include "commands/ToggleClawExtensionCommand.h"
+#include <Robot.h>
 
-FireShooterPistonCommand::FireShooterPistonCommand(bool shouldExtend) : shouldExtend(shouldExtend) {
-  // Use Requires() here to declare subsystem dependencies
-  // eg. Requires(Robot::chassis.get());
+ToggleClawExtensionCommand::ToggleClawExtensionCommand() {
+  
 }
 
 // Called just before this Command runs the first time
-void FireShooterPistonCommand::Initialize() {
-  if (shouldExtend) {
-    Robot::ballShooter.extendPiston();
+void ToggleClawExtensionCommand::Initialize() {
+  if(Robot::hatchPanelClaw.isExtended()){
+    Robot::hatchPanelClaw.retractClaw();
   }else{
-    Robot::ballShooter.retractPiston();
+    Robot::hatchPanelClaw.extendClaw();
   }
 }
 
 // Called repeatedly when this Command is scheduled to run
-void FireShooterPistonCommand::Execute() {
-  
-}
+void ToggleClawExtensionCommand::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool FireShooterPistonCommand::IsFinished() { return true; }
+bool ToggleClawExtensionCommand::IsFinished() { return true; }
 
 // Called once after isFinished returns true
-void FireShooterPistonCommand::End() {}
+void ToggleClawExtensionCommand::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void FireShooterPistonCommand::Interrupted() {}
-
+void ToggleClawExtensionCommand::Interrupted() {}

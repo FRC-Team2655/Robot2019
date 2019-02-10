@@ -7,20 +7,34 @@
 
 #include "subsystems/BallShooterSubsystem.h"
 
-BallShooterSubsystem::BallShooterSubsystem() : Subsystem("BallShooterSubsystem") {}
+#include <iostream>
+
+BallShooterSubsystem::BallShooterSubsystem() : Subsystem("BallShooterSubsystem") {
+    ballShooterMotor.SetNeutralMode(NeutralMode::Brake);
+}
 
 void BallShooterSubsystem::InitDefaultCommand() {
  
 }
 
-void BallShooterSubsystem::MoveTalonSpeed(double speed){
+void BallShooterSubsystem::moveSpeed(double speed){
     ballShooterMotor.Set(speed);
 }
 
-void BallShooterSubsystem::ExtendPiston(){
+void BallShooterSubsystem::intake(double speed){
+    ballShooterMotor.SetNeutralMode(NeutralMode::Brake);
+    moveSpeed(std::abs(speed));
+}
+
+void BallShooterSubsystem::output(double speed){
+    ballShooterMotor.SetNeutralMode(NeutralMode::Coast);
+    moveSpeed(-std::abs(speed));
+}
+
+void BallShooterSubsystem::extendPiston(){
     ballShooterSolenoid.Set(frc::DoubleSolenoid::Value::kForward);
 }
 
-void BallShooterSubsystem::RetractPiston(){
+void BallShooterSubsystem::retractPiston(){
     ballShooterSolenoid.Set(frc::DoubleSolenoid::Value::kReverse);
 }

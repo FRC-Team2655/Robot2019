@@ -17,6 +17,11 @@ private:
   rev::CANSparkMax armMotor {IntakeArmMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::CANEncoder armEncoder = armMotor.GetEncoder();
   rev::CANPIDController armPid = armMotor.GetPIDController();
+
+  const double gearRatio = 50.0 / 1.0;  // Gearbox ratio * sprocket ratio
+  const double kp = 0.0004, ki = 0.0000000001, kd = 0.0001, kf = 0, izone = 0, minOut = -1, maxOut = 1;
+  const double allowedError = 0, maxAccel = 3500, minVelocity = 10, maxVelocity = 5500;
+
 public:
   BallIntakeArmSubsystem();
   void InitDefaultCommand() override;

@@ -5,31 +5,36 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/HatchGrabberERCommand.h"
+#include "commands/MoveShooterWheelsCommand.h"
 
-HatchGrabberERCommand::HatchGrabberERCommand() {
-  // Use Requires() here to declare subsystem dependencies
-  // eg. Requires(Robot::chassis.get());
+MoveShooterWheelsCommand::MoveShooterWheelsCommand(double percentage, bool intake) : percentage(std::abs(percentage)), intake(intake) {
+  Requires(&Robot::ballShooter);
 }
 
 // Called just before this Command runs the first time
-void HatchGrabberERCommand::Initialize() {}
+void MoveShooterWheelsCommand::Initialize() {
+  if(intake)
+    Robot::ballShooter.retractPiston();
+}
 
 // Called repeatedly when this Command is scheduled to run
-void HatchGrabberERCommand::Execute() {
-  if (isExtended) {
-      Robot::hatchMover.ExtendHatch();
-  }else if (!isExtended) {
-      Robot::hatchPanel.RetractHatch();
-  }
+void MoveShooterWheelsCommand::Execute() {
+  if(intake)
+    Robot::ballShooter.intake(percentage);
+  else
+    Robot::ballShooter.output(percentage);
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool HatchGrabberERCommand::IsFinished() { return false; }
+bool MoveShooterWheelsCommand::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void HatchGrabberERCommand::End() {}
+void MoveShooterWheelsCommand::End() {
+  Robot::ballShooter.moveSpeed(0);
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void HatchGrabberERCommand::Interrupted() {}
+void MoveShooterWheelsCommand::Interrupted() {
+  End();
+}

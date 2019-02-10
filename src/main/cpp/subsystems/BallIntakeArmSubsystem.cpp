@@ -24,10 +24,10 @@ BallIntakeArmSubsystem::BallIntakeArmSubsystem() : Subsystem("BallIntakeArmSubsy
 
   // Setup for Smart Motion
   armPid.SetSmartMotionAccelStrategy(rev::CANPIDController::AccelStrategy::kTrapezoidal);
-  armPid.SetSmartMotionAllowedClosedLoopError(IntakeArmAllowedError);
-  armPid.SetSmartMotionMaxAccel(IntakeArmMaxA);
-  armPid.SetSmartMotionMaxVelocity(IntakeArmMaxV);
-  armPid.SetSmartMotionMinOutputVelocity(IntakeArmMinV);
+  armPid.SetSmartMotionAllowedClosedLoopError(allowedError);
+  armPid.SetSmartMotionMaxAccel(maxAccel);
+  armPid.SetSmartMotionMaxVelocity(maxVelocity);
+  armPid.SetSmartMotionMinOutputVelocity(minVelocity);
 }
 
 void BallIntakeArmSubsystem::moveArmSpeed(double percentage){
@@ -52,7 +52,7 @@ void BallIntakeArmSubsystem::resetPosition() {
 
 void BallIntakeArmSubsystem::moveToPosition(double revolutions){
   // For now use position will use smart motion
-  armPid.SetReference(revolutions * IntakeArmGearRatio, rev::ControlType::kSmartMotion);
+  armPid.SetReference(revolutions * gearRatio, rev::ControlType::kSmartMotion);
 }
 
 

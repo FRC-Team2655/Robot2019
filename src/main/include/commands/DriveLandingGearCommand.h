@@ -8,16 +8,19 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include <subsystems/HatchPanelSubsystem.h>
+#include <subsystems/LandingGearDriveSubsystem.h>
+#include <subsystems/LandingGearArmSubsystem.h>
 #include <Robot.h>
 
-class HatchGrabberOCCommand : public frc::Command {
+class DriveLandingGearCommand : public frc::Command {
  public:
-  HatchGrabberOCCommand();
+  DriveLandingGearCommand(double percentage);
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
-  bool isOpen;
+
+private:
+  double percentage;
 };

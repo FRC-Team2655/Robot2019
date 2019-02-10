@@ -7,17 +7,9 @@
 
 #pragma once
 
-#include <frc/commands/Command.h>
-#include <subsystems/HatchPanelSubsystem.h>
-#include <Robot.h>
+#include <frc/commands/CommandGroup.h>
 
-class HatchGrabberERCommand : public frc::Command {
- public:
-  HatchGrabberERCommand();
-  void Initialize() override;
-  void Execute() override;
-  bool IsFinished() override;
-  void End() override;
-  void Interrupted() override;
-  bool isExtended;
+class ShootCargoShipCommandGroup : public frc::CommandGroup {
+public:
+  ShootCargoShipCommandGroup();
 };

@@ -8,12 +8,12 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include <subsystems/BallShooterSubsystem.h>
-#include <Robot.h>
+#include <subsystems/LandingGearDriveSubsystem.h>
+#include <subsystems/LandingGearArmSubsystem.h>
 
-class FireShooterPistonCommand : public frc::Command {
+class MoveLandingGearCommand : public frc::Command {
 public:
-  FireShooterPistonCommand(bool shouldExtend);
+  MoveLandingGearCommand(double position, bool positionMode);
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
@@ -21,5 +21,6 @@ public:
   void Interrupted() override;
 
 private:
-  bool shouldExtend;
+  double value;
+  bool positionMode;
 };

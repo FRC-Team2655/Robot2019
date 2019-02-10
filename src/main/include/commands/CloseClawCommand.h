@@ -8,16 +8,18 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include <subsystems/LandingGearDriveSubsystem.h>
-#include <subsystems/LandingGearArmSubsystem.h>
+#include <subsystems/HatchPanelClawSubsystem.h>
 #include <Robot.h>
 
-class MoveLandWheelPercentCommand : public frc::Command {
+class CloseClawCommand : public frc::Command {
  public:
-  MoveLandWheelPercentCommand();
+  CloseClawCommand(bool shouldClose);
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+
+private:
+  bool shouldClose;
 };
