@@ -9,6 +9,7 @@
 #include <commands/MoveShooterWheelsCommand.h>
 #include <commands/ToggleClawExtensionCommand.h>
 #include <commands/ToggleLockCommand.h>
+#include <commands/ShootRocketLvl2CG.h>
 
 using namespace team2655;
 
@@ -21,6 +22,7 @@ OI::OI() {
   frc::JoystickButton *l1Btn = new frc::JoystickButton(js0, 5);
   frc::JoystickButton *r1Btn = new frc::JoystickButton(js0, 6);
   frc::JoystickButton *triangleBtn = new frc::JoystickButton(js0, 4);
+  frc::JoystickButton *circleBtn = new frc::JoystickButton(js0, 3);
 
   xBtn->WhenPressed(new ShootCargoShipCommandGroup());
   squareBtn->WhenPressed(new ToggleClawExtensionCommand());
@@ -30,4 +32,5 @@ OI::OI() {
   l1Btn->WhileHeld(new MoveShooterWheelsCommand(.4, true));
   r1Btn->WhileHeld(new MoveShooterWheelsCommand(1, false));
   triangleBtn->WhenPressed(new ToggleLockCommand());
+  circleBtn->WhenPressed(new ShootRocketLvl2CG());
 }
