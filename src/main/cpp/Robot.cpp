@@ -6,6 +6,7 @@
 #include <team2655/autonomous.hpp>
 #include <commands/DriveTimeCommand.h>
 #include <commands/ExecutePathCommand.h>
+#include <commands/MoveIntakeArmCommand.h>
 
 OI Robot::oi;
 DriveBaseSubsystem Robot::driveBase;
@@ -51,8 +52,19 @@ void Robot::TeleopInit() {
     driveBase.setCoastMode();
 }
 
-void Robot::TeleopPeriodic() { 
+void Robot::TeleopPeriodic() {
     frc::Scheduler::GetInstance()->Run();
+
+    bool isPressed = ballIntakeArm.isTopLimitSwitchPressed();
+    if (isPressed) {
+        ballIntakeArm.resetPosition();
+    }
+    if (isPressed && !wasPressed) {
+        frc::Command *cmd = new MoveIntakeArmCommand(0);
+        cmd->Start();
+    }
+
+    wasPressed = isPressed;
 }
 
 void Robot::TestPeriodic() {}

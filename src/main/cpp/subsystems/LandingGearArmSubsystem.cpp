@@ -9,9 +9,11 @@
 #include <iostream>
 #include <frc/commands/Command.h>
 #include <commands/LandingGearArmTimeCG.h>
+#include <commands/JoystickLandingArmCommand.h>
 
-LandingGearArmSubsystem::LandingGearArmSubsystem() : Subsystem("ExampleSubsystem") {
+LandingGearArmSubsystem::LandingGearArmSubsystem() : Subsystem("LandingGearArmSubsystem") {
   landingGearArmMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  landingGearArmSlave.Follow(landingGearArmMotor);
 
   lockSolenoid.Set(false);
 
@@ -34,12 +36,10 @@ LandingGearArmSubsystem::LandingGearArmSubsystem() : Subsystem("ExampleSubsystem
 }
 
 void LandingGearArmSubsystem::moveArmSpeed(double percentage){
-  if(!isLocked())
-    landingGearArmMotor.Set(percentage);
+  landingGearArmMotor.Set(percentage);
 }
 void LandingGearArmSubsystem::moveArmPosition(double ticks){
-  if(!isLocked())
-    landingGearArmMotor.Set(ticks);
+  landingGearArmMotor.Set(ticks);
 }
 void LandingGearArmSubsystem::stopArm(){
   landingGearArmMotor.Set(0);
@@ -52,7 +52,7 @@ void LandingGearArmSubsystem::resetArmPosition(){
 }
 
 void LandingGearArmSubsystem::InitDefaultCommand() {
-  
+  SetDefaultCommand(new JoystickLandingArmCommand);
 }
 
 void LandingGearArmSubsystem::lock(){

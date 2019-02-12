@@ -6,21 +6,22 @@
 /*----------------------------------------------------------------------------*/
 
 #include <subsystems/BallIntakeArmSubsystem.h>
+#include <commands/JoystickBallIntakeCommand.h>
 
 #include <iostream>
 
 BallIntakeArmSubsystem::BallIntakeArmSubsystem() : Subsystem("BallIntakeArmSubsystem") {
-  armMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  armMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
 
   resetPosition();
 
   // PID Settings
-  armPid.SetP(0.0004);
-  armPid.SetI(0.0000000001);
-  armPid.SetD(0.0001);
-  armPid.SetFF(0);
-  armPid.SetIZone(0);
-  armPid.SetOutputRange(-1, 1);
+  armPid.SetP(kp);
+  armPid.SetI(ki);
+  armPid.SetD(kd);
+  armPid.SetFF(kf);
+  armPid.SetIZone(izone);
+  armPid.SetOutputRange(minOut, maxOut);
 
   // Setup for Smart Motion
   armPid.SetSmartMotionAccelStrategy(rev::CANPIDController::AccelStrategy::kTrapezoidal);
@@ -43,7 +44,7 @@ double BallIntakeArmSubsystem::getArmPosition(){
 }
 
 void BallIntakeArmSubsystem::InitDefaultCommand() {
-  
+  SetDefaultCommand(new JoystickBallIntakeCommand());
 }
 
 void BallIntakeArmSubsystem::resetPosition() {
@@ -55,4 +56,6 @@ void BallIntakeArmSubsystem::moveToPosition(double revolutions){
   armPid.SetReference(revolutions * gearRatio, rev::ControlType::kSmartMotion);
 }
 
-
+bool BallIntakeArmSubsystem::isTopLimitSwitchPressed(){
+  return !topLimitSwitch.Get();
+}

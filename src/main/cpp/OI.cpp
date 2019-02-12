@@ -10,11 +10,13 @@
 #include <commands/ToggleClawExtensionCommand.h>
 #include <commands/ToggleLockCommand.h>
 #include <commands/ShootRocketLvl2CG.h>
+#include <commands/LandingGearArmTimeCG.h>
 
 using namespace team2655;
 
 OI::OI() {
   js0 = new frc::Joystick(0);
+  js1 = new frc::Joystick(1);
   frc::JoystickButton *xBtn = new frc::JoystickButton(js0, 2);
   frc::JoystickButton *squareBtn = new frc::JoystickButton(js0, 1);
   frc::JoystickButton *optionBtn = new frc::JoystickButton(js0, 10);
@@ -29,8 +31,8 @@ OI::OI() {
   r2Btn->WhenPressed(new CloseClawCommand(false));
   r2Btn->WhenReleased(new CloseClawCommand(true));
   optionBtn->WhenPressed(new ResetAllCommand());
-  l1Btn->WhileHeld(new MoveShooterWheelsCommand(.4, true));
-  r1Btn->WhileHeld(new MoveShooterWheelsCommand(1, false));
+  r1Btn->WhileHeld(new MoveShooterWheelsCommand(.4, true));
+  l1Btn->WhileHeld(new MoveShooterWheelsCommand(1, false));
   triangleBtn->WhenPressed(new ToggleLockCommand());
-  circleBtn->WhenPressed(new ShootRocketLvl2CG());
+  circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.125));
 }

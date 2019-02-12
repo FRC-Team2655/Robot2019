@@ -36,3 +36,5 @@
 #define ExtenderSolenoidA 0
 #define ExtenderSolenoidB 1
 #define LockSolenoid 6
+
+#define LandingGearArmSlave 8

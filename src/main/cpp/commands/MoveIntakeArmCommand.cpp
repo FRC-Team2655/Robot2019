@@ -8,12 +8,21 @@
 #include <commands/MoveIntakeArmCommand.h>
 #include <Robot.h>
 
+#define DOWN_DIRECTION -1
+
 MoveIntakeArmCommand::MoveIntakeArmCommand(double position) : position(position) {
   Requires(&Robot::ballIntakeArm);
 }
 
 // Called just before this Command runs the first time
-void MoveIntakeArmCommand::Initialize() {}
+void MoveIntakeArmCommand::Initialize() {
+  // position / DOWN_DIRECTION is a sign (positive means moving in same direction aka down)
+  // negative means moving in oppisate direction
+  if(Robot::ballIntakeArm.isTopLimitSwitchPressed() && (position / DOWN_DIRECTION) < 0){
+    // if at top and not trying to move down do not allow this action
+    position = 0;
+  }
+}
 
 // Called repeatedly when this Command is scheduled to run
 void MoveIntakeArmCommand::Execute() {

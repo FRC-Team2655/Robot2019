@@ -22,6 +22,7 @@ void BallShooterSubsystem::moveSpeed(double speed){
 }
 
 void BallShooterSubsystem::intake(double speed){
+    retractPiston();
     ballShooterMotor.SetNeutralMode(NeutralMode::Brake);
     moveSpeed(std::abs(speed));
 }
