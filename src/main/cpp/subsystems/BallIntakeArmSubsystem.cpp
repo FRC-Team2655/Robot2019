@@ -7,11 +7,12 @@
 
 #include <subsystems/BallIntakeArmSubsystem.h>
 #include <commands/JoystickBallIntakeCommand.h>
+#include <Robot.h>
 
 #include <iostream>
 
 BallIntakeArmSubsystem::BallIntakeArmSubsystem() : Subsystem("BallIntakeArmSubsystem") {
-  armMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  setBrakeMode();
 
   resetPosition();
 
@@ -58,4 +59,12 @@ void BallIntakeArmSubsystem::moveToPosition(double revolutions){
 
 bool BallIntakeArmSubsystem::isTopLimitSwitchPressed(){
   return !topLimitSwitch.Get();
+}
+
+void BallIntakeArmSubsystem::setCoastMode() {
+  armMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+}
+
+void BallIntakeArmSubsystem::setBrakeMode() {
+  armMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 }

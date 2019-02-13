@@ -20,7 +20,7 @@ void MoveIntakeArmCommand::Initialize() {
   // negative means moving in oppisate direction
   if(Robot::ballIntakeArm.isTopLimitSwitchPressed() && (position / DOWN_DIRECTION) < 0){
     // if at top and not trying to move down do not allow this action
-    position = 0;
+    position = BallIntakeFullUp;
   }
 }
 

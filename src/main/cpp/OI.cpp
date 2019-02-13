@@ -26,13 +26,13 @@ OI::OI() {
   frc::JoystickButton *triangleBtn = new frc::JoystickButton(js0, 4);
   frc::JoystickButton *circleBtn = new frc::JoystickButton(js0, 3);
 
-  xBtn->WhenPressed(new ShootCargoShipCommandGroup());
+  triangleBtn->WhenPressed(new ShootCargoShipCommandGroup());
   squareBtn->WhenPressed(new ToggleClawExtensionCommand());
   r2Btn->WhenPressed(new CloseClawCommand(false));
   r2Btn->WhenReleased(new CloseClawCommand(true));
   optionBtn->WhenPressed(new ResetAllCommand());
   r1Btn->WhileHeld(new MoveShooterWheelsCommand(.4, true));
   l1Btn->WhileHeld(new MoveShooterWheelsCommand(1, false));
-  triangleBtn->WhenPressed(new MoveIntakeArmCommand(0));
-  circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.1875));
+  xBtn->WhenPressed(new MoveIntakeArmCommand(BallIntakeFullUp));
+  circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.25));
 }

@@ -38,3 +38,6 @@
 #define LockSolenoid 6
 
 #define LandingGearArmSlave 8
+
+#define BallIntakeFullUp .015    // Past the mechanical slop
+#define BallIntakeDownDirection -1 // Sign of moving downwards

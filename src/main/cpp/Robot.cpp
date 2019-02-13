@@ -28,11 +28,14 @@ void Robot::RobotPeriodic() {
     frc::SmartDashboard::PutNumber(ArmPosition, ballIntakeArm.getArmPosition());
 }
 
-void Robot::DisabledInit() {}
+void Robot::DisabledInit() {
+    ballIntakeArm.setBrakeMode();
+}
 
 void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::AutonomousInit() {
+    ballIntakeArm.setCoastMode();
    // driveBase.setBrakeMode();
 
     /*autoManager.clearCommands();
@@ -50,17 +53,16 @@ void Robot::AutonomousPeriodic() {
 
 void Robot::TeleopInit() {
     driveBase.setCoastMode();
+    ballIntakeArm.setCoastMode();
 }
 
 void Robot::TeleopPeriodic() {
     frc::Scheduler::GetInstance()->Run();
 
     bool isPressed = ballIntakeArm.isTopLimitSwitchPressed();
-    if (isPressed) {
-        ballIntakeArm.resetPosition();
-    }
     if (isPressed && !wasPressed) {
-        frc::Command *cmd = new MoveIntakeArmCommand(0);
+        ballIntakeArm.resetPosition();
+        frc::Command *cmd = new MoveIntakeArmCommand(BallIntakeFullUp);
         cmd->Start();
     }
 
