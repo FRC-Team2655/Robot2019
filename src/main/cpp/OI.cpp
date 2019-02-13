@@ -33,6 +33,6 @@ OI::OI() {
   optionBtn->WhenPressed(new ResetAllCommand());
   r1Btn->WhileHeld(new MoveShooterWheelsCommand(.4, true));
   l1Btn->WhileHeld(new MoveShooterWheelsCommand(1, false));
-  triangleBtn->WhenPressed(new ToggleLockCommand());
-  circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.125));
+  triangleBtn->WhenPressed(new MoveIntakeArmCommand(0));
+  circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.1875));
 }

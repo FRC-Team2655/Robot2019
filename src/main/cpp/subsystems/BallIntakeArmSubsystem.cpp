@@ -53,7 +53,7 @@ void BallIntakeArmSubsystem::resetPosition() {
 
 void BallIntakeArmSubsystem::moveToPosition(double revolutions){
   // For now use position will use smart motion
-  armPid.SetReference(revolutions * gearRatio, rev::ControlType::kSmartMotion);
+  armPid.SetReference(revolutions * gearRatio, rev::ControlType::kPosition);
 }
 
 bool BallIntakeArmSubsystem::isTopLimitSwitchPressed(){

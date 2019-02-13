@@ -21,8 +21,10 @@ private:
   frc::DigitalInput topLimitSwitch { 0 };
 
   const double gearRatio = (50.0 / 1.0) * (12.0 / 15.0);  // Gearbox ratio * sprocket ratio
-  const double kp = 0.001, ki = 0, kd = 0, kf = 0, izone = 0, minOut = -1, maxOut = 1;
+  const double kp = 0.05, ki = 2.5e-5, kd = 1e-2, kf = 0, izone = 0, minOut = -0.5, maxOut = 0.5;
   const double allowedError = 0, maxAccel = 1000, minVelocity = 10, maxVelocity = 2000;
+
+  //old configs: p=0.05, i=5e-5, d=1e-2, f=0
 
 public:
   BallIntakeArmSubsystem();
