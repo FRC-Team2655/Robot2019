@@ -59,14 +59,14 @@ void Robot::TeleopInit() {
 void Robot::TeleopPeriodic() {
     frc::Scheduler::GetInstance()->Run();
 
-    bool isPressed = ballIntakeArm.isTopLimitSwitchPressed();
+    /*bool isPressed = ballIntakeArm.isTopLimitSwitchPressed();
     if (isPressed && !wasPressed) {
         ballIntakeArm.resetPosition();
         frc::Command *cmd = new MoveIntakeArmCommand(BallIntakeFullUp);
         cmd->Start();
     }
 
-    wasPressed = isPressed;
+    wasPressed = isPressed;*/
 }
 
 void Robot::TestPeriodic() {}
