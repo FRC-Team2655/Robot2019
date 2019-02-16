@@ -23,6 +23,7 @@ void HatchPanelClawSubsystem::extendClaw(){
   extenderSol.Set(frc::DoubleSolenoid::Value::kReverse);
 }
 void HatchPanelClawSubsystem::retractClaw(){
+  closeClaw();
   extenderSol.Set(frc::DoubleSolenoid::Value::kForward);
 }
 

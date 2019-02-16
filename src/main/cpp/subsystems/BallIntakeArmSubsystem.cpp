@@ -44,6 +44,10 @@ double BallIntakeArmSubsystem::getArmPosition(){
   return armEncoder.GetPosition();
 }
 
+double BallIntakeArmSubsystem::getArmVelocity(){
+  return armEncoder.GetVelocity();
+}
+
 void BallIntakeArmSubsystem::InitDefaultCommand() {
   SetDefaultCommand(new JoystickBallIntakeCommand());
 }
@@ -53,8 +57,7 @@ void BallIntakeArmSubsystem::resetPosition() {
 }
 
 void BallIntakeArmSubsystem::moveToPosition(double revolutions){
-  // For now use position will use smart motion
-  armPid.SetReference(revolutions * gearRatio, rev::ControlType::kPosition);
+  armPid.SetReference(revolutions * gearRatio, rev::ControlType::kSmartMotion);
 }
 
 bool BallIntakeArmSubsystem::isTopLimitSwitchPressed(){
