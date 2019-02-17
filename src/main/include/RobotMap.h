@@ -24,6 +24,8 @@
 #define IntakeArmMotor 5
 #define LandingGearArmMotor 6
 #define LandingGearDriveMotor 7
+#define LandingGearArmSlave 8
+#define LandingGearArmSlave2 9
 
 // Talon SRX IDs
 #define BallShooter 1
@@ -36,7 +38,5 @@
 #define ExtenderSolenoidA 0
 #define ExtenderSolenoidB 1
 #define LockSolenoid 6
-
-#define LandingGearArmSlave 8
 
 #define BallIntakeDownDirection -1 // Sign of moving downwards

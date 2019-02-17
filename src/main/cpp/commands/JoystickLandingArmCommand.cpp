@@ -12,7 +12,7 @@ void JoystickLandingArmCommand::Execute() {
   double armVal = Robot::oi.js1->GetRawAxis(5);
   if(armVal > 0.2)
     armVal = 0.2;
-  Robot::landingGearArm.moveArmSpeed(-1 * jshelper::getAxisValue(Robot::oi.landingGearAxisConfig, armVal));
+  Robot::landingGearArm.moveArmSpeed(-.8 * jshelper::getAxisValue(Robot::oi.landingGearAxisConfig, armVal));
 
   double val = Robot::oi.js1->GetRawAxis(3);
   if(val < 0)

@@ -5,9 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
+#define UpPID 0
+#define DownPID 1
+#define ClimbPID 2
+
 #include <subsystems/BallIntakeArmSubsystem.h>
 #include <commands/JoystickBallIntakeCommand.h>
 #include <Robot.h>
+#include <subsystems/BallIntakeArmSubsystem.h>
 
 #include <iostream>
 
@@ -16,20 +21,50 @@ BallIntakeArmSubsystem::BallIntakeArmSubsystem() : Subsystem("BallIntakeArmSubsy
 
   resetPosition();
 
-  // PID Settings
-  armPid.SetP(kp);
-  armPid.SetI(ki);
-  armPid.SetD(kd);
-  armPid.SetFF(kf);
-  armPid.SetIZone(izone);
-  armPid.SetOutputRange(minOut, maxOut);
+  // Up PID Settings
+  armPid.SetP(kpUp, UpPID);
+  armPid.SetI(kiUp, UpPID);
+  armPid.SetD(kdUp, UpPID);
+  armPid.SetFF(kfUp, UpPID);
+  armPid.SetIZone(izoneUp, UpPID);
+  armPid.SetOutputRange(minOutUp, maxOutUp, UpPID);
 
   // Setup for Smart Motion
-  armPid.SetSmartMotionAccelStrategy(rev::CANPIDController::AccelStrategy::kTrapezoidal);
-  armPid.SetSmartMotionAllowedClosedLoopError(allowedError);
-  armPid.SetSmartMotionMaxAccel(maxAccel);
-  armPid.SetSmartMotionMaxVelocity(maxVelocity);
-  armPid.SetSmartMotionMinOutputVelocity(minVelocity);
+  armPid.SetSmartMotionAccelStrategy(rev::CANPIDController::AccelStrategy::kTrapezoidal, UpPID);
+  armPid.SetSmartMotionAllowedClosedLoopError(allowedErrorUp, UpPID);
+  armPid.SetSmartMotionMaxAccel(maxAccelUp, UpPID);
+  armPid.SetSmartMotionMaxVelocity(maxVelocityUp, UpPID);
+  armPid.SetSmartMotionMinOutputVelocity(minVelocityUp, UpPID);
+
+  // Down PID Settings
+  armPid.SetP(kpDown, DownPID);
+  armPid.SetI(kiDown, DownPID);
+  armPid.SetD(kdDown, DownPID);
+  armPid.SetFF(kfDown, DownPID);
+  armPid.SetIZone(izoneDown, DownPID);
+  armPid.SetOutputRange(minOutDown, maxOutDown, DownPID);
+
+  // Setup for Smart Motion
+  armPid.SetSmartMotionAccelStrategy(rev::CANPIDController::AccelStrategy::kTrapezoidal, DownPID);
+  armPid.SetSmartMotionAllowedClosedLoopError(allowedErrorDown, DownPID);
+  armPid.SetSmartMotionMaxAccel(maxAccelDown, DownPID);
+  armPid.SetSmartMotionMaxVelocity(maxVelocityDown, DownPID);
+  armPid.SetSmartMotionMinOutputVelocity(minVelocityDown, DownPID);
+
+   // Climb PID Settings
+  armPid.SetP(kpClimb, ClimbPID);
+  armPid.SetI(kiClimb, ClimbPID);
+  armPid.SetD(kdClimb, ClimbPID);
+  armPid.SetFF(kfClimb, ClimbPID);
+  armPid.SetIZone(izoneClimb, ClimbPID);
+  armPid.SetOutputRange(minOutClimb, maxOutClimb, ClimbPID);
+
+  // Setup for Smart Motion
+  armPid.SetSmartMotionAccelStrategy(rev::CANPIDController::AccelStrategy::kTrapezoidal, ClimbPID);
+  armPid.SetSmartMotionAllowedClosedLoopError(allowedErrorClimb, ClimbPID);
+  armPid.SetSmartMotionMaxAccel(maxAccelClimb, ClimbPID);
+  armPid.SetSmartMotionMaxVelocity(maxVelocityClimb, ClimbPID);
+  armPid.SetSmartMotionMinOutputVelocity(minVelocityClimb, ClimbPID);
 }
 
 void BallIntakeArmSubsystem::moveArmSpeed(double percentage){
@@ -57,7 +92,17 @@ void BallIntakeArmSubsystem::resetPosition() {
 }
 
 void BallIntakeArmSubsystem::moveToPosition(double revolutions){
-  armPid.SetReference(revolutions * gearRatio, rev::ControlType::kSmartMotion);
+  if ((revolutions / BallIntakeDownDirection) <= 0) {
+    // Moving up
+    armPid.SetReference(revolutions * gearRatio, rev::ControlType::kSmartMotion, UpPID);
+  }else{
+    // Moving Down
+    armPid.SetReference(revolutions * gearRatio, rev::ControlType::kSmartMotion, DownPID);
+  }
+}
+
+void BallIntakeArmSubsystem::armClimbPosition(double position){
+  armPid.SetReference(position * gearRatio, rev::ControlType::kPosition, ClimbPID);
 }
 
 bool BallIntakeArmSubsystem::isTopLimitSwitchPressed(){

@@ -14,7 +14,9 @@
 LandingGearArmSubsystem::LandingGearArmSubsystem() : Subsystem("LandingGearArmSubsystem") {
   landingGearArmMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
   landingGearArmSlave.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  landingGearArmSlave2.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
   landingGearArmSlave.Follow(landingGearArmMotor);
+  landingGearArmSlave2.Follow(landingGearArmMotor);
 
   lockSolenoid.Set(false);
 

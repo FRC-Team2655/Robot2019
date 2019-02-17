@@ -12,8 +12,8 @@
 #include <commands/StopIntakeMotorsCommand.h>
 
 ShootRocketLvl2CG::ShootRocketLvl2CG() {
-  AddParallel(new MoveShooterWheelsCommand(0.4, false));
-  AddSequential(new frc::WaitCommand(0.275));
+  AddParallel(new MoveShooterWheelsCommand(1, false));
+  AddSequential(new frc::WaitCommand(0));
   AddSequential(new FireShooterPistonCommand(true));
   AddSequential(new frc::WaitCommand(1));
   AddSequential(new StopIntakeMotorsCommand());

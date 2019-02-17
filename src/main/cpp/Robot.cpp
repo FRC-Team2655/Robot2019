@@ -27,6 +27,7 @@ void Robot::RobotPeriodic() {
     frc::SmartDashboard::PutNumber(LeftVelocity, driveBase.getLeftVelocity());
     frc::SmartDashboard::PutNumber(RightVelocity, driveBase.getRightVelocity());
     frc::SmartDashboard::PutNumber(ArmPosition, ballIntakeArm.getArmPosition());
+    frc::SmartDashboard::PutNumber("Velcoity", ballShooter.getVelocity());
 }
 
 void Robot::DisabledInit() {

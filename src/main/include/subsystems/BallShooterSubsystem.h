@@ -11,9 +11,11 @@ public:
   void moveSpeed(double speed);
   void intake(double speed);
   void output(double speed);
+  double getVelocity();
   void extendPiston();
   void retractPiston();
   void InitDefaultCommand() override;
+  void moveVelocity(double velocity);
 
 private:
   WPI_TalonSRX ballShooterMotor{BallShooter};

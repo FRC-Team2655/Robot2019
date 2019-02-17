@@ -12,8 +12,8 @@
 #include <commands/StopIntakeMotorsCommand.h>
 
 ShootCargoShipCommandGroup::ShootCargoShipCommandGroup() {
-  AddParallel(new MoveShooterWheelsCommand(0.15, false));
-  AddSequential(new frc::WaitCommand(0.45));
+  AddParallel(new MoveShooterWheelsCommand(0, false));
+  AddSequential(new frc::WaitCommand(0));
   AddSequential(new FireShooterPistonCommand(true));
   AddSequential(new frc::WaitCommand(1));
   AddSequential(new StopIntakeMotorsCommand());

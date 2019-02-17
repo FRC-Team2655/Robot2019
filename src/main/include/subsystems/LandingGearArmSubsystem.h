@@ -16,6 +16,7 @@ class LandingGearArmSubsystem : public frc::Subsystem {
 private:
   rev::CANSparkMax landingGearArmMotor{LandingGearArmMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::CANSparkMax landingGearArmSlave {LandingGearArmSlave, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
+  rev::CANSparkMax landingGearArmSlave2 {LandingGearArmSlave2, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::CANEncoder landingGearArmEncoder = landingGearArmMotor.GetEncoder();
   rev::CANPIDController landingGearArmPid = landingGearArmMotor.GetPIDController();
   frc::Solenoid lockSolenoid {LockSolenoid};

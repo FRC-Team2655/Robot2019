@@ -11,6 +11,8 @@
 #include <commands/ToggleLockCommand.h>
 #include <commands/ShootRocketLvl2CG.h>
 #include <commands/LandingGearArmTimeCG.h>
+#include <commands/ClimbBallIntakePositionCommand.h>
+#include <commands/ClimbCommandGroup.h>
 
 using namespace team2655;
 
@@ -25,6 +27,7 @@ OI::OI() {
   frc::JoystickButton *r1Btn = new frc::JoystickButton(js0, 6);
   frc::JoystickButton *triangleBtn = new frc::JoystickButton(js0, 4);
   frc::JoystickButton *circleBtn = new frc::JoystickButton(js0, 3);
+  frc::JoystickButton *shareBtn = new frc::JoystickButton(js0, 9);
 
   triangleBtn->WhenPressed(new ShootCargoShipCommandGroup());
   squareBtn->WhenPressed(new ToggleClawExtensionCommand());
@@ -32,7 +35,8 @@ OI::OI() {
   r2Btn->WhenReleased(new CloseClawCommand(true));
   optionBtn->WhenPressed(new ResetAllCommand());
   r1Btn->WhileHeld(new MoveShooterWheelsCommand(.4, true));
-  l1Btn->WhileHeld(new MoveShooterWheelsCommand(1, false));
+  l1Btn->WhileHeld(new MoveShooterWheelsCommand(.4, false));
   xBtn->WhenPressed(new MoveIntakeArmCommand(0));
-  circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.25));
+  circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.35625));
+  shareBtn->WhenPressed(new ClimbCommandGroup());
 }
