@@ -18,7 +18,7 @@ using namespace team2655;
 
 OI::OI() {
   js0 = new frc::Joystick(0);
-  js1 = new frc::Joystick(1);
+  //js1 = new frc::Joystick(1);
   frc::JoystickButton *xBtn = new frc::JoystickButton(js0, 2);
   frc::JoystickButton *squareBtn = new frc::JoystickButton(js0, 1);
   frc::JoystickButton *optionBtn = new frc::JoystickButton(js0, 10);

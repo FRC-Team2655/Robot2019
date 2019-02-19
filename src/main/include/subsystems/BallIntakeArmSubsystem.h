@@ -18,17 +18,7 @@ private:
   rev::CANSparkMax armMotor {IntakeArmMotor, rev::CANSparkMaxLowLevel::MotorType::kBrushless};
   rev::CANEncoder armEncoder = armMotor.GetEncoder();
   rev::CANPIDController armPid = armMotor.GetPIDController();
-  frc::DigitalInput topLimitSwitch { 0 };
-
-  const double gearRatio = (50.0 / 1.0) * (12.0 / 15.0);  // Gearbox ratio * sprocket ratio
-  const double kpUp = 0.0005, kiUp = 0, kdUp = 1e-3, kfUp = 0, izoneUp = 0, minOutUp = -1, maxOutUp = 1;
-  const double allowedErrorUp = 0, maxAccelUp = 2000, minVelocityUp = 0, maxVelocityUp = 4000;
-
-  const double kpDown = 0.00075, kiDown = 0, kdDown = 0, kfDown = 0, izoneDown = 0, minOutDown = -1, maxOutDown = 1;
-  const double allowedErrorDown = 0.05, maxAccelDown = 1000, minVelocityDown = 0, maxVelocityDown = 2000;
-
-  const double kpClimb = 0.4, kiClimb = 0, kdClimb = 0, kfClimb = 0, izoneClimb = 0, minOutClimb = -1, maxOutClimb = 1;
-  const double allowedErrorClimb = 0, maxAccelClimb = 18000, minVelocityClimb = 0, maxVelocityClimb = 6000;
+  frc::DigitalInput topLimitSwitch { LimitSwitchID };
 
 public:
   BallIntakeArmSubsystem();

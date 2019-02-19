@@ -12,12 +12,7 @@
 BallShooterSubsystem::BallShooterSubsystem() : Subsystem("BallShooterSubsystem") {
     ballShooterMotor.SetNeutralMode(NeutralMode::Brake);
 
-    ballShooterMotor.ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative);
     ballShooterMotor.SetInverted(true);
-    ballShooterMotor.Config_kP(0, 0, 0);
-    ballShooterMotor.Config_kI(0, 0, 0);
-    ballShooterMotor.Config_kD(0, 0, 0);
-    ballShooterMotor.Config_kF(0, 0, 0);
 }
 
 void BallShooterSubsystem::InitDefaultCommand() {
@@ -44,11 +39,11 @@ double BallShooterSubsystem::getVelocity(){
 }
 
 void BallShooterSubsystem::extendPiston(){
-    ballShooterSolenoid.Set(frc::DoubleSolenoid::Value::kForward);
+    ballShooterSolenoid.Set(BallShooter_Extend);
 }
 
 void BallShooterSubsystem::retractPiston(){
-    ballShooterSolenoid.Set(frc::DoubleSolenoid::Value::kReverse);
+    ballShooterSolenoid.Set(BallShooter_Retract);
 }
 
 void BallShooterSubsystem::moveVelocity(double velocity) {

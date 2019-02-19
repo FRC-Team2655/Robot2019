@@ -23,19 +23,19 @@ LandingGearArmSubsystem::LandingGearArmSubsystem() : Subsystem("LandingGearArmSu
   resetArmPosition();
 
   // PID Settings
-  landingGearArmPid.SetP(kp);
-  landingGearArmPid.SetI(ki);
-  landingGearArmPid.SetD(kd);
-  landingGearArmPid.SetFF(kf);
-  landingGearArmPid.SetIZone(izone);
-  landingGearArmPid.SetOutputRange(minOut, maxOut);
+  landingGearArmPid.SetP(LandingGearArm_kp);
+  landingGearArmPid.SetI(LandingGearArm_ki);
+  landingGearArmPid.SetD(LandingGearArm_kd);
+  landingGearArmPid.SetFF(LandingGearArm_kf);
+  landingGearArmPid.SetIZone(LandingGearArm_izone);
+  landingGearArmPid.SetOutputRange(LandingGearArm_minOut, LandingGearArm_maxOut);
 
   // Setup for Smart Motion
   landingGearArmPid.SetSmartMotionAccelStrategy(rev::CANPIDController::AccelStrategy::kTrapezoidal);
-  landingGearArmPid.SetSmartMotionAllowedClosedLoopError(allowedError);
-  landingGearArmPid.SetSmartMotionMaxAccel(maxAccel);
-  landingGearArmPid.SetSmartMotionMaxVelocity(maxVelocity);
-  landingGearArmPid.SetSmartMotionMinOutputVelocity(minVelocity);
+  landingGearArmPid.SetSmartMotionAllowedClosedLoopError(LandingGearArm_allowedError);
+  landingGearArmPid.SetSmartMotionMaxAccel(LandingGearArm_maxAccel);
+  landingGearArmPid.SetSmartMotionMaxVelocity(LandingGearArm_maxVelocity);
+  landingGearArmPid.SetSmartMotionMinOutputVelocity(LandingGearArm_minVelocity);
 }
 
 void LandingGearArmSubsystem::moveArmSpeed(double percentage){

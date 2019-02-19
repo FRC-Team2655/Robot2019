@@ -14,21 +14,21 @@ void HatchPanelClawSubsystem::InitDefaultCommand() {
 
 void HatchPanelClawSubsystem::openClaw(){
   if(isExtended())
-    clawSol.Set(frc::DoubleSolenoid::Value::kForward);
+    clawSol.Set(Claw_Open);
 }
 void HatchPanelClawSubsystem::closeClaw(){
-  clawSol.Set(frc::DoubleSolenoid::Value::kReverse);
+  clawSol.Set(Claw_Close);
 }
 void HatchPanelClawSubsystem::extendClaw(){
-  extenderSol.Set(frc::DoubleSolenoid::Value::kReverse);
+  extenderSol.Set(Claw_Extend);
 }
 void HatchPanelClawSubsystem::retractClaw(){
   closeClaw();
-  extenderSol.Set(frc::DoubleSolenoid::Value::kForward);
+  extenderSol.Set(Claw_Retract);
 }
 
 bool HatchPanelClawSubsystem::isExtended(){
-  return extenderSol.Get() == frc::DoubleSolenoid::Value::kReverse;
+  return extenderSol.Get() == Claw_Extend;
 }
 
 

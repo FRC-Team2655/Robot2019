@@ -21,10 +21,6 @@ private:
   rev::CANPIDController landingGearArmPid = landingGearArmMotor.GetPIDController();
   frc::Solenoid lockSolenoid {LockSolenoid};
 
-  const double gearRatio = 45.33 / 1.0;
-  const double kp = 0, ki = 0, kd = 0, kf = 0, izone = 0, minOut = -1, maxOut = 1;
-  const double allowedError = 0, maxAccel = 0, minVelocity = 0, maxVelocity = 0;
-
 public:
   LandingGearArmSubsystem();
   void InitDefaultCommand() override;
