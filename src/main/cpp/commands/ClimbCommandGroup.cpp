@@ -8,8 +8,20 @@
 #include "commands/ClimbCommandGroup.h"
 #include <commands/DriveTrainBrakeMode.h>
 #include <commands/ClimbBallIntakePositionCommand.h>
+#include <commands/MoveIntakeArmCommand.h>
+#include <commands/MoveIntakeArmPercentageCommand.h>
+#include <commands/MoveIntakeArmTimeCommand.h>
+#include <commands/MoveLandingGearTimeCommand.h>
+#include <frc/commands/WaitCommand.h>
+#include <commands/StopIntakeArmCommand.h>
 
 ClimbCommandGroup::ClimbCommandGroup() {
   AddSequential(new DriveTrainBrakeMode(true));
-  AddSequential(new ClimbBallIntakePositionCommand(-0.4));
+  AddSequential(new MoveIntakeArmTimeCommand(-0.2, 0.5));
+  AddParallel(new MoveIntakeArmPercentageCommand(-0.3));
+  AddSequential(new frc::WaitCommand(1));
+  AddSequential(new StopIntakeArmCommand());
+  AddSequential(new MoveLandingGearTimeCommand(0.5, 1.5));
+  //AddParallel(new MoveIntakeArmPercentageCommand(-0.2));
+  //AddSequential(new MoveLandingGearTimeCommand(0.5, 999999999999));
 }

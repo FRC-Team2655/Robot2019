@@ -24,7 +24,11 @@ void MoveIntakeArmCommand::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void MoveIntakeArmCommand::Execute() {
-  Robot::ballIntakeArm.moveToPosition(position);
+  if(Robot::hasEverResetBallIntakeArm){
+    Robot::ballIntakeArm.moveToPosition(position);
+  }else if ((position / BallIntakeDownDirection) <= 0){
+    Robot::ballIntakeArm.moveArmSpeed(-1 * BallIntakeDownDirection * 0.3);
+  }
 }
 
 // Make this return true when this Command no longer needs to run execute()

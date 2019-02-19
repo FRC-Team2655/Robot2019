@@ -16,6 +16,7 @@ BallShooterSubsystem Robot::ballShooter;
 HatchPanelClawSubsystem Robot::hatchPanelClaw;
 LandingGearArmSubsystem Robot::landingGearArm;
 LandingGearDriveSubsystem Robot::landingGearDrive;
+bool Robot::hasEverResetBallIntakeArm = false;
 
 void Robot::RobotInit() {
     // Register auto commands
@@ -64,6 +65,7 @@ void Robot::TeleopPeriodic() {
     frc::Scheduler::GetInstance()->Run();
     bool isPressed = ballIntakeArm.isTopLimitSwitchPressed();
     if (isPressed && !wasPressed) {
+        hasEverResetBallIntakeArm = true;
         frc::Command *cmd = new ResetIntakeArmPosCG();
         cmd->Start();
     }

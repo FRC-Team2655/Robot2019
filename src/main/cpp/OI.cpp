@@ -38,5 +38,5 @@ OI::OI() {
   l1Btn->WhileHeld(new MoveShooterWheelsCommand(.4, false));
   xBtn->WhenPressed(new MoveIntakeArmCommand(0));
   circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.35625));
-  shareBtn->WhenPressed(new ClimbCommandGroup());
+  //shareBtn->WhenPressed(new ClimbCommandGroup());
 }

@@ -22,6 +22,8 @@ public:
   static HatchPanelClawSubsystem hatchPanelClaw;
   static LandingGearArmSubsystem landingGearArm;
   static LandingGearDriveSubsystem landingGearDrive;
+  static bool hasEverResetBallIntakeArm;
+
 
   void RobotInit() override;
   void RobotPeriodic() override;

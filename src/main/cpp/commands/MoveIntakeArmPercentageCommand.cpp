@@ -5,34 +5,30 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/MoveIntakeArmTimeCommand.h"
+#include "commands/MoveIntakeArmPercentageCommand.h"
 #include <Robot.h>
 
-MoveIntakeArmTimeCommand::MoveIntakeArmTimeCommand(double speed, double timeSec) : speed(speed),
-                                                      timeSec(timeSec){
+MoveIntakeArmPercentageCommand::MoveIntakeArmPercentageCommand(double speed) : speed(speed) {
   Requires(&Robot::ballIntakeArm);
 }
 
 // Called just before this Command runs the first time
-void MoveIntakeArmTimeCommand::Initialize() {
-  SetTimeout(timeSec);
+void MoveIntakeArmPercentageCommand::Initialize() {
 }
 
 // Called repeatedly when this Command is scheduled to run
-void MoveIntakeArmTimeCommand::Execute() {
+void MoveIntakeArmPercentageCommand::Execute() {
   Robot::ballIntakeArm.moveArmSpeed(speed);
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool MoveIntakeArmTimeCommand::IsFinished() { return IsTimedOut(); }
+bool MoveIntakeArmPercentageCommand::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void MoveIntakeArmTimeCommand::End() {
-  Robot::ballIntakeArm.stopArm();
-}
+void MoveIntakeArmPercentageCommand::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void MoveIntakeArmTimeCommand::Interrupted() {
+void MoveIntakeArmPercentageCommand::Interrupted() {
   End();
 }
