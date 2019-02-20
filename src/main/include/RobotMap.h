@@ -6,8 +6,6 @@
 
 
 
-
-
 /**
  *  MAKE SURE TO SET THIS TO THE CORRECT VALUE BEFORE DEPLOYING CODE!!!
  */
@@ -65,9 +63,9 @@
 #define BallIntake_gearRatio (50.0 / 1.0) * (12.0 / 15.0)  // Gearbox ratio * sprocket ratio
 
 #if COMPBOT
-#define BallIntake_LimitSwitchPressed true
+    #define BallIntake_LimitSwitchPressed true
 #else
-#define BallIntake_LimitSwitchPressed false
+    #define BallIntake_LimitSwitchPressed false
 #endif
 
 //Up
