@@ -10,8 +10,6 @@
 #include <team2655/autonomous.hpp>
 #include <subsystems/BallShooterSubsystem.h>
 #include <subsystems/HatchPanelClawSubsystem.h>
-#include <subsystems/LandingGearArmSubsystem.h>
-#include <subsystems/LandingGearDriveSubsystem.h>
 
 class Robot : public frc::TimedRobot {
 public:
@@ -20,10 +18,7 @@ public:
   static BallIntakeArmSubsystem ballIntakeArm;
   static BallShooterSubsystem ballShooter;
   static HatchPanelClawSubsystem hatchPanelClaw;
-  static LandingGearArmSubsystem landingGearArm;
-  static LandingGearDriveSubsystem landingGearDrive;
   static bool hasEverResetBallIntakeArm;
-
 
   void RobotInit() override;
   void RobotPeriodic() override;

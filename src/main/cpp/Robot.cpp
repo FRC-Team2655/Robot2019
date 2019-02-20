@@ -14,8 +14,6 @@ DriveBaseSubsystem Robot::driveBase;
 BallIntakeArmSubsystem Robot::ballIntakeArm;
 BallShooterSubsystem Robot::ballShooter;
 HatchPanelClawSubsystem Robot::hatchPanelClaw;
-LandingGearArmSubsystem Robot::landingGearArm;
-LandingGearDriveSubsystem Robot::landingGearDrive;
 bool Robot::hasEverResetBallIntakeArm = false;
 
 void Robot::RobotInit() {

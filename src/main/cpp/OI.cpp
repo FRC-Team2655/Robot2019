@@ -8,9 +8,7 @@
 #include <commands/ShootCargoshipCommandGroup.h>
 #include <commands/MoveShooterWheelsCommand.h>
 #include <commands/ToggleClawExtensionCommand.h>
-#include <commands/ToggleLockCommand.h>
 #include <commands/ShootRocketLvl2CG.h>
-#include <commands/LandingGearArmTimeCG.h>
 #include <commands/ClimbBallIntakePositionCommand.h>
 #include <commands/ClimbCommandGroup.h>
 
