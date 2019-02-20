@@ -15,9 +15,6 @@
 #include <commands/StopIntakeArmCommand.h>
 
 ClimbCommandGroup::ClimbCommandGroup() {
-  AddSequential(new DriveTrainBrakeMode(true));
-  AddSequential(new MoveIntakeArmTimeCommand(-0.2, 0.5));
-  AddParallel(new MoveIntakeArmPercentageCommand(-0.3));
-  AddSequential(new frc::WaitCommand(1));
-  AddSequential(new StopIntakeArmCommand());
+  //AddSequential(new DriveTrainBrakeMode(true));
+  //AddSequential(new MoveIntakeArmTimeCommand(-0.2, 0.75));
 }

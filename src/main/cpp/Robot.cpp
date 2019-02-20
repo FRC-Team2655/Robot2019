@@ -8,6 +8,7 @@
 #include <commands/ExecutePathCommand.h>
 #include <commands/MoveIntakeArmCommand.h>
 #include <commands/ResetIntakeArmPosCG.h>
+#include <commands/ClimbCommandGroup.h>
 
 OI Robot::oi;
 DriveBaseSubsystem Robot::driveBase;
@@ -67,6 +68,13 @@ void Robot::TeleopPeriodic() {
         cmd->Start();
     }
     wasPressed = isPressed;
+
+    int value = oi.js0->GetPOV();
+    if(value == 180 && previousPovValue != 180){
+        //frc::Command *cmd = new ClimbCommandGroup();
+        //cmd->Start();
+    }
+    previousPovValue = value;
 }
 
 void Robot::TestPeriodic() {}

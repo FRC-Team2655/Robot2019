@@ -11,6 +11,7 @@
 #include <commands/ShootRocketLvl2CG.h>
 #include <commands/ClimbBallIntakePositionCommand.h>
 #include <commands/ClimbCommandGroup.h>
+#include <commands/JoystickBallIntakeDriveCommand.h>
 
 using namespace team2655;
 
@@ -26,6 +27,7 @@ OI::OI() {
   frc::JoystickButton *triangleBtn = new frc::JoystickButton(js0, 4);
   frc::JoystickButton *circleBtn = new frc::JoystickButton(js0, 3);
   frc::JoystickButton *shareBtn = new frc::JoystickButton(js0, 9);
+  frc::JoystickButton *l2Btn = new frc::JoystickButton(js0, 7);
 
   triangleBtn->WhenPressed(new ShootCargoShipCommandGroup());
   squareBtn->WhenPressed(new ToggleClawExtensionCommand());
@@ -36,5 +38,5 @@ OI::OI() {
   l1Btn->WhileHeld(new MoveShooterWheelsCommand(.4, false));
   xBtn->WhenPressed(new MoveIntakeArmCommand(0));
   circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.35625));
-  //shareBtn->WhenPressed(new ClimbCommandGroup());
+  l2Btn->WhenPressed(new JoystickBallIntakeDriveCommand());
 }

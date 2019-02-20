@@ -92,7 +92,7 @@
 #define BallIntake_DownPID 1
 
 //Climb
-#define BallIntake_kpClimb 0.4
+#define BallIntake_kpClimb 1
 #define BallIntake_kiClimb 0
 #define BallIntake_kdClimb 0
 #define BallIntake_kfClimb 0

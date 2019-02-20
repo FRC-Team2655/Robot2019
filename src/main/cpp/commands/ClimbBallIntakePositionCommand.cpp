@@ -25,12 +25,13 @@ void ClimbBallIntakePositionCommand::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ClimbBallIntakePositionCommand::Execute() {
-  Robot::ballIntakeArm.armClimbPosition(position);
+  if(Robot::hasEverResetBallIntakeArm)
+    Robot::ballIntakeArm.armClimbPosition(position);
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool ClimbBallIntakePositionCommand::IsFinished() { 
-  return false;
+  return !Robot::hasEverResetBallIntakeArm;
 }
 
 // Called once after isFinished returns true
