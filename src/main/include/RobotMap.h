@@ -29,7 +29,7 @@
 #define LMaxVelocity 5700.0 //5580.0      
 #define GearRatio 9.47 / 1.0       // 9.47 motor revolutions to 1 output revolution
 #define WheelDiameter .1524      // wheel diameter in meters (6")
-#define MaxVelocity MINVAL(LMaxVelocity, RMaxVelocity)
+#define MaxVelocity 5700    // This is capped at the slowest velocity on ANY robot to ensure that paths work the same
 #define PathfinderMaxVelocity MaxVelocity / GearRatio / 60 * WheelDiameter * 3.141592
 
 // SPARK MAX IDs
@@ -38,10 +38,6 @@
 #define RMaster 3
 #define RSlave 4
 #define IntakeArmMotor 5
-#define LandingGearArmMotor 6
-#define LandingGearDriveMotor 7
-#define LandingGearArmSlave 8
-#define LandingGearArmSlave2 9
 
 // Talon SRX IDs
 #define BallShooter 1
@@ -53,7 +49,6 @@
 #define ClawSolendoidB 5
 #define ExtenderSolenoidA 0
 #define ExtenderSolenoidB 1
-#define LockSolenoid 6
 
 #define LimitSwitchID 0
 
@@ -69,14 +64,14 @@
 #endif
 
 //Up
-#define BallIntake_kpUp 0.0005
-#define BallIntake_kiUp 0
-#define BallIntake_kdUp 1e-3
+#define BallIntake_kpUp 0.0009
+#define BallIntake_kiUp 1e-8
+#define BallIntake_kdUp 0
 #define BallIntake_kfUp 0
 #define BallIntake_izoneUp 0
 #define BallIntake_minOutUp -1
 #define BallIntake_maxOutUp 1
-#define BallIntake_allowedErrorUp 0
+#define BallIntake_allowedErrorUp 0.025
 #define BallIntake_maxAccelUp 2000
 #define BallIntake_minVelocityUp 0
 #define BallIntake_maxVelocityUp 4000
@@ -111,14 +106,26 @@
 #define BallIntake_ClimbPID 2
 
 //Ball Shooter Subsystem Extend and Retract for the Solenoids
+#if COMPBOT
+#define BallShooter_Extend frc::DoubleSolenoid::Value::kReverse
+#define BallShooter_Retract frc::DoubleSolenoid::Value::kForward
+#else
 #define BallShooter_Extend frc::DoubleSolenoid::Value::kForward
 #define BallShooter_Retract frc::DoubleSolenoid::Value::kReverse
+#endif
 
 //Hatch Panel Claw Subsystem Extend, Retract, Open, and Close for the Solenoids
+#if COMPBOT
+#define Claw_Extend frc::DoubleSolenoid::Value::kForward
+#define Claw_Retract frc::DoubleSolenoid::Value::kReverse
+#define Claw_Close frc::DoubleSolenoid::Value::kForward
+#define Claw_Open frc::DoubleSolenoid::Value::kReverse
+#else
 #define Claw_Extend frc::DoubleSolenoid::Value::kReverse
 #define Claw_Retract frc::DoubleSolenoid::Value::kForward
 #define Claw_Close frc::DoubleSolenoid::Value::kReverse
 #define Claw_Open frc::DoubleSolenoid::Value::kForward
+#endif
 
 //LandingGearArm PID values
 #define LandingGearArm_gearRatio 45.33 / 1.0

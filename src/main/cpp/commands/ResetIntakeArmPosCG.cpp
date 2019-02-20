@@ -12,7 +12,7 @@
 #include <Robot.h>
 
 ResetIntakeArmPosCG::ResetIntakeArmPosCG() {
-  AddSequential(new MoveIntakeArmTimeCommand(0.1, .25));
+  //AddSequential(new MoveIntakeArmTimeCommand(0.1, .25));
   AddSequential(new ResetIntakeArmEncoderCommand());
   AddSequential(new MoveIntakeArmCommand(0));
 }

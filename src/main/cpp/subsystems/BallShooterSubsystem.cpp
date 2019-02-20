@@ -34,10 +34,6 @@ void BallShooterSubsystem::output(double speed){
     moveSpeed(-std::abs(speed));
 }
 
-double BallShooterSubsystem::getVelocity(){
-    return ballShooterMotor.GetSelectedSensorVelocity();
-}
-
 void BallShooterSubsystem::extendPiston(){
     ballShooterSolenoid.Set(BallShooter_Extend);
 }
