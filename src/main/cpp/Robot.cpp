@@ -36,6 +36,8 @@ void Robot::DisabledInit() {
 void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::AutonomousInit() {
+    DefaultSolonoidState();
+
     ballIntakeArm.setCoastMode();
    // driveBase.setBrakeMode();
 
@@ -47,27 +49,21 @@ void Robot::AutonomousInit() {
 }
 
 void Robot::AutonomousPeriodic() { 
+    LimitSwitchReset();
     frc::Scheduler::GetInstance()->Run(); 
     Robot::driveBase.driveTankVelocity(3000, 3000);
 }
 
 
 void Robot::TeleopInit() {
-    driveBase.setCoastMode();
-    ballIntakeArm.setCoastMode();
-    ballShooter.retractPiston();
-    hatchPanelClaw.retractClaw();
+    DefaultSolonoidState();
+    
 }
 
 void Robot::TeleopPeriodic() {
     frc::Scheduler::GetInstance()->Run();
-    bool isPressed = ballIntakeArm.isTopLimitSwitchPressed();
-    if (isPressed && !wasPressed) {
-        hasEverResetBallIntakeArm = true;
-        frc::Command *cmd = new ResetIntakeArmPosCG();
-        cmd->Start();
-    }
-    wasPressed = isPressed;
+    
+    LimitSwitchReset();
 
     int value = oi.js0->GetPOV();
     if(value == 180 && previousPovValue != 180){
@@ -82,3 +78,30 @@ void Robot::TestPeriodic() {}
 #ifndef RUNNING_FRC_TESTS
 int main() { return frc::StartRobot<Robot>(); }
 #endif
+
+void LimitSwitchReset(){
+    bool isPressed = ballIntakeArm.isTopLimitSwitchPressed();
+    if (isPressed && !wasPressed) {
+        hasEverResetBallIntakeArm = true;
+        frc::Command *cmd = new ResetIntakeArmPosCG();
+        cmd->Start();
+    }
+    wasPressed = isPressed;
+}
+
+void DefaultSolonoidState(){
+    static bool hasBeenReset = false;
+
+    if (hasBeenReset) {
+        return;
+    }
+
+    driveBase.setCoastMode();
+    ballIntakeArm.setCoastMode();
+    ballShooter.retractPiston();
+    hatchPanelClaw.retractClaw();
+    hasBeenReset = true;
+    }
+
+
+}

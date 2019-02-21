@@ -29,6 +29,7 @@ public:
   void TeleopInit() override;
   void TeleopPeriodic() override;
   void TestPeriodic() override;
+  void LimitSwitchReset();
 
 private:
   team2655::AutoManager autoManager;
