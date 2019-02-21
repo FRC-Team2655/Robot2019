@@ -52,10 +52,12 @@
 
 #define LimitSwitchID 0
 
-#define BallIntakeDownDirection -1 // Sign of moving downwards
-
 //BallIntake PID values
 #define BallIntake_gearRatio (50.0 / 1.0) * (12.0 / 15.0)  // Gearbox ratio * sprocket ratio
+
+#define BallIntakeDownDirection -1 // Sign of moving downwards
+#define BallIntakeDownPosLimit 0.5  // Magnitude of downward rotation allowed (do not put sign)
+#define BallIntakeUpPosLimit 0.1 //Magitude of upward rotation allowed (do not put sign)
 
 #if COMPBOT
     #define BallIntake_LimitSwitchPressed true

@@ -112,3 +112,24 @@ void BallIntakeArmSubsystem::setCoastMode() {
 void BallIntakeArmSubsystem::setBrakeMode() {
   armMotor.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 }
+
+double BallIntakeArmSubsystem::restrictPosition(double displacement) {
+  if (BallIntakeDownDirection < 0){
+    // DownLimit is less than UpLimit
+    if (displacement < -BallIntakeDownPosLimit){
+      return -BallIntakeDownPosLimit;
+    }
+    if (displacment > BallIntakeUpPosLimit){
+      return BallIntakeUpPosLimit;
+    }
+  }else{
+    // DownLimit is greater than UpLimit
+    if (displacement > BallIntakeDownPosLimit){
+      return BallIntakeDownPosLimit;
+    }
+    if (displacment < -BallIntakeUpPosLimit){
+      return -BallIntakeUpPosLimit;
+    }
+  }
+  return displacement; 
+}
