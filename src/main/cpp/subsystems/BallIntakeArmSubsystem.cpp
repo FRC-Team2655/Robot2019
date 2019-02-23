@@ -1,10 +1,3 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) 2017-2018 FIRST. All Rights Reserved.                        */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 #include <subsystems/BallIntakeArmSubsystem.h>
 #include <commands/JoystickBallIntakeCommand.h>
 #include <Robot.h>
@@ -13,8 +6,6 @@
 #include <iostream>
 
 BallIntakeArmSubsystem::BallIntakeArmSubsystem() : Subsystem("BallIntakeArmSubsystem") {
-  setBrakeMode();
-
   resetPosition();
 
   // Up PID Settings
@@ -61,14 +52,35 @@ BallIntakeArmSubsystem::BallIntakeArmSubsystem() : Subsystem("BallIntakeArmSubsy
   armPid.SetSmartMotionMaxAccel(BallIntake_maxAccelClimb, BallIntake_ClimbPID);
   armPid.SetSmartMotionMaxVelocity(BallIntake_maxVelocityClimb, BallIntake_ClimbPID);
   armPid.SetSmartMotionMinOutputVelocity(BallIntake_minVelocityClimb, BallIntake_ClimbPID);
+
+  // Lock PID Settings
+  armPid.SetP(BallIntake_kpLock, BallIntake_LockPID);
+  armPid.SetI(BallIntake_kiLock, BallIntake_LockPID);
+  armPid.SetD(BallIntake_kdLock, BallIntake_LockPID);
+  armPid.SetFF(BallIntake_kfLock, BallIntake_LockPID);
+  armPid.SetIZone(BallIntake_izoneLock, BallIntake_LockPID);
+  armPid.SetOutputRange(BallIntake_minOutLock, BallIntake_maxOutLock, BallIntake_LockPID);
+
+  // Setup for Smart Motion
+  armPid.SetSmartMotionAccelStrategy(rev::CANPIDController::AccelStrategy::kTrapezoidal, BallIntake_LockPID);
+  armPid.SetSmartMotionAllowedClosedLoopError(BallIntake_allowedErrorLock, BallIntake_LockPID);
+  armPid.SetSmartMotionMaxAccel(BallIntake_maxAccelLock, BallIntake_LockPID);
+  armPid.SetSmartMotionMaxVelocity(BallIntake_maxVelocityLock, BallIntake_LockPID);
+  armPid.SetSmartMotionMinOutputVelocity(BallIntake_minVelocityLock, BallIntake_LockPID);
 }
 
 void BallIntakeArmSubsystem::moveArmSpeed(double percentage){
+  if(Robot::hasEverResetBallIntakeArm){
+    double pos = getArmPosition();
+    double adjustedPos = restrictPosition(pos);
+    if(pos != adjustedPos)
+      percentage = 0;
+  }
   armMotor.Set(percentage);
 }
 
 void BallIntakeArmSubsystem::stopArm(){
-  armMotor.Set(0);
+  armMotor.Set(0); 
 }
 
 double BallIntakeArmSubsystem::getArmPosition(){
@@ -88,6 +100,7 @@ void BallIntakeArmSubsystem::resetPosition() {
 }
 
 void BallIntakeArmSubsystem::moveToPosition(double revolutions){
+  revolutions = restrictPosition(revolutions);
   if ((revolutions / BallIntakeDownDirection) <= 0) {
     // Moving up
     armPid.SetReference(revolutions * BallIntake_gearRatio, rev::ControlType::kSmartMotion, BallIntake_UpPID);
@@ -114,12 +127,13 @@ void BallIntakeArmSubsystem::setBrakeMode() {
 }
 
 double BallIntakeArmSubsystem::restrictPosition(double displacement) {
-  if (BallIntakeDownDirection < 0){
+  if (BallIntakeDownDirection < 0) {
     // DownLimit is less than UpLimit
     if (displacement < -BallIntakeDownPosLimit){
       return -BallIntakeDownPosLimit;
     }
-    if (displacment > BallIntakeUpPosLimit){
+    if (displacement > BallIntakeUpPosLimit){
+      std::cout << BallIntakeUpPosLimit << std::endl;
       return BallIntakeUpPosLimit;
     }
   }else{
@@ -127,7 +141,7 @@ double BallIntakeArmSubsystem::restrictPosition(double displacement) {
     if (displacement > BallIntakeDownPosLimit){
       return BallIntakeDownPosLimit;
     }
-    if (displacment < -BallIntakeUpPosLimit){
+    if (displacement < -BallIntakeUpPosLimit){
       return -BallIntakeUpPosLimit;
     }
   }

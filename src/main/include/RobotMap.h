@@ -9,7 +9,7 @@
 /**
  *  MAKE SURE TO SET THIS TO THE CORRECT VALUE BEFORE DEPLOYING CODE!!!
  */
-#define COMPBOT true
+#define COMPBOT false
 
 
 
@@ -66,8 +66,8 @@
 #endif
 
 //Up
-#define BallIntake_kpUp 0.0009
-#define BallIntake_kiUp 1e-8
+#define BallIntake_kpUp 0.001
+#define BallIntake_kiUp 0
 #define BallIntake_kdUp 0
 #define BallIntake_kfUp 0
 #define BallIntake_izoneUp 0
@@ -107,6 +107,20 @@
 #define BallIntake_maxVelocityClimb 6000
 #define BallIntake_ClimbPID 2
 
+//Lock arm
+#define BallIntake_kpLock 0
+#define BallIntake_kiLock 0
+#define BallIntake_kdLock 0
+#define BallIntake_kfLock 0
+#define BallIntake_izoneLock 0
+#define BallIntake_minOutLock 0
+#define BallIntake_maxOutLock 0
+#define BallIntake_allowedErrorLock 0
+#define BallIntake_maxAccelLock 0
+#define BallIntake_minVelocityLock 0
+#define BallIntake_maxVelocityLock 0
+#define BallIntake_LockPID 3
+
 //Ball Shooter Subsystem Extend and Retract for the Solenoids
 #if COMPBOT
 #define BallShooter_Extend frc::DoubleSolenoid::Value::kReverse
@@ -125,8 +139,8 @@
 #else
 #define Claw_Extend frc::DoubleSolenoid::Value::kReverse
 #define Claw_Retract frc::DoubleSolenoid::Value::kForward
-#define Claw_Close frc::DoubleSolenoid::Value::kReverse
-#define Claw_Open frc::DoubleSolenoid::Value::kForward
+#define Claw_Close frc::DoubleSolenoid::Value::kForward
+#define Claw_Open frc::DoubleSolenoid::Value::kReverse
 #endif
 
 //LandingGearArm PID values

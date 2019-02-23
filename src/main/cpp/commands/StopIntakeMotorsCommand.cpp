@@ -1,4 +1,3 @@
-
 #include "commands/StopIntakeMotorsCommand.h"
 
 StopIntakeMotorsCommand::StopIntakeMotorsCommand() {

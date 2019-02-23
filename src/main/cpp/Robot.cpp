@@ -27,6 +27,8 @@ void Robot::RobotPeriodic() {
     frc::SmartDashboard::PutNumber(LeftVelocity, driveBase.getLeftVelocity());
     frc::SmartDashboard::PutNumber(RightVelocity, driveBase.getRightVelocity());
     frc::SmartDashboard::PutNumber(ArmPosition, ballIntakeArm.getArmPosition());
+    frc::SmartDashboard::PutBoolean("LimitSwitchPressed", ballIntakeArm.isTopLimitSwitchPressed());
+    frc::SmartDashboard::PutNumber("Intake Arm Vecolity: ", ballIntakeArm.getArmVelocity());
 }
 
 void Robot::DisabledInit() {
@@ -57,7 +59,8 @@ void Robot::AutonomousPeriodic() {
 
 void Robot::TeleopInit() {
     DefaultSolonoidState();
-    
+    Robot::ballIntakeArm.restrictPosition(100);
+    ballIntakeArm.setCoastMode();
 }
 
 void Robot::TeleopPeriodic() {
@@ -79,7 +82,7 @@ void Robot::TestPeriodic() {}
 int main() { return frc::StartRobot<Robot>(); }
 #endif
 
-void LimitSwitchReset(){
+void Robot::LimitSwitchReset(){
     bool isPressed = ballIntakeArm.isTopLimitSwitchPressed();
     if (isPressed && !wasPressed) {
         hasEverResetBallIntakeArm = true;
@@ -89,7 +92,7 @@ void LimitSwitchReset(){
     wasPressed = isPressed;
 }
 
-void DefaultSolonoidState(){
+void Robot::DefaultSolonoidState(){
     static bool hasBeenReset = false;
 
     if (hasBeenReset) {
@@ -101,7 +104,4 @@ void DefaultSolonoidState(){
     ballShooter.retractPiston();
     hatchPanelClaw.retractClaw();
     hasBeenReset = true;
-    }
-
-
 }
