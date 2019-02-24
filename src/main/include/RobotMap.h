@@ -58,6 +58,7 @@
 #define BallIntakeDownDirection -1 // Sign of moving downwards
 #define BallIntakeDownPosLimit 0.5  // Magnitude of downward rotation allowed (do not put sign)
 #define BallIntakeUpPosLimit 0.1 //Magitude of upward rotation allowed (do not put sign)
+#define BallIntakeUpPos 0
 
 #if COMPBOT
     #define BallIntake_LimitSwitchPressed true
@@ -68,19 +69,20 @@
 //Up
 #define BallIntake_kpUp 0.001
 #define BallIntake_kiUp 0
-#define BallIntake_kdUp 0
+#define BallIntake_kdUp 1e-6
 #define BallIntake_kfUp 0
 #define BallIntake_izoneUp 0
 #define BallIntake_minOutUp -1
 #define BallIntake_maxOutUp 1
-#define BallIntake_allowedErrorUp 0.025
+#define BallIntake_allowedErrorUp 0
 #define BallIntake_maxAccelUp 2000
 #define BallIntake_minVelocityUp 0
-#define BallIntake_maxVelocityUp 4000
+#define BallIntake_maxVelocityUp 4500
 #define BallIntake_UpPID 0
 
 //Down
-#define BallIntake_kpDown 0.00075
+//#define BallIntake_kpDown 0.00075
+#define BallIntake_kpDown 0.0001
 #define BallIntake_kiDown 0
 #define BallIntake_kdDown 0
 #define BallIntake_kfDown 0
@@ -156,3 +158,10 @@
 #define LandingGearArm_maxAccel 0
 #define LandingGearArm_minVelocity 0
 #define LandingGearArm_maxVelocity 0
+
+// Rotate PID
+#define Rotate_kp 0
+#define Rotate_ki 0
+#define Rotate_kd 0
+#define Rotate_minOut -1
+#define Rotate_maxOut 1

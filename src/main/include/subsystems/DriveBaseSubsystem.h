@@ -4,9 +4,19 @@
 #include <rev/CANSparkMax.h>
 #include <adi/ADIS16470_IMU.h>
 #include <RobotMap.h>
+#include <frc/PIDController.h>
 
 using MotorType = rev::CANSparkMax::MotorType;
 
+class RotatePIDSource : public frc::PIDSource {
+public:
+  double PIDGet() override;
+};
+
+class RotatePIDOutput : public frc::PIDOutput {
+public:
+  void PIDWrite(double output) override;
+};
 
 class DriveBaseSubsystem : public frc::Subsystem {
 public:
@@ -66,6 +76,8 @@ public:
   void resetIMU();
   void resetEncoders();
   
+  void stopRotatePID();
+  void rotateToHeading(double heading);
 
 private:
   rev::CANSparkMax leftMaster {LMaster, MotorType::kBrushless};
@@ -81,6 +93,10 @@ private:
 
   rev::CANPIDController leftPID = leftMaster.GetPIDController();
   rev::CANPIDController rightPID = rightMaster.GetPIDController();
+
+
+  frc::PIDController rotatePID {Rotate_kp, Rotate_ki, Rotate_kd, new RotatePIDSource(), 
+                                new RotatePIDOutput(), 0.05};
   
   frc::ADIS16470_IMU imu;
 

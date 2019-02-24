@@ -1,11 +1,34 @@
 #include <subsystems/DriveBaseSubsystem.h>
 #include <RobotMap.h>
+#include <Robot.h>
 
 #include <commands/DriveJoystickCommand.h>
 
 #include <iostream>
 
 using IdleMode = rev::CANSparkMax::IdleMode;
+
+
+///////////////////////////////////////////////////////////////
+//// RotatePIDSource
+///////////////////////////////////////////////////////////////
+
+double RotatePIDSource::PIDGet() {
+	return Robot::driveBase.getIMUAngle();
+}
+
+///////////////////////////////////////////////////////////////
+//// RotatePIDOutput
+///////////////////////////////////////////////////////////////
+
+void RotatePIDOutput::PIDWrite(double output) {
+	Robot::driveBase.driveTankVelocity(-output * MaxVelocity, output * MaxVelocity);
+}
+
+//////////////////////////////////////////////////////////////
+/// DriveBaseSubsystem
+//////////////////////////////////////////////////////////////
+
 
 DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {
   leftSlave.Follow(leftMaster);
@@ -27,6 +50,9 @@ DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {
   rightPID.SetIZone(0);
   rightPID.SetOutputRange(-1, 1);
 
+  rotatePID.SetOutputRange(Rotate_minOut, Rotate_maxOut);
+
+  this->AddChild(rotatePID);
 }
 
 void DriveBaseSubsystem::InitDefaultCommand() {
@@ -157,4 +183,13 @@ void DriveBaseSubsystem::resetEncoders(){
 
 void DriveBaseSubsystem::resetIMU(){
 	imu.Reset();
+}
+
+void DriveBaseSubsystem::stopRotatePID() {
+  rotatePID.SetEnabled(false);
+}
+
+void DriveBaseSubsystem::rotateToHeading(double heading) {
+  rotatePID.SetSetpoint(heading);
+  rotatePID.SetEnabled(true);
 }

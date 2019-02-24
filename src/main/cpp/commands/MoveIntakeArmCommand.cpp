@@ -1,5 +1,6 @@
 #include <commands/MoveIntakeArmCommand.h>
 #include <Robot.h>
+#include <RobotMap.h>
 
 MoveIntakeArmCommand::MoveIntakeArmCommand(double position) : position(position) {
   Requires(&Robot::ballIntakeArm);
@@ -11,7 +12,7 @@ void MoveIntakeArmCommand::Initialize() {
   // negative means moving in oppisate direction
   if(Robot::ballIntakeArm.isTopLimitSwitchPressed() && (position / BallIntakeDownDirection) < 0){
     // if at top and not trying to move down do not allow this action
-    position = 0;
+    position = BallIntakeUpPos;
   }
 }
 

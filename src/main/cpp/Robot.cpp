@@ -29,6 +29,7 @@ void Robot::RobotPeriodic() {
     frc::SmartDashboard::PutNumber(ArmPosition, ballIntakeArm.getArmPosition());
     frc::SmartDashboard::PutBoolean("LimitSwitchPressed", ballIntakeArm.isTopLimitSwitchPressed());
     frc::SmartDashboard::PutNumber("Intake Arm Vecolity: ", ballIntakeArm.getArmVelocity());
+    frc::SmartDashboard::PutNumber("IMU Angle: ", driveBase.getIMUAngle());
 }
 
 void Robot::DisabledInit() {
@@ -60,13 +61,13 @@ void Robot::AutonomousPeriodic() {
 void Robot::TeleopInit() {
     DefaultSolonoidState();
     Robot::ballIntakeArm.restrictPosition(100);
-    ballIntakeArm.setCoastMode();
+    ballIntakeArm.setBrakeMode();
 }
 
 void Robot::TeleopPeriodic() {
     frc::Scheduler::GetInstance()->Run();
     
-    LimitSwitchReset();
+    //LimitSwitchReset();
 
     int value = oi.js0->GetPOV();
     if(value == 180 && previousPovValue != 180){

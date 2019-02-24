@@ -3,9 +3,10 @@
 #include <commands/MoveIntakeArmCommand.h>
 #include <commands/ResetIntakeArmEncoderCommand.h>
 #include <Robot.h>
+#include <RobotMap.h>
 
 ResetIntakeArmPosCG::ResetIntakeArmPosCG() {
-  //AddSequential(new MoveIntakeArmTimeCommand(0.1, .25));
+  //AddSequential(new MoveIntakeArmTimeCommand(0.1, 0.25));
   AddSequential(new ResetIntakeArmEncoderCommand());
-  AddSequential(new MoveIntakeArmCommand(0));
+  AddSequential(new MoveIntakeArmCommand(BallIntakeUpPos));
 }

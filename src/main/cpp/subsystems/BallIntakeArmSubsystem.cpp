@@ -133,7 +133,6 @@ double BallIntakeArmSubsystem::restrictPosition(double displacement) {
       return -BallIntakeDownPosLimit;
     }
     if (displacement > BallIntakeUpPosLimit){
-      std::cout << BallIntakeUpPosLimit << std::endl;
       return BallIntakeUpPosLimit;
     }
   }else{

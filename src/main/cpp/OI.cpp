@@ -12,6 +12,7 @@
 #include <commands/ClimbBallIntakePositionCommand.h>
 #include <commands/ClimbCommandGroup.h>
 #include <commands/JoystickBallIntakeDriveCommand.h>
+#include <RobotMap.h>
 
 using namespace team2655;
 
@@ -36,7 +37,7 @@ OI::OI() {
   optionBtn->WhenPressed(new ResetAllCommand());
   r1Btn->WhileHeld(new MoveShooterWheelsCommand(.4, true));
   l1Btn->WhileHeld(new MoveShooterWheelsCommand(.4, false));
-  xBtn->WhenPressed(new MoveIntakeArmCommand(0));
-  circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.34375));
+  xBtn->WhenPressed(new MoveIntakeArmCommand(BallIntakeUpPos));
+  circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.2725));
   l2Btn->WhenPressed(new JoystickBallIntakeDriveCommand());
 }
