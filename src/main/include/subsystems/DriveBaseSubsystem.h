@@ -79,6 +79,8 @@ public:
   void stopRotatePID();
   void rotateToHeading(double heading);
 
+  double invertHeading(double angle);
+
 private:
   rev::CANSparkMax leftMaster {LMaster, MotorType::kBrushless};
   rev::CANSparkMax leftSlave {LSlave, MotorType::kBrushless};

@@ -4,6 +4,8 @@
 #include <pathfinder.h>
 #include <Robot.h>
 
+#define BUFFER_LEN 1024
+
 /**
  * Load csv files from the Roborio to drive the path. It must be executed from the auto manager.
  * Arguments:
@@ -18,8 +20,8 @@ public:
   void End() override;
   void Interrupted() override;
 private:
-	Segment leftTrajectory[1024];
-	Segment rightTrajectory[1024];
+	Segment leftTrajectory[BUFFER_LEN];
+	Segment rightTrajectory[BUFFER_LEN];
 
 	int leftLength;
 	int rightLength;
@@ -29,4 +31,6 @@ private:
 
 	EncoderConfig leftConfig = {0, 0, 0, 0, 0, 0, 0, 0};
 	EncoderConfig rightConfig = {0, 0, 0, 0, 0, 0, 0, 0};
+
+	void reverseTrajectory(Segment *trajectory, int start, int end);
 };

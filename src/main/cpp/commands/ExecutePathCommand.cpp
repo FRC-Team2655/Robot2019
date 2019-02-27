@@ -16,14 +16,21 @@ void ExecutePathCommand::Initialize() {
 	}
 
 	// If there are not enough arguments, exit the function.
-  /*if (arguments.size() < 2) {
+  if (arguments.size() < 3) {
     std::cout << "Not enough arguments" << std::endl;
-    return;
-  }*/
+    Cancel();
+		return;
+  }
 
 	// Load the paths from the roborio.
-  FILE *leftFile = fopen(("/auto-paths/" + arguments[0] + "_left.csv").c_str(), "r");
-	FILE *rightFile = fopen(("/auto-paths/" + arguments[0] + "_right.csv").c_str(), "r");
+	FILE *leftFile, *rightFile;
+	if(arguments[1] == "BACK"){
+		leftFile = fopen(("/auto-paths/" + arguments[0] + "_right.csv").c_str(), "r");
+		rightFile = fopen(("/auto-paths/" + arguments[0] + "_left.csv").c_str(), "r");
+	}else{
+		leftFile = fopen(("/auto-paths/" + arguments[0] + "_left.csv").c_str(), "r");
+		rightFile = fopen(("/auto-paths/" + arguments[0] + "_right.csv").c_str(), "r");
+	}
 
 	// If the files do not exist, exit the function.
   if(!leftFile) {
@@ -41,6 +48,47 @@ void ExecutePathCommand::Initialize() {
 
 	fclose(leftFile);
 	fclose(rightFile);
+
+	if (arguments[1] == "BACK"){
+		for (int i = 0; i < leftLength; ++i){
+			leftTrajectory[i].heading = Robot::driveBase.invertHeading(leftTrajectory[i].heading);
+			leftTrajectory[i].acceleration *= -1;
+			leftTrajectory[i].jerk *= -1;
+			leftTrajectory[i].velocity *= -1;
+			leftTrajectory[i].position *= -1;
+			leftTrajectory[i].x *= -1;
+			leftTrajectory[i].y *= -1;
+		}
+		for (int i = 0; i < rightLength; ++i){
+			rightTrajectory[i].heading = Robot::driveBase.invertHeading(rightTrajectory[i].heading);
+			rightTrajectory[i].acceleration *= -1;
+			rightTrajectory[i].jerk *= -1;
+			rightTrajectory[i].velocity *= -1;
+			rightTrajectory[i].position *= -1;
+			rightTrajectory[i].x *= -1;
+			rightTrajectory[i].y *= -1;
+		}
+	}else if (arguments[1] != "FRONT"){
+		std::cout << "Unknown Argument for robot drive side." << std::endl;
+		Cancel();
+		return;
+	}
+
+	if (arguments[2] == "REVERSE") {
+		for (int i = 0; i < leftLength; ++i) {
+			leftTrajectory[i].heading = Robot::driveBase.invertHeading(leftTrajectory[i].heading);
+		}
+		for (int i = 0; i < rightLength; ++i) {
+			rightTrajectory[i].heading = Robot::driveBase.invertHeading(rightTrajectory[i].heading);
+		}
+
+		reverseTrajectory(leftTrajectory, 0, BUFFER_LEN);
+		reverseTrajectory(rightTrajectory, 0, BUFFER_LEN);
+	}else if (arguments[2] != "FORWARD") {
+		std::cout << "Unknown Argument for path direction." << std::endl;
+		Cancel();
+		return;
+	}
 
 	double leftStartPos = Robot::driveBase.getLeftOutputPosition();
 	double rightStartPos = Robot::driveBase.getRightOutputPosition();
@@ -67,11 +115,13 @@ void ExecutePathCommand::Execute() {
 	double desired_heading = r2d(leftFollower.heading);
 	double angle_difference = desired_heading - gyro_heading;
 	double turn = 0.8 * (-1.0/80) * angle_difference;
-	//l += turn;
-	//r -= turn;
+
+	l -= turn;
+	r += turn;
 
 	Robot::driveBase.driveTankVelocity(l * MaxVelocity, r * MaxVelocity);
 	
+	std::cout << "L: " << l << std::endl << "R: " << r << std::endl << "--------------" << std::endl;
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -90,3 +140,12 @@ void ExecutePathCommand::Interrupted() {
 	End();
 }
 
+void ExecutePathCommand::reverseTrajectory(Segment *trajectory, int start, int end) {
+  while (start < end) { 
+        Segment temp = trajectory[start];
+        trajectory[start] = trajectory[end]; 
+        trajectory[end] = temp; 
+        start++; 
+        end--; 
+  }  
+}

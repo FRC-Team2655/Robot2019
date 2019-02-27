@@ -30,7 +30,7 @@
 #define GearRatio 9.47 / 1.0       // 9.47 motor revolutions to 1 output revolution
 #define WheelDiameter .1524      // wheel diameter in meters (6")
 #define MaxVelocity 5700    // This is capped at the slowest velocity on ANY robot to ensure that paths work the same
-#define PathfinderMaxVelocity MaxVelocity / GearRatio / 60 * WheelDiameter * 3.141592
+#define PathfinderMaxVelocity 4.8030
 
 // SPARK MAX IDs
 #define LMaster 1

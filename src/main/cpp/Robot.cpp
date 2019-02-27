@@ -19,8 +19,8 @@ bool Robot::hasEverResetBallIntakeArm = false;
 
 void Robot::RobotInit() {
     // Register auto commands
-    autoManager.registerCommand(team2655::CommandCreator<DriveTimeCommand>, false, "DRIVE");
     autoManager.registerCommand(team2655::CommandCreator<ExecutePathCommand>, false, "PATH");
+    std::cout << PathfinderMaxVelocity << std::endl;
 }
 
 void Robot::RobotPeriodic() {
@@ -42,19 +42,17 @@ void Robot::AutonomousInit() {
     DefaultSolonoidState();
 
     ballIntakeArm.setCoastMode();
-   // driveBase.setBrakeMode();
+    driveBase.setBrakeMode();
 
-    /*autoManager.clearCommands();
-    //autoManager.addCommand("DRIVE", {"0.25", "1"});
-    autoManager.addCommandToScript("PATH", {"path"});
+    autoManager.clearCommands();
+    autoManager.addCommandToScript("PATH", {"TestPath"});
     autoCommandPtr = autoManager.getScriptCommand();
-    autoCommandPtr.get()->Start();*/
+    autoCommandPtr.get()->Start();
 }
 
 void Robot::AutonomousPeriodic() { 
     LimitSwitchReset();
     frc::Scheduler::GetInstance()->Run(); 
-    Robot::driveBase.driveTankVelocity(3000, 3000);
 }
 
 
@@ -62,6 +60,7 @@ void Robot::TeleopInit() {
     DefaultSolonoidState();
     Robot::ballIntakeArm.restrictPosition(100);
     ballIntakeArm.setBrakeMode();
+    driveBase.setCoastMode();
 }
 
 void Robot::TeleopPeriodic() {
