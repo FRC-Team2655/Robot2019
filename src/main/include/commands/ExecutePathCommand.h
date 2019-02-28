@@ -10,6 +10,8 @@
  * Load csv files from the Roborio to drive the path. It must be executed from the auto manager.
  * Arguments:
  * 0 = path name
+ * 1 = FRONT/BACK = Side of robot to follow path with
+ * 2 = FORWARD/REVERSE = Order of path (ex. forward=pt1-pt4 reverse=pt4-pt1)
  */
 class ExecutePathCommand : public team2655::AutoCommand {
 public:
@@ -19,7 +21,17 @@ public:
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+
 private:
+
+	bool hasEnded = false;
+
+	// Make sure these are all upper case
+	const std::string DRIVE_DIRECTION_FRONT = "FRONT";
+	const std::string DRIVE_DIRECTION_BACK = "BACK";
+	const std::string PATH_ORDER_FORWARD = "FORWARD";
+	const std::string PATH_ORDER_REVERSE = "REVERSE";
+
 	Segment leftTrajectory[BUFFER_LEN];
 	Segment rightTrajectory[BUFFER_LEN];
 
@@ -33,4 +45,6 @@ private:
 	EncoderConfig rightConfig = {0, 0, 0, 0, 0, 0, 0, 0};
 
 	void reverseTrajectory(Segment *trajectory, int start, int end);
+	void negatePositions(Segment *trajectory, size_t length);
+	void flipHeading(Segment *trajectory, size_t length);
 };

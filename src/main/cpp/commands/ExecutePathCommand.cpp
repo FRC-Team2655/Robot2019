@@ -12,35 +12,71 @@ ExecutePathCommand::ExecutePathCommand() {
 // Called just before this Command runs the first time
 void ExecutePathCommand::Initialize() {
 	if (!startedFromAutoManager) {
+		End();
 		return;
 	}
 
 	// If there are not enough arguments, exit the function.
-  if (arguments.size() < 3) {
-    std::cout << "Not enough arguments" << std::endl;
-    Cancel();
+  	if (arguments.size() < 3) {
+    	std::cerr << "Not enough arguments" << std::endl;
+    	End();
 		return;
-  }
+  	}
+
+	// front = driving in the direction of the front of the robot
+	// forward = following path in forward order (ex. pt1->pt2->pt3->pt4)
+	bool front, forward;
+	// Convert arguments to upper case
+	std::transform(arguments[1].begin(), arguments[1].end(), arguments[1].begin(), ::toupper);
+	std::transform(arguments[2].begin(), arguments[2].end(), arguments[2].begin(), ::toupper);
+
+	// Parse drive direction
+	if(arguments[1] == DRIVE_DIRECTION_FRONT) {
+		front = true;
+	} else if(arguments[1] == DRIVE_DIRECTION_BACK) {
+		front = false;
+	} else {
+		std::cerr << "Unknown drive direction '" << arguments[1] << "'." << std::endl;
+		End();
+		return;
+	}
+
+	// Parse path order
+	if(arguments[2] == PATH_ORDER_FORWARD) {
+		forward = true;
+	} else if(arguments[2] == PATH_ORDER_REVERSE) {
+		forward = false;
+	} else {
+		std::cerr << "Unknown path order '" << arguments[2] << "'." << std::endl;
+		End();
+		return;
+	}
 
 	// Load the paths from the roborio.
 	FILE *leftFile, *rightFile;
-	if(arguments[1] == "BACK"){
-		leftFile = fopen(("/auto-paths/" + arguments[0] + "_right.csv").c_str(), "r");
+
+	// If driving in forward order with back of robot or reverse order with the front or the robot
+	//            left and right trajectories need to be swapped
+	if((!front && forward) || (front && !forward)){
+		// switched left and right paths 
 		rightFile = fopen(("/auto-paths/" + arguments[0] + "_left.csv").c_str(), "r");
+		leftFile = fopen(("/auto-paths/" + arguments[0] + "_right.csv").c_str(), "r");
 	}else{
 		leftFile = fopen(("/auto-paths/" + arguments[0] + "_left.csv").c_str(), "r");
 		rightFile = fopen(("/auto-paths/" + arguments[0] + "_right.csv").c_str(), "r");
 	}
 
 	// If the files do not exist, exit the function.
-  if(!leftFile) {
-    std::cout << "Left file not found" << std::endl;
-    return;
-  }
-  if (!rightFile) {
-    std::cout << "Right file not found" << std::endl;
-    return;
-  }
+	if(!leftFile) {
+		std::cout << "Left file not found" << std::endl;
+		End();
+		return;
+	}
+	if (!rightFile) {
+		std::cout << "Right file not found" << std::endl;
+		End();
+		return;
+	}
 
 	// Parse CSVs (load trajectories from pathfinder CSV files.)
 	leftLength = pathfinder_deserialize_csv(leftFile, leftTrajectory);
@@ -49,52 +85,34 @@ void ExecutePathCommand::Initialize() {
 	fclose(leftFile);
 	fclose(rightFile);
 
-	if (arguments[1] == "BACK"){
-		for (int i = 0; i < leftLength; ++i){
-			leftTrajectory[i].heading = Robot::driveBase.invertHeading(leftTrajectory[i].heading);
-			leftTrajectory[i].acceleration *= -1;
-			leftTrajectory[i].jerk *= -1;
-			leftTrajectory[i].velocity *= -1;
-			leftTrajectory[i].position *= -1;
-			leftTrajectory[i].x *= -1;
-			leftTrajectory[i].y *= -1;
-		}
-		for (int i = 0; i < rightLength; ++i){
-			rightTrajectory[i].heading = Robot::driveBase.invertHeading(rightTrajectory[i].heading);
-			rightTrajectory[i].acceleration *= -1;
-			rightTrajectory[i].jerk *= -1;
-			rightTrajectory[i].velocity *= -1;
-			rightTrajectory[i].position *= -1;
-			rightTrajectory[i].x *= -1;
-			rightTrajectory[i].y *= -1;
-		}
-	}else if (arguments[1] != "FRONT"){
-		std::cout << "Unknown Argument for robot drive side." << std::endl;
-		Cancel();
-		return;
+	// If driving with the back of the robot in forward order flip the headings and negate positions
+	if (!front && forward){
+		flipHeading(leftTrajectory, leftLength);
+		flipHeading(rightTrajectory, rightLength);
+		negatePositions(leftTrajectory,leftLength);
+		negatePositions(rightTrajectory, rightLength);
 	}
 
-	if (arguments[2] == "REVERSE") {
-		for (int i = 0; i < leftLength; ++i) {
-			leftTrajectory[i].heading = Robot::driveBase.invertHeading(leftTrajectory[i].heading);
-		}
-		for (int i = 0; i < rightLength; ++i) {
-			rightTrajectory[i].heading = Robot::driveBase.invertHeading(rightTrajectory[i].heading);
-		}
+	// If 
+	if (!front && !forward){
+		reverseTrajectory(leftTrajectory, 0, leftLength);
+		reverseTrajectory(rightTrajectory, 0, rightLength);
+		negatePositions(rightTrajectory, rightLength);
+		negatePositions(leftTrajectory, leftLength);
+	}
 
-		reverseTrajectory(leftTrajectory, 0, BUFFER_LEN);
-		reverseTrajectory(rightTrajectory, 0, BUFFER_LEN);
-	}else if (arguments[2] != "FORWARD") {
-		std::cout << "Unknown Argument for path direction." << std::endl;
-		Cancel();
-		return;
+	if (front && !forward){
+		flipHeading(leftTrajectory, leftLength);
+		flipHeading(rightTrajectory, rightLength);
+		reverseTrajectory(leftTrajectory, 0, leftLength);
+		reverseTrajectory(rightTrajectory, 0, rightLength);
 	}
 
 	double leftStartPos = Robot::driveBase.getLeftOutputPosition();
 	double rightStartPos = Robot::driveBase.getRightOutputPosition();
 
 	// initialEncoderPos, ticksPerRevolutions, WheelCircumference,
-  //  kp, ki, kd, kv, ka
+  	//  kp, ki, kd, kv, ka
 	leftConfig = {(int)(leftStartPos * T_PER_REV), T_PER_REV, WheelDiameter * 3.141592, 
 					1.0, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
 	rightConfig = {(int)(rightStartPos * T_PER_REV), T_PER_REV, WheelDiameter * 3.141592, 
@@ -102,35 +120,36 @@ void ExecutePathCommand::Initialize() {
 }
 
 // Called repeatedly when this Command is scheduled to run
-void ExecutePathCommand::Execute() {	
-	// Get current power (as percentage) for L and R sides 
-	//       based on current position and calculated trajectories
-	double l = pathfinder_follow_encoder(leftConfig, &leftFollower, leftTrajectory, leftLength, 
-									T_PER_REV * Robot::driveBase.getLeftOutputPosition());
-	double r = pathfinder_follow_encoder(rightConfig, &rightFollower, rightTrajectory, rightLength, 
-									T_PER_REV * Robot::driveBase.getRightOutputPosition());
+void ExecutePathCommand::Execute() {
+	if(!hasEnded){	
+		// Get current power (as percentage) for L and R sides 
+		//       based on current position and calculated trajectories
+		double l = pathfinder_follow_encoder(leftConfig, &leftFollower, leftTrajectory, leftLength, 
+										T_PER_REV * Robot::driveBase.getLeftOutputPosition());
+		double r = pathfinder_follow_encoder(rightConfig, &rightFollower, rightTrajectory, rightLength, 
+										T_PER_REV * Robot::driveBase.getRightOutputPosition());
 
-	// Apply angle correction based on the IMU angle
-	double gyro_heading = Robot::driveBase.getIMUAngle();
-	double desired_heading = r2d(leftFollower.heading);
-	double angle_difference = desired_heading - gyro_heading;
-	double turn = 0.8 * (-1.0/80) * angle_difference;
+		// Apply angle correction based on the IMU angle
+		double gyro_heading = Robot::driveBase.getIMUAngle();
+		double desired_heading = r2d(leftFollower.heading);
+		double angle_difference = desired_heading - gyro_heading;
+		double turn = 0.8 * (-1.0/80) * angle_difference;
 
-	l -= turn;
-	r += turn;
+		//l -= turn;
+		//r += turn;
 
-	Robot::driveBase.driveTankVelocity(l * MaxVelocity, r * MaxVelocity);
-	
-	std::cout << "L: " << l << std::endl << "R: " << r << std::endl << "--------------" << std::endl;
+		Robot::driveBase.driveTankVelocity(l * MaxVelocity, r * MaxVelocity);
+	}
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool ExecutePathCommand::IsFinished() { 
-	return !startedFromAutoManager || false;
+	return !startedFromAutoManager || hasEnded;
 }
 
 // Called once after isFinished returns true
 void ExecutePathCommand::End() {
+	hasEnded = true;
   	Robot::driveBase.driveTankVelocity(0.0, 0.0);
 }
 
@@ -148,4 +167,21 @@ void ExecutePathCommand::reverseTrajectory(Segment *trajectory, int start, int e
         start++; 
         end--; 
   }  
+}
+
+void ExecutePathCommand::negatePositions(Segment *trajectory, size_t length){
+	for (size_t i = 0; i < length; ++i){
+		trajectory[i].position *= -1;
+		trajectory[i].velocity *= -1;
+		trajectory[i].acceleration *= -1;
+		trajectory[i].jerk *= -1;
+		trajectory[i].x *= -1;
+		trajectory[i].y *= -1;
+	}
+}
+
+void ExecutePathCommand::flipHeading(Segment *trajectory, size_t length){
+	for (size_t i =0; i < length; ++i){
+		trajectory[i].heading += 180;
+	}
 }

@@ -38,13 +38,14 @@ void Robot::DisabledInit() {
 void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::AutonomousInit() {
+    wasPressed = false; // Make sure lock will reengage if limit switch is held when enabled
     DefaultSolonoidState();
 
     ballIntakeArm.setCoastMode();
     driveBase.setBrakeMode();
 
     autoManager.clearCommands();
-    autoManager.addCommandToScript("PATH", {"TestPath"});
+    autoManager.addCommandToScript("PATH", {"TestPath", "FRONT", "FORWARD"});
     autoCommandPtr = autoManager.getScriptCommand();
     autoCommandPtr.get()->Start();
 }
@@ -56,8 +57,8 @@ void Robot::AutonomousPeriodic() {
 
 
 void Robot::TeleopInit() {
+    wasPressed = false; // Make sure lock will reengage if limit switch is held when enabled
     DefaultSolonoidState();
-    Robot::ballIntakeArm.restrictPosition(100);
     ballIntakeArm.setCoastMode();
     driveBase.setCoastMode();
 }

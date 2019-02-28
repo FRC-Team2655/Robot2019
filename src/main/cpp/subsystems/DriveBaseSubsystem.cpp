@@ -157,7 +157,7 @@ double DriveBaseSubsystem::getRightOutputVelocity() {
 }
 
 double DriveBaseSubsystem::getIMUAngle() {
-	imu.GetAngleZ();
+	imu.GetAngleZ() + 180;
 }
 
 void DriveBaseSubsystem::setCoastMode() {
@@ -192,23 +192,4 @@ void DriveBaseSubsystem::stopRotatePID() {
 void DriveBaseSubsystem::rotateToHeading(double heading) {
   rotatePID.SetSetpoint(heading);
   rotatePID.SetEnabled(true);
-}
-
-double DriveBaseSubsystem::invertHeading(double angle) {
-	double retVal = 0;
-	if (angle < 0) {
-		retVal = (-180 + angle);
-	}else{
-		retVal = (180 + angle);
-	}
-
-	// Make sure between -180 and 180
-	while (retVal > 180) {
-		retVal -= 360;
-	}
-	while (retVal < -180) {
-		retVal += 360;
-	}
-
-	return retVal;
 }
