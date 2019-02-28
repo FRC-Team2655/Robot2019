@@ -45,10 +45,12 @@
 // Solenoid IDs
 #define ShooterSolenoidA 2
 #define ShooterSolenoidB 3
-#define ClawSolendoidA 4
-#define ClawSolendoidB 5
+#define ClawSolenoidA 4
+#define ClawSolenoidB 5
 #define ExtenderSolenoidA 0
 #define ExtenderSolenoidB 1
+#define ClawLockSolenoidA 6
+#define ClawLockSolenoidB 7
 
 #define LimitSwitchID 0
 
@@ -58,7 +60,7 @@
 #define BallIntakeDownDirection -1 // Sign of moving downwards
 #define BallIntakeDownPosLimit 0.5  // Magnitude of downward rotation allowed (do not put sign)
 #define BallIntakeUpPosLimit 0.1 //Magitude of upward rotation allowed (do not put sign)
-#define BallIntakeUpPos 0
+#define BallIntakeUpPos 0.05
 
 #if COMPBOT
     #define BallIntake_LimitSwitchPressed true
@@ -69,20 +71,19 @@
 //Up
 #define BallIntake_kpUp 0.001
 #define BallIntake_kiUp 0
-#define BallIntake_kdUp 1e-6
+#define BallIntake_kdUp 0
 #define BallIntake_kfUp 0
 #define BallIntake_izoneUp 0
 #define BallIntake_minOutUp -1
 #define BallIntake_maxOutUp 1
 #define BallIntake_allowedErrorUp 0
-#define BallIntake_maxAccelUp 2000
+#define BallIntake_maxAccelUp 2500
 #define BallIntake_minVelocityUp 0
 #define BallIntake_maxVelocityUp 4500
 #define BallIntake_UpPID 0
 
 //Down
-//#define BallIntake_kpDown 0.00075
-#define BallIntake_kpDown 0.0001
+#define BallIntake_kpDown 0.001
 #define BallIntake_kiDown 0
 #define BallIntake_kdDown 0
 #define BallIntake_kfDown 0
@@ -144,6 +145,9 @@
 #define Claw_Close frc::DoubleSolenoid::Value::kForward
 #define Claw_Open frc::DoubleSolenoid::Value::kReverse
 #endif
+
+#define Claw_Lock frc::DoubleSolenoid::Value::kForward
+#define Claw_Unlock frc::DoubleSolenoid::Value::kReverse
 
 //LandingGearArm PID values
 #define LandingGearArm_gearRatio 45.33 / 1.0

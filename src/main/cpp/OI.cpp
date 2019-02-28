@@ -38,6 +38,6 @@ OI::OI() {
   r1Btn->WhileHeld(new MoveShooterWheelsCommand(.4, true));
   l1Btn->WhileHeld(new MoveShooterWheelsCommand(.4, false));
   xBtn->WhenPressed(new MoveIntakeArmCommand(BallIntakeUpPos));
-  circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.2725));
+  circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.33));
   l2Btn->WhenPressed(new JoystickBallIntakeDriveCommand());
 }

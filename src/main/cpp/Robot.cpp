@@ -20,7 +20,6 @@ bool Robot::hasEverResetBallIntakeArm = false;
 void Robot::RobotInit() {
     // Register auto commands
     autoManager.registerCommand(team2655::CommandCreator<ExecutePathCommand>, false, "PATH");
-    std::cout << PathfinderMaxVelocity << std::endl;
 }
 
 void Robot::RobotPeriodic() {
@@ -59,14 +58,14 @@ void Robot::AutonomousPeriodic() {
 void Robot::TeleopInit() {
     DefaultSolonoidState();
     Robot::ballIntakeArm.restrictPosition(100);
-    ballIntakeArm.setBrakeMode();
+    ballIntakeArm.setCoastMode();
     driveBase.setCoastMode();
 }
 
 void Robot::TeleopPeriodic() {
     frc::Scheduler::GetInstance()->Run();
     
-    //LimitSwitchReset();
+    LimitSwitchReset();
 
     int value = oi.js0->GetPOV();
     if(value == 180 && previousPovValue != 180){

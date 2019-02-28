@@ -6,7 +6,7 @@
 #include <RobotMap.h>
 
 ResetIntakeArmPosCG::ResetIntakeArmPosCG() {
-  //AddSequential(new MoveIntakeArmTimeCommand(0.1, 0.25));
+  AddSequential(new MoveIntakeArmTimeCommand(0.1, 0.25));
   AddSequential(new ResetIntakeArmEncoderCommand());
   AddSequential(new MoveIntakeArmCommand(BallIntakeUpPos));
 }
