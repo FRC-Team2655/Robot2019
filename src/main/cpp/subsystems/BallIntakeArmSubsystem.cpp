@@ -73,8 +73,8 @@ void BallIntakeArmSubsystem::moveArmSpeed(double percentage){
   if(Robot::hasEverResetBallIntakeArm){
     double pos = getArmPosition();
     double adjustedPos = restrictPosition(pos);
-    if(pos != adjustedPos)
-      percentage = 0;
+    if(pos != adjustedPos && std::abs(percentage) >= 0.1)
+      percentage = 0.1;
   }
   armMotor.Set(percentage);
 }

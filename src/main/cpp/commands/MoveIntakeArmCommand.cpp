@@ -21,7 +21,7 @@ void MoveIntakeArmCommand::Execute() {
   if(Robot::hasEverResetBallIntakeArm){
     Robot::ballIntakeArm.moveToPosition(position);
   }else if ((position / BallIntakeDownDirection) <= 0){
-    Robot::ballIntakeArm.moveArmSpeed(-0.3 * BallIntakeDownDirection);
+    Robot::ballIntakeArm.moveArmSpeed(-1 * 0.3 * BallIntakeDownDirection);
   }
 }
 
