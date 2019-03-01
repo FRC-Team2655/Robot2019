@@ -3,6 +3,7 @@
 #include <frc/commands/Subsystem.h>
 #include <rev/CANSparkMax.h>
 #include <adi/ADIS16470_IMU.h>
+#include <adi/ADIS16448_IMU.h>
 #include <RobotMap.h>
 #include <frc/PIDController.h>
 
@@ -73,13 +74,17 @@ public:
   // Setting brake mode for the motors.
   void setBrakeMode();
 
-  void resetIMU();
   void resetEncoders();
   
   void stopRotatePID();
   void rotateToHeading(double heading);
 
+  void resetIMUForward();
+  void resetIMUReverse();
+
 private:
+  double imuOffSet = 0;
+
   rev::CANSparkMax leftMaster {LMaster, MotorType::kBrushless};
   rev::CANSparkMax leftSlave {LSlave, MotorType::kBrushless};
   rev::CANSparkMax rightMaster {RMaster, MotorType::kBrushless};
@@ -99,6 +104,7 @@ private:
                                 new RotatePIDOutput(), 0.05};
   
   frc::ADIS16470_IMU imu;
+  //frc::ADIS16448_IMU imu;
 
   std::array<double, 2> arcadeDrive(double xSpeed, double zRotation);
 };

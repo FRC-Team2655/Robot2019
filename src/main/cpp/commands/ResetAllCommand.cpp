@@ -10,7 +10,7 @@ ResetAllCommand::ResetAllCommand() {
 // Called just before this Command runs the first time
 void ResetAllCommand::Initialize() {
   Robot::ballIntakeArm.resetPosition();
-  Robot::driveBase.resetIMU();
+  Robot::driveBase.resetIMUForward();
   Robot::driveBase.resetEncoders();
 }
 

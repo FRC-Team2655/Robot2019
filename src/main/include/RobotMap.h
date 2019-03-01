@@ -69,7 +69,7 @@
 #endif
 
 //Up
-#define BallIntake_kpUp 0.001
+#define BallIntake_kpUp 0.01
 #define BallIntake_kiUp 0
 #define BallIntake_kdUp 0
 #define BallIntake_kfUp 0
@@ -83,7 +83,7 @@
 #define BallIntake_UpPID 0
 
 //Down
-#define BallIntake_kpDown 0.001
+#define BallIntake_kpDown 0.01
 #define BallIntake_kiDown 0
 #define BallIntake_kdDown 0
 #define BallIntake_kfDown 0

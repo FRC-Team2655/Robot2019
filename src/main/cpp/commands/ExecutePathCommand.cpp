@@ -134,9 +134,10 @@ void ExecutePathCommand::Execute() {
 		double desired_heading = r2d(leftFollower.heading);
 		double angle_difference = desired_heading - gyro_heading;
 		double turn = 0.8 * (-1.0/80) * angle_difference;
+		std::cout << angle_difference << std::endl;
 
-		//l -= turn;
-		//r += turn;
+		l += turn;
+		r -= turn;
 
 		Robot::driveBase.driveTankVelocity(l * MaxVelocity, r * MaxVelocity);
 	}
@@ -182,6 +183,6 @@ void ExecutePathCommand::negatePositions(Segment *trajectory, size_t length){
 
 void ExecutePathCommand::flipHeading(Segment *trajectory, size_t length){
 	for (size_t i =0; i < length; ++i){
-		trajectory[i].heading += 180;
+		trajectory[i].heading += PI;
 	}
 }

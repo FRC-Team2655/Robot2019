@@ -70,12 +70,12 @@ BallIntakeArmSubsystem::BallIntakeArmSubsystem() : Subsystem("BallIntakeArmSubsy
 }
 
 void BallIntakeArmSubsystem::moveArmSpeed(double percentage){
-  if(Robot::hasEverResetBallIntakeArm){
+  /*if(Robot::hasEverResetBallIntakeArm){
     double pos = getArmPosition();
     double adjustedPos = restrictPosition(pos);
     if(pos != adjustedPos && std::abs(percentage) >= 0.1)
       percentage = 0.1;
-  }
+  }*/
   armMotor.Set(percentage);
 }
 
@@ -100,12 +100,14 @@ void BallIntakeArmSubsystem::resetPosition() {
 }
 
 void BallIntakeArmSubsystem::moveToPosition(double revolutions){
-  revolutions = restrictPosition(revolutions);
+  //revolutions = restrictPosition(revolutions);
   if ((revolutions / BallIntakeDownDirection) <= 0) {
     // Moving up
+    std::cout << revolutions << std::endl;
     armPid.SetReference(revolutions * BallIntake_gearRatio, rev::ControlType::kSmartMotion, BallIntake_UpPID);
   }else{
     // Moving Down
+    std::cout << revolutions << std::endl;
     armPid.SetReference(revolutions * BallIntake_gearRatio, rev::ControlType::kSmartMotion, BallIntake_DownPID);
   }
 }
