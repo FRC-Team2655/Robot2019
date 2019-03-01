@@ -134,7 +134,12 @@ void ExecutePathCommand::Execute() {
 		double desired_heading = r2d(leftFollower.heading);
 		double angle_difference = desired_heading - gyro_heading;
 		double turn = 0.8 * (-1.0/80) * angle_difference;
-		std::cout << angle_difference << std::endl;
+
+		if(std::abs(angle_difference) >= 80){
+			std::cout << "GyroAngle: " << gyro_heading << std::endl <<
+						 "DesiredHeading: " << desired_heading << std::endl <<
+						 "AngleDifference: " << angle_difference << std::endl;
+		}
 
 		l += turn;
 		r -= turn;
