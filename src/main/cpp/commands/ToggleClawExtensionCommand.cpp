@@ -1,5 +1,6 @@
 #include "commands/ToggleClawExtensionCommand.h"
 #include <Robot.h>
+#include <commands/RetractClawCommandGroup.h>
 
 ToggleClawExtensionCommand::ToggleClawExtensionCommand() {
   
@@ -8,7 +9,8 @@ ToggleClawExtensionCommand::ToggleClawExtensionCommand() {
 // Called just before this Command runs the first time
 void ToggleClawExtensionCommand::Initialize() {
   if(Robot::hatchPanelClaw.isExtended()){
-    Robot::hatchPanelClaw.retractClaw();
+    frc::Command *cmd = new RetractClawCommandGroup();
+    cmd->Start();
   }else{
     Robot::hatchPanelClaw.extendClaw();
   }
