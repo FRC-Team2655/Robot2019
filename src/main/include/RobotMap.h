@@ -9,7 +9,7 @@
 /**
  *  MAKE SURE TO SET THIS TO THE CORRECT VALUE BEFORE DEPLOYING CODE!!!
  */
-#define COMPBOT false
+#define COMPBOT true
 
 
 
@@ -69,7 +69,7 @@
 #endif
 
 //Up
-#define BallIntake_kpUp 0.01
+#define BallIntake_kpUp 0.03
 #define BallIntake_kiUp 0
 #define BallIntake_kdUp 0
 #define BallIntake_kfUp 0
@@ -83,14 +83,14 @@
 #define BallIntake_UpPID 0
 
 //Down
-#define BallIntake_kpDown 0.01
+#define BallIntake_kpDown 0.03
 #define BallIntake_kiDown 0
 #define BallIntake_kdDown 0
 #define BallIntake_kfDown 0
 #define BallIntake_izoneDown 0
 #define BallIntake_minOutDown -1
 #define BallIntake_maxOutDown 1
-#define BallIntake_allowedErrorDown 0.05
+#define BallIntake_allowedErrorDown 0
 #define BallIntake_maxAccelDown 1000
 #define BallIntake_minVelocityDown 0
 #define BallIntake_maxVelocityDown 2000
