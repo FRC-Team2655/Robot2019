@@ -8,6 +8,15 @@ CloseClawCommand::CloseClawCommand(bool shouldClose) : shouldClose(shouldClose) 
 
 // Called just before this Command runs the first time
 void CloseClawCommand::Initialize() {
+
+  std::transform(commandName.begin(), commandName.end(), commandName.begin(), ::toupper);
+
+  if (startedFromAutoManager && commandName == "CLOSE_CLAW") {
+    shouldClose = true;
+  }else if (startedFromAutoManager && commandName == "OPEN_CLAW") {
+    shouldClose = false;
+  }
+
   if (shouldClose) {
     Robot::hatchPanelClaw.closeClaw();
   }else{

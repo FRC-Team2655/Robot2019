@@ -34,7 +34,7 @@ public:
 
 private:
   team2655::AutoManager autoManager;
-  std::unique_ptr<frc::CommandGroup> autoCommandPtr;
+  std::unique_ptr<frc::CommandGroup> autoCommandPtr = std::unique_ptr<frc::CommandGroup>(nullptr);
   bool wasPressed = false;
   int previousPovValue = -1;
 };

@@ -1,5 +1,6 @@
 #include "subsystems/HatchPanelClawSubsystem.h"
 
+#include <frc/smartdashboard/SmartDashboard.h>
 #include <commands/LockClawTimeCG.h>
 
 HatchPanelClawSubsystem::HatchPanelClawSubsystem() : Subsystem("HatchPanelClawSubsystem") {}
@@ -30,7 +31,8 @@ bool HatchPanelClawSubsystem::isExtended(){
 }
 
 void HatchPanelClawSubsystem::lock(){
-  lockSolenoid.Set(Claw_Lock);
+  if(!frc::SmartDashboard::GetBoolean("ABCDEFG", false))
+    lockSolenoid.Set(Claw_Lock);
 }
 
 void HatchPanelClawSubsystem::unlock(){

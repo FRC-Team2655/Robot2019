@@ -9,6 +9,9 @@
 #include <commands/MoveIntakeArmCommand.h>
 #include <commands/ResetIntakeArmPosCG.h>
 #include <commands/ClimbCommandGroup.h>
+#include <commands/WaitAutoCommand.h>
+#include <commands/ExtendClawCommand.h>
+#include <commands/CloseClawCommand.h>
 
 OI Robot::oi;
 DriveBaseSubsystem Robot::driveBase;
@@ -20,6 +23,12 @@ bool Robot::hasEverResetBallIntakeArm = false;
 void Robot::RobotInit() {
     // Register auto commands
     autoManager.registerCommand(team2655::CommandCreator<ExecutePathCommand>, false, "PATH");
+    autoManager.registerCommand(team2655::CommandCreator<WaitAutoCommand>, false, "WAIT");
+    autoManager.registerCommand(team2655::CommandCreator<ExtendClawCommand>, false, "EXTEND_CLAW");
+    autoManager.registerCommand(team2655::CommandCreator<ExtendClawCommand>, false, "RETRACT_CLAW");
+    autoManager.registerCommand(team2655::CommandCreator<CloseClawCommand>, false, "OPEN_CLAW");
+    autoManager.registerCommand(team2655::CommandCreator<CloseClawCommand>, false, "CLOSE_CLAW");
+    frc::SmartDashboard::PutBoolean("ABCDEFG", false);
 }
 
 void Robot::RobotPeriodic() {
@@ -38,21 +47,23 @@ void Robot::DisabledInit() {
 void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::AutonomousInit() {
-    //driveBase.resetIMUReverse();
+    driveBase.resetIMUReverse();
 
     wasPressed = false; // Make sure lock will reengage if limit switch is held when enabled
     DefaultSolonoidState();
     ballIntakeArm.setCoastMode();
     driveBase.setCoastMode();
 
-    //autoManager.clearCommands();
-    //autoManager.addCommandToScript("PATH", {"TestPath", "FRONT", "FORWARD"});
-    //autoManager.addCommandToScript("PATH", {"TestPath", "BACK", "REVERSE"});
-    //autoCommandPtr = autoManager.getScriptCommand();
-    //autoCommandPtr.get()->Start();
+    autoManager.clearCommands();
+    autoManager.loadScript("/auto-scripts/RightFront.csv");
+    autoCommandPtr = autoManager.getScriptCommand();
+    autoCommandPtr.get()->Start();
 }
 
 void Robot::AutonomousPeriodic() { 
+    // Giant button kills auto
+    if(oi.js0->GetRawButton(14) && autoCommandPtr.get() != nullptr)
+        autoCommandPtr->Cancel();
     LimitSwitchReset();
     frc::Scheduler::GetInstance()->Run(); 
 }

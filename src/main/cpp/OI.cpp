@@ -34,7 +34,7 @@ OI::OI() {
   squareBtn->WhenPressed(new ToggleClawExtensionCommand());
   r2Btn->WhenPressed(new CloseClawCommand(false));
   r2Btn->WhenReleased(new CloseClawCommand(true));
-  optionBtn->WhenPressed(new ResetAllCommand());
+  //optionBtn->WhenPressed(new ResetAllCommand());
   r1Btn->WhileHeld(new MoveShooterWheelsCommand(.4, true));
   l1Btn->WhileHeld(new MoveShooterWheelsCommand(.4, false));
   xBtn->WhenPressed(new MoveIntakeArmCommand(BallIntakeUpPos));
