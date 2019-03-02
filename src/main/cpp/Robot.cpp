@@ -38,18 +38,18 @@ void Robot::DisabledInit() {
 void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::AutonomousInit() {
-    driveBase.resetIMUReverse();
+    //driveBase.resetIMUReverse();
 
     wasPressed = false; // Make sure lock will reengage if limit switch is held when enabled
     DefaultSolonoidState();
-
     ballIntakeArm.setCoastMode();
-    driveBase.setBrakeMode();
+    driveBase.setCoastMode();
 
-    autoManager.clearCommands();
-    autoManager.addCommandToScript("PATH", {"TestPath", "BACK", "FORWARD"});
-    autoCommandPtr = autoManager.getScriptCommand();
-    autoCommandPtr.get()->Start();
+    //autoManager.clearCommands();
+    //autoManager.addCommandToScript("PATH", {"TestPath", "FRONT", "FORWARD"});
+    //autoManager.addCommandToScript("PATH", {"TestPath", "BACK", "REVERSE"});
+    //autoCommandPtr = autoManager.getScriptCommand();
+    //autoCommandPtr.get()->Start();
 }
 
 void Robot::AutonomousPeriodic() { 

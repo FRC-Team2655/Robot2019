@@ -135,11 +135,9 @@ void ExecutePathCommand::Execute() {
 		double angle_difference = desired_heading - gyro_heading;
 		double turn = 0.8 * (-1.0/80) * angle_difference;
 
-		if(std::abs(angle_difference) >= 80){
-			std::cout << "GyroAngle: " << gyro_heading << std::endl <<
-						 "DesiredHeading: " << desired_heading << std::endl <<
-						 "AngleDifference: " << angle_difference << std::endl;
-		}
+		std::cout << "GyroAngle: " << gyro_heading << std::endl;
+		std::cout << "DesiredHeading: " << desired_heading << std::endl;
+		std::cout << "AngleDifference: " << angle_difference << std::endl;
 
 		l += turn;
 		r -= turn;
@@ -150,7 +148,13 @@ void ExecutePathCommand::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool ExecutePathCommand::IsFinished() { 
-	return !startedFromAutoManager || hasEnded;
+	static int stopCounter = 0;
+	if(std::abs(Robot::driveBase.getLeftVelocity()) < 1 && std::abs(Robot::driveBase.getRightVelocity() < 1))
+		stopCounter++;
+	else
+		stopCounter = 0;
+
+	return !startedFromAutoManager || hasEnded || stopCounter >= 20;
 }
 
 // Called once after isFinished returns true

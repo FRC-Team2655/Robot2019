@@ -9,7 +9,7 @@
 /**
  *  MAKE SURE TO SET THIS TO THE CORRECT VALUE BEFORE DEPLOYING CODE!!!
  */
-#define COMPBOT false
+#define COMPBOT true
 
 
 
@@ -146,8 +146,8 @@
 #define Claw_Open frc::DoubleSolenoid::Value::kReverse
 #endif
 
-#define Claw_Lock frc::DoubleSolenoid::Value::kForward
-#define Claw_Unlock frc::DoubleSolenoid::Value::kReverse
+#define Claw_Lock frc::DoubleSolenoid::Value::kReverse
+#define Claw_Unlock frc::DoubleSolenoid::Value::kForward
 
 //LandingGearArm PID values
 #define LandingGearArm_gearRatio 45.33 / 1.0

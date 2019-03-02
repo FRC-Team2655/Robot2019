@@ -192,8 +192,10 @@ void DriveBaseSubsystem::rotateToHeading(double heading) {
 
 void DriveBaseSubsystem::resetIMUForward() {
 	imuOffSet = 0;
+	imu.Reset();
 }
 
 void DriveBaseSubsystem::resetIMUReverse() {
 	imuOffSet = 180;
+	imu.Reset();
 }
