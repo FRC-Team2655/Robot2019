@@ -103,12 +103,10 @@ void BallIntakeArmSubsystem::moveToPosition(double revolutions){
   //revolutions = restrictPosition(revolutions);
   if ((revolutions / BallIntakeDownDirection) <= 0) {
     // Moving up
-    std::cout << revolutions << std::endl;
-    armPid.SetReference(revolutions * BallIntake_gearRatio, rev::ControlType::kSmartMotion, BallIntake_UpPID);
+    armPid.SetReference(revolutions * BallIntake_gearRatio, rev::ControlType::kPosition, BallIntake_UpPID);
   }else{
     // Moving Down
-    std::cout << revolutions << std::endl;
-    armPid.SetReference(revolutions * BallIntake_gearRatio, rev::ControlType::kSmartMotion, BallIntake_DownPID);
+    armPid.SetReference(revolutions * BallIntake_gearRatio, rev::ControlType::kPosition, BallIntake_DownPID);
   }
 }
 

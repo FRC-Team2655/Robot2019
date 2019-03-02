@@ -105,5 +105,6 @@ void Robot::DefaultSolonoidState(){
     ballIntakeArm.setCoastMode();
     ballShooter.retractPiston();
     hatchPanelClaw.retractClaw();
+    hatchPanelClaw.unlock();
     hasBeenReset = true;
 }
