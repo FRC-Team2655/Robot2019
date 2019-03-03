@@ -12,6 +12,7 @@
 #include <commands/WaitAutoCommand.h>
 #include <commands/ExtendClawCommand.h>
 #include <commands/CloseClawCommand.h>
+#include <commands/UnlockClawCommand.h>
 
 OI Robot::oi;
 DriveBaseSubsystem Robot::driveBase;
@@ -28,6 +29,7 @@ void Robot::RobotInit() {
     autoManager.registerCommand(team2655::CommandCreator<ExtendClawCommand>, false, "RETRACT_CLAW");
     autoManager.registerCommand(team2655::CommandCreator<CloseClawCommand>, false, "OPEN_CLAW");
     autoManager.registerCommand(team2655::CommandCreator<CloseClawCommand>, false, "CLOSE_CLAW");
+    autoManager.registerCommand(team2655::CommandCreator<UnlockClawCommand>, false, "UNLOCK_CLAW");
     frc::SmartDashboard::PutBoolean("ABCDEFG", false);
 }
 
@@ -41,23 +43,34 @@ void Robot::RobotPeriodic() {
 }
 
 void Robot::DisabledInit() {
+    
+    #if COMPBOT 
+        driveBase.setBrakeMode();
+    #else
+        driveBase.setCoastMode();
+    #endif    
+
     ballIntakeArm.setBrakeMode();
 }
 
 void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::AutonomousInit() {
+
+    compressor.SetClosedLoopControl(false);
+    compressor.SetClosedLoopControl(true);
+
     driveBase.resetIMUReverse();
 
     wasPressed = false; // Make sure lock will reengage if limit switch is held when enabled
     DefaultSolonoidState();
+    driveBase.setBrakeMode();
     ballIntakeArm.setCoastMode();
-    driveBase.setCoastMode();
 
-    autoManager.clearCommands();
+    /*autoManager.clearCommands();
     autoManager.loadScript("/auto-scripts/RightFront.csv");
     autoCommandPtr = autoManager.getScriptCommand();
-    autoCommandPtr.get()->Start();
+    autoCommandPtr.get()->Start();*/
 }
 
 void Robot::AutonomousPeriodic() { 
@@ -70,16 +83,31 @@ void Robot::AutonomousPeriodic() {
 
 
 void Robot::TeleopInit() {
+
+    if (hatchPanelClaw.isExtended()) {
+        hatchPanelClaw.lock();
+    }
+
     wasPressed = false; // Make sure lock will reengage if limit switch is held when enabled
     DefaultSolonoidState();
-    ballIntakeArm.setCoastMode();
+
     driveBase.setCoastMode();
+    ballIntakeArm.setCoastMode();
+
+    compressor.SetClosedLoopControl(false);
+    compressor.SetClosedLoopControl(true);
 }
 
 void Robot::TeleopPeriodic() {
     frc::Scheduler::GetInstance()->Run();
     
     LimitSwitchReset();
+
+    /*if (oi.js0->GetRawAxis(10)) {
+        driveBase.setBrakeMode();
+    }else{
+        driveBase.setCoastMode();
+    }*/
 
     int value = oi.js0->GetPOV();
     if(value == 180 && previousPovValue != 180){
@@ -112,8 +140,6 @@ void Robot::DefaultSolonoidState(){
         return;
     }
 
-    driveBase.setCoastMode();
-    ballIntakeArm.setCoastMode();
     ballShooter.retractPiston();
     hatchPanelClaw.retractClaw();
     hatchPanelClaw.unlock();

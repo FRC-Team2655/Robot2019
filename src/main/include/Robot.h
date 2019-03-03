@@ -11,6 +11,8 @@
 #include <subsystems/BallShooterSubsystem.h>
 #include <subsystems/HatchPanelClawSubsystem.h>
 
+#include <frc/Compressor.h>
+
 class Robot : public frc::TimedRobot {
 public:
   static OI oi;
@@ -37,4 +39,6 @@ private:
   std::unique_ptr<frc::CommandGroup> autoCommandPtr = std::unique_ptr<frc::CommandGroup>(nullptr);
   bool wasPressed = false;
   int previousPovValue = -1;
+
+  frc::Compressor compressor{0};
 };

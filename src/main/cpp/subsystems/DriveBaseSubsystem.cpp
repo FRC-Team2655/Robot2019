@@ -31,8 +31,10 @@ void RotatePIDOutput::PIDWrite(double output) {
 
 
 DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {
-  leftSlave.Follow(leftMaster);
+  /*leftSlave.Follow(leftMaster);
+  leftSlave2.Follow(leftMaster);
   rightSlave.Follow(rightMaster);
+  rightSlave2.Follow(rightMaster);
 
   rightMaster.SetInverted(true);
 
@@ -51,6 +53,9 @@ DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {
   rightPID.SetOutputRange(-1, 1);
 
   rotatePID.SetOutputRange(Rotate_minOut, Rotate_maxOut);
+*/
+  //leftMaster.BurnFlash();
+  //rightMaster.BurnFlash();
 
   this->AddChild(rotatePID);
 }
@@ -71,7 +76,12 @@ void DriveBaseSubsystem::driveVelocity(double speed, double rotation) {
 }
 void DriveBaseSubsystem::driveTankPercentage(double leftPercentage, double rightPercentage) {
 	leftMaster.Set(leftPercentage);
+	leftSlave.Set(leftPercentage);
+	leftSlave2.Set(leftPercentage);
+
 	rightMaster.Set(rightPercentage);
+	rightSlave.Set(rightPercentage);
+	rightSlave2.Set(rightPercentage);
 }
 void DriveBaseSubsystem::driveTankVelocity(double lVel, double rVel) {
 	if (lVel == 0) {
@@ -163,17 +173,21 @@ double DriveBaseSubsystem::getIMUAngle() {
 void DriveBaseSubsystem::setCoastMode() {
 	leftMaster.SetIdleMode(IdleMode::kCoast);
 	leftSlave.SetIdleMode(IdleMode::kCoast);
+	leftSlave2.SetIdleMode(IdleMode::kCoast);
 
 	rightMaster.SetIdleMode(IdleMode::kCoast);
 	rightSlave.SetIdleMode(IdleMode::kCoast);
+	rightSlave2.SetIdleMode(IdleMode::kCoast);
 }
 
 void DriveBaseSubsystem::setBrakeMode() {
 	leftMaster.SetIdleMode(IdleMode::kBrake);
 	leftSlave.SetIdleMode(IdleMode::kBrake);
+	leftSlave2.SetIdleMode(IdleMode::kBrake);
 
 	rightMaster.SetIdleMode(IdleMode::kBrake);
 	rightSlave.SetIdleMode(IdleMode::kBrake);
+	rightSlave2.SetIdleMode(IdleMode::kBrake);
 }
 
 void DriveBaseSubsystem::resetEncoders(){

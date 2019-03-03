@@ -8,8 +8,9 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include <team2655/autonomous.hpp>
 
-class UnlockClawCommand : public frc::Command {
+class UnlockClawCommand : public team2655::AutoCommand {
  public:
   UnlockClawCommand();
   void Initialize() override;

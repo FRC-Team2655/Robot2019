@@ -16,6 +16,8 @@ void ExecutePathCommand::Initialize() {
 		return;
 	}
 
+	std::cout << "Running path: " << arguments[0] << std::endl;
+
 	// If there are not enough arguments, exit the function.
   	if (arguments.size() < 3) {
     	std::cerr << "Not enough arguments" << std::endl;
@@ -68,12 +70,12 @@ void ExecutePathCommand::Initialize() {
 
 	// If the files do not exist, exit the function.
 	if(!leftFile) {
-		std::cout << "Left file not found" << std::endl;
+		std::cerr << "Left file not found" << std::endl;
 		End();
 		return;
 	}
 	if (!rightFile) {
-		std::cout << "Right file not found" << std::endl;
+		std::cerr << "Right file not found" << std::endl;
 		End();
 		return;
 	}
@@ -135,12 +137,12 @@ void ExecutePathCommand::Execute() {
 		double angle_difference = desired_heading - gyro_heading;
 		double turn = 0.8 * (-1.0/80) * angle_difference;
 
-		std::cout << "GyroAngle: " << gyro_heading << std::endl;
-		std::cout << "DesiredHeading: " << desired_heading << std::endl;
-		std::cout << "AngleDifference: " << angle_difference << std::endl;
+		//std::cout << "GyroAngle: " << gyro_heading << std::endl;
+		//std::cout << "DesiredHeading: " << desired_heading << std::endl;
+		//std::cout << "AngleDifference: " << angle_difference << std::endl;
 
-		l += turn;
-		r -= turn;
+		//l += turn;
+		//r -= turn;
 
 		Robot::driveBase.driveTankVelocity(l * MaxVelocity, r * MaxVelocity);
 	}
@@ -148,7 +150,6 @@ void ExecutePathCommand::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool ExecutePathCommand::IsFinished() { 
-	static int stopCounter = 0;
 	if(std::abs(Robot::driveBase.getLeftVelocity()) < 1 && std::abs(Robot::driveBase.getRightVelocity() < 1))
 		stopCounter++;
 	else

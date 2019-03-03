@@ -67,6 +67,8 @@ BallIntakeArmSubsystem::BallIntakeArmSubsystem() : Subsystem("BallIntakeArmSubsy
   armPid.SetSmartMotionMaxAccel(BallIntake_maxAccelLock, BallIntake_LockPID);
   armPid.SetSmartMotionMaxVelocity(BallIntake_maxVelocityLock, BallIntake_LockPID);
   armPid.SetSmartMotionMinOutputVelocity(BallIntake_minVelocityLock, BallIntake_LockPID);
+
+  armMotor.BurnFlash();
 }
 
 void BallIntakeArmSubsystem::moveArmSpeed(double percentage){

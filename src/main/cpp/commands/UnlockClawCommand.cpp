@@ -9,8 +9,6 @@
 #include <Robot.h>
 
 UnlockClawCommand::UnlockClawCommand() {
-  // Use Requires() here to declare subsystem dependencies
-  // eg. Requires(Robot::chassis.get());
   Requires(&Robot::hatchPanelClaw);
 }
 
@@ -30,4 +28,6 @@ void UnlockClawCommand::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void UnlockClawCommand::Interrupted() {}
+void UnlockClawCommand::Interrupted() {
+  End();
+}

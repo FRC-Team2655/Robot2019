@@ -87,8 +87,10 @@ private:
 
   rev::CANSparkMax leftMaster {LMaster, MotorType::kBrushless};
   rev::CANSparkMax leftSlave {LSlave, MotorType::kBrushless};
+  rev::CANSparkMax leftSlave2 {LSlave2, MotorType::kBrushless};
   rev::CANSparkMax rightMaster {RMaster, MotorType::kBrushless};
   rev::CANSparkMax rightSlave {RSlave, MotorType::kBrushless};
+  rev::CANSparkMax rightSlave2 {RSlave2, MotorType::kBrushless};
 
   // When getting encoders/pid controllers from SPARK MAXs the function instantiates a new object.
   //    Make sure to store the object instead of using GetEncoder/GetPIDController each time

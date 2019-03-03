@@ -47,4 +47,6 @@ private:
 	void reverseTrajectory(Segment *trajectory, int start, int end);
 	void negatePositions(Segment *trajectory, size_t length);
 	void flipHeading(Segment *trajectory, size_t length);
+
+	int stopCounter = 0;
 };

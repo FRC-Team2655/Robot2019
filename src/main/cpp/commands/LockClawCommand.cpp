@@ -9,9 +9,7 @@
 
 #include <Robot.h>
 
-LockClawCommand::LockClawCommand() {
-  // Use Requires() here to declare subsystem dependencies
-  // eg. Requires(Robot::chassis.get());
+LockClawCommand::LockClawCommand() {;
   Requires(&Robot::hatchPanelClaw);
 }
 
