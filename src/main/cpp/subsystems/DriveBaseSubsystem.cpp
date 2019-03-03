@@ -36,7 +36,6 @@ DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {
   rightSlave.Follow(rightMaster);
   rightSlave2.Follow(rightMaster);
 
-  rightMaster.SetInverted(true);
 
   leftPID.SetP(2e-5);
   leftPID.SetI(0);
@@ -56,6 +55,10 @@ DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {
 */
   //leftMaster.BurnFlash();
   //rightMaster.BurnFlash();
+
+  rightMaster.SetInverted(true);
+  rightSlave.SetInverted(true);
+  rightSlave2.SetInverted(true);
 
   this->AddChild(rotatePID);
 }
