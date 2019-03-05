@@ -18,6 +18,7 @@ public:
   void InitDefaultCommand() override;
   void moveArmSpeed(double percentage);
   void moveToPosition(double ticks);
+  void lockToPosition(bool isTopLimitSwitchPressed)
 
   /**
    * ONLY USE WHEN CLIMBING!!! TOO AGRESSIVE FOR NORMAL USE. FOR NORMAL USE USE moveToPosition
