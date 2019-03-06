@@ -79,11 +79,6 @@ void Robot::AutonomousPeriodic() {
         autoCommandPtr->Cancel();
     LimitSwitchReset();
     frc::Scheduler::GetInstance()->Run(); 
-    
-    if(isTopLimitSwitchPressed) {
-        BallIntakeArmSubsystem::lockToPosition(getArmPosition());
-    }
-    
 }
 
 
