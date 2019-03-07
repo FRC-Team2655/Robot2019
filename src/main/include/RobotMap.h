@@ -9,7 +9,7 @@
 /**
  *  MAKE SURE TO SET THIS TO THE CORRECT VALUE BEFORE DEPLOYING CODE!!!
  */
-#define COMPBOT true
+#define COMPBOT false
 
 
 
@@ -57,7 +57,7 @@
 #define LimitSwitchID 0
 
 //BallIntake PID values
-#define BallIntake_gearRatio (50.0 / 1.0) * (12.0 / 15.0)  // Gearbox ratio * sprocket ratio
+#define BallIntake_gearRatio 40.0
 
 #define BallIntakeDownDirection -1 // Sign of moving downwards
 #define BallIntakeDownPosLimit 0.5  // Magnitude of downward rotation allowed (do not put sign)
@@ -142,8 +142,8 @@
 #define Claw_Close frc::DoubleSolenoid::Value::kForward
 #define Claw_Open frc::DoubleSolenoid::Value::kReverse
 #else
-#define Claw_Extend frc::DoubleSolenoid::Value::kReverse
-#define Claw_Retract frc::DoubleSolenoid::Value::kForward
+#define Claw_Extend frc::DoubleSolenoid::Value::kForward
+#define Claw_Retract frc::DoubleSolenoid::Value::kReverse
 #define Claw_Close frc::DoubleSolenoid::Value::kForward
 #define Claw_Open frc::DoubleSolenoid::Value::kReverse
 #endif

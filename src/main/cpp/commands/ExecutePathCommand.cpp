@@ -19,7 +19,7 @@ void ExecutePathCommand::Initialize() {
 	std::cout << "Running path: " << arguments[0] << std::endl;
 
 	// If there are not enough arguments, exit the function.
-  	if (arguments.size() < 3) {
+  	if (arguments.size() < 4) {
     	std::cerr << "Not enough arguments" << std::endl;
     	End();
 		return;
@@ -50,6 +50,18 @@ void ExecutePathCommand::Initialize() {
 		forward = false;
 	} else {
 		std::cerr << "Unknown path order '" << arguments[2] << "'." << std::endl;
+		End();
+		return;
+	}
+
+	std::transform(arguments[3].begin(), arguments[3].end(), arguments[3].begin(), ::tolower);
+	if(arguments[3] == "true"){
+		startingAngleZero = true;
+		angleOffset = Robot::driveBase.getIMUAngle();
+	}else if(arguments[3] == "false"){
+		startingAngleZero = false;
+	}else{
+		std::cerr << "Execute path command unknown argument #4." << std::endl;
 		End();
 		return;
 	}
@@ -132,7 +144,7 @@ void ExecutePathCommand::Execute() {
 										T_PER_REV * Robot::driveBase.getRightOutputPosition());
 
 		// Apply angle correction based on the IMU angle
-		double gyro_heading = Robot::driveBase.getIMUAngle();
+		double gyro_heading = Robot::driveBase.getIMUAngle() - angleOffset;
 		double desired_heading = r2d(leftFollower.heading);
 		double angle_difference = desired_heading - gyro_heading;
 		double turn = 0.8 * (-1.0/80) * angle_difference;
@@ -192,7 +204,7 @@ void ExecutePathCommand::negatePositions(Segment *trajectory, size_t length){
 }
 
 void ExecutePathCommand::flipHeading(Segment *trajectory, size_t length){
-	for (size_t i =0; i < length; ++i){
+	for (size_t i = 0; i < length; ++i){
 		trajectory[i].heading += PI;
 	}
 }

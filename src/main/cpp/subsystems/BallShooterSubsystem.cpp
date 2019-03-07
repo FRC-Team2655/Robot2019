@@ -8,9 +8,7 @@ BallShooterSubsystem::BallShooterSubsystem() : Subsystem("BallShooterSubsystem")
     ballShooterMotor.SetInverted(true);
 }
 
-void BallShooterSubsystem::InitDefaultCommand() {
- 
-}
+void BallShooterSubsystem::InitDefaultCommand() {}
 
 void BallShooterSubsystem::moveSpeed(double speed){
     ballShooterMotor.Set(speed);
@@ -28,11 +26,11 @@ void BallShooterSubsystem::output(double speed){
 }
 
 void BallShooterSubsystem::extendPiston(){
-    ballShooterSolenoid.Set(BallShooter_Extend);
+    //ballShooterSolenoid.Set(BallShooter_Extend);
 }
 
 void BallShooterSubsystem::retractPiston(){
-    ballShooterSolenoid.Set(BallShooter_Retract);
+    //ballShooterSolenoid.Set(BallShooter_Retract);
 }
 
 void BallShooterSubsystem::moveVelocity(double velocity) {

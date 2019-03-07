@@ -43,13 +43,7 @@ void Robot::RobotPeriodic() {
 }
 
 void Robot::DisabledInit() {
-    
-    #if COMPBOT 
-        driveBase.setBrakeMode();
-    #else
-        driveBase.setCoastMode();
-    #endif    
-
+    driveBase.setBrakeMode(); 
     ballIntakeArm.setBrakeMode();
 }
 
@@ -142,6 +136,7 @@ void Robot::DefaultSolonoidState(){
 
     ballShooter.retractPiston();
     hatchPanelClaw.retractClaw();
+    hatchPanelClaw.closeClaw();
     hatchPanelClaw.unlock();
     hasBeenReset = true;
 }

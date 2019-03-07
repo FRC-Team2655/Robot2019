@@ -12,6 +12,7 @@
  * 0 = path name
  * 1 = FRONT/BACK = Side of robot to follow path with
  * 2 = FORWARD/REVERSE = Order of path (ex. forward=pt1-pt4 reverse=pt4-pt1)
+ * 3 = true/false starting angle zero
  */
 class ExecutePathCommand : public team2655::AutoCommand {
 public:
@@ -22,9 +23,14 @@ public:
   void End() override;
   void Interrupted() override;
 
+void adjustRelativeIMUAngle(double imuAngle, Segment *trajectory, size_t length);
+
 private:
 
+	bool startingAngleZero = false;
 	bool hasEnded = false;
+
+	double angleOffset = 0;
 
 	// Make sure these are all upper case
 	const std::string DRIVE_DIRECTION_FRONT = "FRONT";

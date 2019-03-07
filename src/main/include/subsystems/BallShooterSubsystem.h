@@ -19,5 +19,5 @@ public:
 
 private:
   WPI_TalonSRX ballShooterMotor{BallShooter};
-  frc::DoubleSolenoid ballShooterSolenoid { ShooterSolenoidA, ShooterSolenoidB };
+  //frc::DoubleSolenoid ballShooterSolenoid { ShooterSolenoidA, ShooterSolenoidB };
 };
