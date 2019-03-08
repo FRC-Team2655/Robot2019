@@ -31,7 +31,7 @@ void RotatePIDOutput::PIDWrite(double output) {
 
 
 DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {
-  /*leftSlave.Follow(leftMaster);
+  leftSlave.Follow(leftMaster);
   leftSlave2.Follow(leftMaster);
   rightSlave.Follow(rightMaster);
   rightSlave2.Follow(rightMaster);
@@ -52,9 +52,8 @@ DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {
   rightPID.SetOutputRange(-1, 1);
 
   rotatePID.SetOutputRange(Rotate_minOut, Rotate_maxOut);
-*/
-  //leftMaster.BurnFlash();
-  //rightMaster.BurnFlash();
+  leftMaster.BurnFlash();
+  rightMaster.BurnFlash();
 
   rightMaster.SetInverted(true);
   rightSlave.SetInverted(true);

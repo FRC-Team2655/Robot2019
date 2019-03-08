@@ -14,7 +14,7 @@ void DriveJoystickCommand::Initialize() {
 void DriveJoystickCommand::Execute() {
   double power = -1 * jshelper::getAxisValue(Robot::oi.driveAxisConfig, Robot::oi.js0->GetRawAxis(1));
 	double rotate = .4 * jshelper::getAxisValue(Robot::oi.rotateAxisConfig, Robot::oi.js0->GetRawAxis(2));
-	Robot::driveBase.drivePercentage(power, rotate);
+	Robot::driveBase.driveVelocity(power, rotate);
 }
 
 // Make this return true when this Command no longer needs to run execute()
