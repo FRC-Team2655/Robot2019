@@ -13,6 +13,7 @@
 #include <commands/ExtendClawCommand.h>
 #include <commands/CloseClawCommand.h>
 #include <commands/UnlockClawCommand.h>
+#include <commands/DriveDistanceCommand.h>
 
 OI Robot::oi;
 DriveBaseSubsystem Robot::driveBase;
@@ -65,6 +66,9 @@ void Robot::AutonomousInit() {
     autoManager.loadScript("/auto-scripts/RightFront.csv");
     autoCommandPtr = autoManager.getScriptCommand();
     autoCommandPtr.get()->Start();*/
+
+    frc::Command *cmd = new DriveDistanceCommand(12);
+    cmd->Start();
 }
 
 void Robot::AutonomousPeriodic() { 

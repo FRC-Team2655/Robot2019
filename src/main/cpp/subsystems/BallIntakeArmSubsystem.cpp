@@ -78,6 +78,7 @@ void BallIntakeArmSubsystem::moveArmSpeed(double percentage){
     if(pos != adjustedPos && std::abs(percentage) >= 0.1)
       percentage = 0.1;
   }*/
+  std::cout << percentage << std::endl;
   armMotor.Set(percentage);
 }
 
