@@ -57,7 +57,7 @@
 #define LimitSwitchID 0
 
 //BallIntake PID values
-#define BallIntake_gearRatio 40.0
+#define BallIntake_gearRatio 50.0
 
 #define BallIntakeDownDirection -1 // Sign of moving downwards
 #define BallIntakeDownPosLimit 0.5  // Magnitude of downward rotation allowed (do not put sign)
@@ -85,7 +85,7 @@
 #define BallIntake_UpPID 0
 
 //Down
-#define BallIntake_kpDown 0.06
+#define BallIntake_kpDown 0.0006
 #define BallIntake_kiDown 0
 #define BallIntake_kdDown 0
 #define BallIntake_kfDown 0
@@ -93,7 +93,7 @@
 #define BallIntake_minOutDown -1
 #define BallIntake_maxOutDown 1
 #define BallIntake_allowedErrorDown 0
-#define BallIntake_maxAccelDown 1000
+#define BallIntake_maxAccelDown 2000
 #define BallIntake_minVelocityDown 0
 #define BallIntake_maxVelocityDown 2000
 #define BallIntake_DownPID 1

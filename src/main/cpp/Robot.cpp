@@ -32,6 +32,8 @@ void Robot::RobotInit() {
     autoManager.registerCommand(team2655::CommandCreator<CloseClawCommand>, false, "CLOSE_CLAW");
     autoManager.registerCommand(team2655::CommandCreator<UnlockClawCommand>, false, "UNLOCK_CLAW");
     frc::SmartDashboard::PutBoolean("ABCDEFG", false);
+
+    frc::SmartDashboard::PutNumber("P: ", BallIntake_kpDown);
 }
 
 void Robot::RobotPeriodic() {
@@ -97,6 +99,7 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
+
     frc::Scheduler::GetInstance()->Run();
     
     LimitSwitchReset();

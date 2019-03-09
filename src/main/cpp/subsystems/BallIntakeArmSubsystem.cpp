@@ -106,15 +106,15 @@ void BallIntakeArmSubsystem::moveToPosition(double revolutions){
   revolutions = restrictPosition(revolutions);
   if ((revolutions / BallIntakeDownDirection) <= 0) {
     // Moving up
-    armPid.SetReference(revolutions * BallIntake_gearRatio, rev::ControlType::kPosition, BallIntake_UpPID);
+    armPid.SetReference(revolutions * BallIntake_gearRatio, rev::ControlType::kSmartMotion, BallIntake_UpPID);
   }else{
     // Moving Down
-    armPid.SetReference(revolutions * BallIntake_gearRatio, rev::ControlType::kPosition, BallIntake_DownPID);
+    armPid.SetReference(revolutions * BallIntake_gearRatio, rev::ControlType::kSmartMotion, BallIntake_DownPID);
   }
 }
 
 void BallIntakeArmSubsystem::armClimbPosition(double position){
-  armPid.SetReference(position * BallIntake_gearRatio, rev::ControlType::kPosition, BallIntake_ClimbPID);
+  armPid.SetReference(position * BallIntake_gearRatio, rev::ControlType::kSmartMotion, BallIntake_ClimbPID);
 }
 
 bool BallIntakeArmSubsystem::isTopLimitSwitchPressed(){
