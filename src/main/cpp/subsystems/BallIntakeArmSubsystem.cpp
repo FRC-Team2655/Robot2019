@@ -104,13 +104,13 @@ void BallIntakeArmSubsystem::resetPosition() {
 
 void BallIntakeArmSubsystem::moveToPosition(double revolutions){
   revolutions = restrictPosition(revolutions);
-  if ((revolutions / BallIntakeDownDirection) <= 0) {
+  //if ((revolutions / BallIntakeDownDirection) <= 0) {
     // Moving up
-    armPid.SetReference(revolutions * BallIntake_gearRatio, rev::ControlType::kSmartMotion, BallIntake_UpPID);
-  }else{
+    //armPid.SetReference(revolutions * BallIntake_gearRatio, rev::ControlType::kSmartMotion, BallIntake_UpPID);
+  //}else{
     // Moving Down
     armPid.SetReference(revolutions * BallIntake_gearRatio, rev::ControlType::kSmartMotion, BallIntake_DownPID);
-  }
+  //}
 }
 
 void BallIntakeArmSubsystem::armClimbPosition(double position){

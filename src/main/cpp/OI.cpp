@@ -5,7 +5,7 @@
 #include <commands/ResetAllCommand.h>
 #include <commands/FireShooterPistonCommand.h>
 #include <commands/CloseClawCommand.h>
-#include <commands/ShootCargoshipCommandGroup.h>
+#include <commands/ShootCargoShipCommandGroup.h>
 #include <commands/MoveShooterWheelsCommand.h>
 #include <commands/ToggleClawExtensionCommand.h>
 #include <commands/ShootRocketLvl2CG.h>
