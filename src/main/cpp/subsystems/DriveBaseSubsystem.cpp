@@ -52,12 +52,12 @@ DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {
   rightPID.SetOutputRange(-1, 1);
 
   rotatePID.SetOutputRange(Rotate_minOut, Rotate_maxOut);
-  leftMaster.BurnFlash();
-  rightMaster.BurnFlash();
+  rotatePID.SetEnabled(false);
 
   rightMaster.SetInverted(true);
-  rightSlave.SetInverted(true);
-  rightSlave2.SetInverted(true);
+
+  leftMaster.BurnFlash();
+  rightMaster.BurnFlash();
 
   this->AddChild(rotatePID);
 }

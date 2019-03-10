@@ -71,7 +71,7 @@
 #endif
 
 //Up
-#define BallIntake_kpUp 0.07
+#define BallIntake_kpUp 0.03
 #define BallIntake_kiUp 0
 #define BallIntake_kdUp 0
 #define BallIntake_kfUp 0
@@ -79,18 +79,18 @@
 #define BallIntake_minOutUp -1
 #define BallIntake_maxOutUp 1
 #define BallIntake_allowedErrorUp 0
-#define BallIntake_maxAccelUp 2500
+#define BallIntake_maxAccelUp 2000
 #define BallIntake_minVelocityUp 0
-#define BallIntake_maxVelocityUp 4500
+#define BallIntake_maxVelocityUp 4000
 #define BallIntake_UpPID 0
 
 //Down
-#define BallIntake_kpDown 0.0002
-#define BallIntake_kiDown 2e-9
+#define BallIntake_kpDown 0.015
+#define BallIntake_kiDown 0
 #define BallIntake_kdDown 0
 #define BallIntake_kfDown 0
 #define BallIntake_izoneDown 0
-#define BallIntake_minOutDown -0.4
+#define BallIntake_minOutDown -1
 #define BallIntake_maxOutDown 1
 #define BallIntake_allowedErrorDown 0
 #define BallIntake_maxAccelDown 2000
@@ -113,13 +113,13 @@
 #define BallIntake_ClimbPID 2
 
 //Lock arm
-#define BallIntake_kpLock 0
+#define BallIntake_kpLock 1
 #define BallIntake_kiLock 0
 #define BallIntake_kdLock 0
 #define BallIntake_kfLock 0
 #define BallIntake_izoneLock 0
 #define BallIntake_minOutLock 0
-#define BallIntake_maxOutLock 0
+#define BallIntake_maxOutLock 0.3
 #define BallIntake_allowedErrorLock 0
 #define BallIntake_maxAccelLock 0
 #define BallIntake_minVelocityLock 0

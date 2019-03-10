@@ -78,7 +78,6 @@ void BallIntakeArmSubsystem::moveArmSpeed(double percentage){
     if(pos != adjustedPos && std::abs(percentage) >= 0.1)
       percentage = 0.1;
   }*/
-  std::cout << percentage << std::endl;
   armMotor.Set(percentage);
 }
 
@@ -95,7 +94,15 @@ double BallIntakeArmSubsystem::getArmVelocity(){
 }
 
 void BallIntakeArmSubsystem::InitDefaultCommand() {
-  SetDefaultCommand(new JoystickBallIntakeCommand());
+  //SetDefaultCommand(new JoystickBallIntakeCommand());
+}
+
+void BallIntakeArmSubsystem::lockPosition(){
+  
+  // Lock a little past 0
+  double target = getArmPosition() + (0.0833333 * BallIntakeDownDirection * -1);
+  armPid.SetReference(target, rev::ControlType::kPosition, BallIntake_LockPID);
+
 }
 
 void BallIntakeArmSubsystem::resetPosition() {
@@ -104,13 +111,13 @@ void BallIntakeArmSubsystem::resetPosition() {
 
 void BallIntakeArmSubsystem::moveToPosition(double revolutions){
   revolutions = restrictPosition(revolutions);
-  //if ((revolutions / BallIntakeDownDirection) <= 0) {
+  if ((revolutions / BallIntakeDownDirection) <= 0) {
     // Moving up
-    //armPid.SetReference(revolutions * BallIntake_gearRatio, rev::ControlType::kSmartMotion, BallIntake_UpPID);
-  //}else{
+    armPid.SetReference(revolutions * BallIntake_gearRatio, rev::ControlType::kPosition, BallIntake_UpPID);
+  }else{
     // Moving Down
-    armPid.SetReference(revolutions * BallIntake_gearRatio, rev::ControlType::kSmartMotion, BallIntake_DownPID);
-  //}
+    armPid.SetReference(revolutions * BallIntake_gearRatio, rev::ControlType::kPosition, BallIntake_DownPID);
+  }
 }
 
 void BallIntakeArmSubsystem::armClimbPosition(double position){
