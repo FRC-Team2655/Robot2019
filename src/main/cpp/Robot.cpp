@@ -16,6 +16,8 @@
 #include <commands/UnlockClawCommand.h>
 #include <commands/DriveDistanceCommand.h>
 
+#include <ctime>
+
 OI Robot::oi;
 DriveBaseSubsystem Robot::driveBase;
 BallIntakeArmSubsystem Robot::ballIntakeArm;
@@ -127,12 +129,21 @@ int main() { return frc::StartRobot<Robot>(); }
 
 void Robot::LimitSwitchReset(){
     bool isPressed = ballIntakeArm.isTopLimitSwitchPressed();
+    double now = time(NULL);
     if (isPressed && !wasPressed) {
         hasEverResetBallIntakeArm = true;
         frc::Command *cmd = new ResetIntakeArmPosCG();
         cmd->Start();
     }
-    wasPressed = isPressed;
+
+    // Debounced wasPressed
+    if(isPressed){
+        lastPressedTime = now;
+        wasPressed = true;
+    }
+    if(now - lastPressedTime >= debounce){
+        wasPressed = false; // Only set if not pressed for debounce time
+    }
 }
 
 void Robot::DefaultSolonoidState(){

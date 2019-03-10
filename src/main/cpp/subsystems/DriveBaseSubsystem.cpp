@@ -56,8 +56,15 @@ DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {
 
   rightMaster.SetInverted(true);
 
+  leftMaster.SetClosedLoopRampRate(DriveRampRate);
+  rightMaster.SetClosedLoopRampRate(DriveRampRate);
+
   leftMaster.BurnFlash();
   rightMaster.BurnFlash();
+
+  rightMaster.SetInverted(true);
+  rightSlave.SetInverted(true);
+  rightSlave2.SetInverted(true);
 
   this->AddChild(rotatePID);
 }
@@ -78,12 +85,8 @@ void DriveBaseSubsystem::driveVelocity(double speed, double rotation) {
 }
 void DriveBaseSubsystem::driveTankPercentage(double leftPercentage, double rightPercentage) {
 	leftMaster.Set(leftPercentage);
-	leftSlave.Set(leftPercentage);
-	leftSlave2.Set(leftPercentage);
 
 	rightMaster.Set(rightPercentage);
-	rightSlave.Set(rightPercentage);
-	rightSlave2.Set(rightPercentage);
 }
 void DriveBaseSubsystem::driveTankVelocity(double lVel, double rVel) {
 	if (lVel == 0) {

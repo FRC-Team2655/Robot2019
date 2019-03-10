@@ -16,7 +16,7 @@ void JoystickBallIntakeDriveCommand::Execute() {
   // PS4 Triggers are -1 by default
   if(val < 0)
     val = 0;
-  Robot::ballIntakeArm.moveArmSpeed(-1 * val);
+  Robot::ballIntakeArm.moveArmSpeed(BallIntakeDownDirection * val);
 }
 
 // Make this return true when this Command no longer needs to run execute()

@@ -35,10 +35,13 @@ public:
   void DefaultSolonoidState();
 
 private:
+
+  const double debounce = 0.5; // Seconds
+  double lastPressedTime = -debounce;
   team2655::AutoManager autoManager;
   std::unique_ptr<frc::CommandGroup> autoCommandPtr = std::unique_ptr<frc::CommandGroup>(nullptr);
-  bool wasPressed = false;
   int previousPovValue = -1;
+  bool wasPressed = false;
 
   frc::Compressor compressor{0};
 };
