@@ -86,16 +86,16 @@
 #define BallIntake_UpPID 0
 
 //Down
-#define BallIntake_kpDown 0.002
+#define BallIntake_kpDown 0.015
 #define BallIntake_kiDown 0
 #define BallIntake_kdDown 0
 #define BallIntake_kfDown 0
 #define BallIntake_izoneDown 0
 #define BallIntake_minOutDown -0.5
-#define BallIntake_maxOutDown 0.5
+#define BallIntake_maxOutDown 1
 #define BallIntake_allowedErrorDown 0
 #define BallIntake_maxAccelDown 2000
-#define BallIntake_minVelocityDown 100
+#define BallIntake_minVelocityDown 0
 #define BallIntake_maxVelocityDown 4000
 #define BallIntake_DownPID 1
 

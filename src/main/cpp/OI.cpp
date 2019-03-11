@@ -30,7 +30,7 @@ OI::OI() {
   frc::JoystickButton *shareBtn = new frc::JoystickButton(js0, 9);
   frc::JoystickButton *l2Btn = new frc::JoystickButton(js0, 7);
 
-  triangleBtn->WhileHeld(new MoveIntakeArmCommand(-0.15));
+  triangleBtn->WhenPressed(new MoveIntakeArmCommand(-0.13));
   squareBtn->WhenPressed(new ToggleClawExtensionCommand());
   r2Btn->WhenPressed(new CloseClawCommand(false));
   r2Btn->WhenReleased(new CloseClawCommand(true));

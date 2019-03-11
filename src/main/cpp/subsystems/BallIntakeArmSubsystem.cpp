@@ -116,7 +116,7 @@ void BallIntakeArmSubsystem::moveToPosition(double revolutions){
     armPid.SetReference(revolutions * BallIntake_gearRatio, rev::ControlType::kPosition, BallIntake_UpPID);
   }else{
     // Moving Down
-    armPid.SetReference(revolutions * BallIntake_gearRatio, rev::ControlType::kSmartMotion, BallIntake_DownPID);
+    armPid.SetReference(revolutions * BallIntake_gearRatio, rev::ControlType::kPosition, BallIntake_DownPID);
   }
 }
 
