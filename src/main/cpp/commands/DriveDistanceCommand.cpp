@@ -44,6 +44,8 @@ void DriveDistanceCommand::Initialize() {
 					1.0, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
 	rightConfig = {(int)(rightStartPos * T_PER_REV), T_PER_REV, WheelDiameter * 3.141592, 
 					1.0, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
+
+  std::cout << "Initializing..." << std::endl;
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -54,6 +56,8 @@ void DriveDistanceCommand::Execute() {
                   T_PER_REV * Robot::driveBase.getRightOutputPosition());
 
   Robot::driveBase.driveTankVelocity(l * MaxVelocity, r * MaxVelocity);
+
+  std::cout << "Executing..." << std::endl;
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -67,7 +71,9 @@ bool DriveDistanceCommand::IsFinished() {
 }
 
 // Called once after isFinished returns true
-void DriveDistanceCommand::End() {}
+void DriveDistanceCommand::End() {
+  std::cout << "Ending..." << std::endl;
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run

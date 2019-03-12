@@ -15,6 +15,7 @@
 #include <commands/CloseClawCommand.h>
 #include <commands/UnlockClawCommand.h>
 #include <commands/DriveDistanceCommand.h>
+#include <commands/PlaceHatchPanelCG.h>
 
 #include <ctime>
 
@@ -34,6 +35,7 @@ void Robot::RobotInit() {
     autoManager.registerCommand(team2655::CommandCreator<CloseClawCommand>, false, "OPEN_CLAW");
     autoManager.registerCommand(team2655::CommandCreator<CloseClawCommand>, false, "CLOSE_CLAW");
     autoManager.registerCommand(team2655::CommandCreator<UnlockClawCommand>, false, "UNLOCK_CLAW");
+    //autoManager.registerCommand(team2655::CommandCreator<PlaceHatchPanelCG>, false, "PLACE_HATCH_PANEL");
     frc::SmartDashboard::PutBoolean("ABCDEFG", false);
 
     frc::SmartDashboard::PutNumber("P: ", BallIntake_kpDown);
@@ -67,13 +69,28 @@ void Robot::AutonomousInit() {
     driveBase.setBrakeMode();
     ballIntakeArm.setCoastMode();
 
-    /*autoManager.clearCommands();
-    autoManager.loadScript("/auto-scripts/RightFront.csv");
+    autoManager.clearCommands();
+    autoManager.loadScript("/auto-scripts/TopSide.csv");
     autoCommandPtr = autoManager.getScriptCommand();
-    autoCommandPtr.get()->Start();*/
+    autoCommandPtr.get()->Start();
 
-    frc::Command *cmd = new DriveDistanceCommand(12);
-    cmd->Start();
+    //frc::Command *cmd = new PlaceHatchPanelCG();
+    //cmd->Start();
+
+    //frc::Command *cmd = new DriveDistanceCommand(-12);
+    //cmd->Start();
+    /*frc::Command *cmd1 = new ExtendClawCommand(true);
+    cmd1->Start();
+    frc::Command *cmd2 = new CloseClawCommand(false);
+    cmd2->Start();*/
+    //frc::Command *cmd3 = new frc::WaitCommand(3);
+    //cmd3->Start();
+    //hatchPanelClaw.openClaw();
+    //frc::Command *cmd4 = new DriveDistanceCommand(12);
+    //cmd4->Start();
+
+    //frc::Command *cmd = new PlaceHatchPanelCG();
+    //cmd->Start();
 }
 
 void Robot::AutonomousPeriodic() { 
@@ -83,7 +100,6 @@ void Robot::AutonomousPeriodic() {
     LimitSwitchReset();
     frc::Scheduler::GetInstance()->Run(); 
 }
-
 
 void Robot::TeleopInit() {
 

@@ -6,11 +6,12 @@
 
 class HatchPanelClawSubsystem : public frc::Subsystem {
 private:
-  frc::DoubleSolenoid clawSol{ClawSolenoidA, ClawSolenoidB};
   frc::DoubleSolenoid extenderSol{ExtenderSolenoidA, ExtenderSolenoidB};
   frc::DoubleSolenoid lockSolenoid{ClawLockSolenoidA, ClawLockSolenoidB};
   
 public:
+  frc::DoubleSolenoid clawSol{ClawSolenoidA, ClawSolenoidB};
+
   HatchPanelClawSubsystem();
   void InitDefaultCommand() override;
   void openClaw();

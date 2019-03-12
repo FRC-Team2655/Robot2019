@@ -29,9 +29,9 @@
 #define LMaxVelocity 5700.0 //5580.0      
 #define GearRatio 9.47 / 1.0       // 9.47 motor revolutions to 1 output revolution
 #define WheelDiameter .1524      // wheel diameter in meters (6")
-#define MaxVelocity 5700    // This is capped at the slowest velocity on ANY robot to ensure that paths work the same
-#define PathfinderMaxVelocity 2.4015
-#define DriveRampRate 0.5  // Minimum time (sec) to go from 0 to full
+#define MaxVelocity 1425 //5700    // This is capped at the slowest velocity on ANY robot to ensure that paths work the same
+#define PathfinderMaxVelocity 0.600375 //2.4015
+#define DriveRampRate 0.25  // Minimum time (sec) to go from 0 to full
 
 // SPARK MAX IDs
 #define LMaster 1
@@ -119,7 +119,7 @@
 #define BallIntake_kdLock 0
 #define BallIntake_kfLock 0
 #define BallIntake_izoneLock 0
-#define BallIntake_minOutLock 0
+#define BallIntake_minOutLock 0.05
 #define BallIntake_maxOutLock 0.3
 #define BallIntake_allowedErrorLock 0
 #define BallIntake_maxAccelLock 0

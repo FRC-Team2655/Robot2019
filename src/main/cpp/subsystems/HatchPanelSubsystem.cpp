@@ -1,5 +1,6 @@
 #include "subsystems/HatchPanelClawSubsystem.h"
 
+#include <iostream>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <commands/LockClawTimeCG.h>
 
@@ -9,7 +10,8 @@ void HatchPanelClawSubsystem::InitDefaultCommand() {
 }
 
 void HatchPanelClawSubsystem::openClaw(){
-  if(isExtended())
+  std::cout << isExtended() << std::endl;
+  //if(isExtended())
     clawSol.Set(Claw_Open);
 }
 void HatchPanelClawSubsystem::closeClaw(){
