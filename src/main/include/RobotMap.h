@@ -29,9 +29,11 @@
 #define LMaxVelocity 5700.0 //5580.0      
 #define GearRatio 9.47 / 1.0       // 9.47 motor revolutions to 1 output revolution
 #define WheelDiameter .1524      // wheel diameter in meters (6")
-#define MaxVelocity 1425 //5700    // This is capped at the slowest velocity on ANY robot to ensure that paths work the same
-#define PathfinderMaxVelocity 0.600375 //2.4015
+#define MaxVelocity 5700    // This is capped at the slowest velocity on ANY robot to ensure that paths work the same
+#define PathfinderMaxVelocity 1.20075 //2.4015
+const double PathfinderMaxRPM = PathfinderMaxVelocity * 60.0 / (WheelDiameter * 3.141592) * GearRatio;
 #define DriveRampRate 0.25  // Minimum time (sec) to go from 0 to full
+#define WheelbaseWidth 0.6223
 
 // SPARK MAX IDs
 #define LMaster 1
@@ -86,17 +88,17 @@
 #define BallIntake_UpPID 0
 
 //Down
-#define BallIntake_kpDown 0.015
-#define BallIntake_kiDown 0
+#define BallIntake_kpDown 0.001
+#define BallIntake_kiDown 1e-12
 #define BallIntake_kdDown 0
 #define BallIntake_kfDown 0
 #define BallIntake_izoneDown 0
 #define BallIntake_minOutDown -0.5
 #define BallIntake_maxOutDown 1
 #define BallIntake_allowedErrorDown 0
-#define BallIntake_maxAccelDown 2000
+#define BallIntake_maxAccelDown 750
 #define BallIntake_minVelocityDown 0
-#define BallIntake_maxVelocityDown 4000
+#define BallIntake_maxVelocityDown 1000
 #define BallIntake_DownPID 1
 
 //Climb
@@ -108,7 +110,7 @@
 #define BallIntake_minOutClimb -1
 #define BallIntake_maxOutClimb 1
 #define BallIntake_allowedErrorClimb 0
-#define BallIntake_maxAccelClimb 18000
+#define BallIntake_maxAccelClimb 1800018000
 #define BallIntake_minVelocityClimb 0
 #define BallIntake_maxVelocityClimb 6000
 #define BallIntake_ClimbPID 2
@@ -142,15 +144,16 @@
 #define Claw_Retract frc::DoubleSolenoid::Value::kReverse
 #define Claw_Close frc::DoubleSolenoid::Value::kForward
 #define Claw_Open frc::DoubleSolenoid::Value::kReverse
+#define Claw_Lock frc::DoubleSolenoid::Value::kReverse
+#define Claw_Unlock frc::DoubleSolenoid::Value::kForward
 #else
 #define Claw_Extend frc::DoubleSolenoid::Value::kForward
 #define Claw_Retract frc::DoubleSolenoid::Value::kReverse
 #define Claw_Close frc::DoubleSolenoid::Value::kForward
 #define Claw_Open frc::DoubleSolenoid::Value::kReverse
+#define Claw_Lock frc::DoubleSolenoid::Value::kForward
+#define Claw_Unlock frc::DoubleSolenoid::Value::kReverse
 #endif
-
-#define Claw_Lock frc::DoubleSolenoid::Value::kReverse
-#define Claw_Unlock frc::DoubleSolenoid::Value::kForward
 
 //LandingGearArm PID values
 #define LandingGearArm_gearRatio 45.33 / 1.0

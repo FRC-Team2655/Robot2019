@@ -30,7 +30,7 @@ OI::OI() {
   frc::JoystickButton *shareBtn = new frc::JoystickButton(js0, 9);
   frc::JoystickButton *l2Btn = new frc::JoystickButton(js0, 7);
 
-  triangleBtn->WhenPressed(new MoveIntakeArmCommand(-0.13));
+  triangleBtn->WhenPressed(new MoveIntakeArmCommand(-0.12));
   squareBtn->WhenPressed(new ToggleClawExtensionCommand());
   r2Btn->WhenPressed(new CloseClawCommand(false));
   r2Btn->WhenReleased(new CloseClawCommand(true));
@@ -38,6 +38,7 @@ OI::OI() {
   r1Btn->WhileHeld(new MoveShooterWheelsCommand(.4, true));
   l1Btn->WhileHeld(new MoveShooterWheelsCommand(1, false));
   xBtn->WhenPressed(new MoveIntakeArmCommand(BallIntakeUpPos));
-  circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.25));
+  circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.255));
   l2Btn->WhenPressed(new JoystickBallIntakeDriveCommand());
+  shareBtn->WhileHeld(new MoveShooterWheelsCommand(0.2, false));
 }

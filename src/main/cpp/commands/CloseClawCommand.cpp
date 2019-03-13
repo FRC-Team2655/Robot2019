@@ -17,6 +17,7 @@ void CloseClawCommand::Initialize() {
     shouldClose = false;
   }
 
+  std::cout << "Closing claw..." << std::endl;
   if (shouldClose) {
     Robot::hatchPanelClaw.closeClaw();
   }else{
@@ -26,7 +27,6 @@ void CloseClawCommand::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void CloseClawCommand::Execute() {
-  std::cout << "Closing claw..." << std::endl;
 }
 
 // Make this return true when this Command no longer needs to run execute()

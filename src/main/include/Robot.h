@@ -21,6 +21,7 @@ public:
   static BallShooterSubsystem ballShooter;
   static HatchPanelClawSubsystem hatchPanelClaw;
   static bool hasEverResetBallIntakeArm;
+  //frc::Command *slowIntakeCmd = nullptr;
 
   void RobotInit() override;
   void RobotPeriodic() override;

@@ -21,4 +21,5 @@ public:
   bool isExtended();
   void lock();
   void unlock();
+  frc::DoubleSolenoid::Value extenderSolenoidDirection();
 };

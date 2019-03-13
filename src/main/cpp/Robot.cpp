@@ -16,6 +16,7 @@
 #include <commands/UnlockClawCommand.h>
 #include <commands/DriveDistanceCommand.h>
 #include <commands/PlaceHatchPanelCG.h>
+#include <commands/MoveShooterWheelsCommand.h>
 
 #include <ctime>
 
@@ -39,6 +40,8 @@ void Robot::RobotInit() {
     frc::SmartDashboard::PutBoolean("ABCDEFG", false);
 
     frc::SmartDashboard::PutNumber("P: ", BallIntake_kpDown);
+
+    std::cout << hatchPanelClaw.extenderSolenoidDirection() << std::endl;
 }
 
 void Robot::RobotPeriodic() {
@@ -91,6 +94,8 @@ void Robot::AutonomousInit() {
 
     //frc::Command *cmd = new PlaceHatchPanelCG();
     //cmd->Start();
+
+    std::cout << hatchPanelClaw.extenderSolenoidDirection() << std::endl;
 }
 
 void Robot::AutonomousPeriodic() { 
@@ -115,6 +120,8 @@ void Robot::TeleopInit() {
 
     compressor.SetClosedLoopControl(false);
     compressor.SetClosedLoopControl(true);
+
+    std::cout << hatchPanelClaw.extenderSolenoidDirection() << std::endl;
 }
 
 void Robot::TeleopPeriodic() {
@@ -130,11 +137,18 @@ void Robot::TeleopPeriodic() {
     }*/
 
     int value = oi.js0->GetPOV();
-    if(value == 180 && previousPovValue != 180){
-        //frc::Command *cmd = new ClimbCommandGroup();
-        //cmd->Start();
-    }
-    previousPovValue = value;
+
+    /*std::cout << value << std::endl;
+
+    if (value == 0 && slowIntakeCmd == nullptr) {
+        slowIntakeCmd = new MoveShooterWheelsCommand(0.2, false);
+        slowIntakeCmd->Start();
+
+        std::cout << "Starting Command..." << std::endl;
+    }else if (slowIntakeCmd != nullptr){
+        slowIntakeCmd->Cancel();
+        slowIntakeCmd = nullptr;
+    }*/
 }
 
 void Robot::TestPeriodic() {}

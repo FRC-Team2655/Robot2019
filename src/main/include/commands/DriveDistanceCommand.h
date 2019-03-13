@@ -4,6 +4,8 @@
 
 #include <pathfinder.h>
 
+#include <RobotMap.h>
+
 
 class DriveDistanceCommand : public frc::Command {
 public:
@@ -15,6 +17,12 @@ public:
   void Interrupted() override;
 
 private:
+
+  const double maxV = 1.20075,
+               maxA = 2,
+               maxJ = 5;
+  const double maxRPM = maxV * 60.0 / (WheelDiameter * 3.141592) * GearRatio;
+
   double distance;
   int stopCounter = 0;
   TrajectoryCandidate *candidate;

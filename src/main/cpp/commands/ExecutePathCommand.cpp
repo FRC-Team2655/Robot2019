@@ -144,7 +144,7 @@ void ExecutePathCommand::Execute() {
 		//l += turn;
 		//r -= turn;
 
-		Robot::driveBase.driveTankVelocity(l * MaxVelocity, r * MaxVelocity);
+		Robot::driveBase.driveTankVelocity(l * PathfinderMaxRPM, r * PathfinderMaxRPM);
 	}
 }
 

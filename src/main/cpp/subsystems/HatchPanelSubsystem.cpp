@@ -10,8 +10,7 @@ void HatchPanelClawSubsystem::InitDefaultCommand() {
 }
 
 void HatchPanelClawSubsystem::openClaw(){
-  std::cout << isExtended() << std::endl;
-  //if(isExtended())
+  if(isExtended())
     clawSol.Set(Claw_Open);
 }
 void HatchPanelClawSubsystem::closeClaw(){
@@ -39,4 +38,8 @@ void HatchPanelClawSubsystem::lock(){
 
 void HatchPanelClawSubsystem::unlock(){
   lockSolenoid.Set(Claw_Unlock);
+}
+
+frc::DoubleSolenoid::Value HatchPanelClawSubsystem::extenderSolenoidDirection() {
+  return extenderSol.Get();
 }

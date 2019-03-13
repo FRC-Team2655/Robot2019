@@ -17,15 +17,16 @@ DriveDistanceCommand::DriveDistanceCommand(double distance) : distance(distance 
 
 // Called just before this Command runs the first time
 void DriveDistanceCommand::Initialize() {
+
   Waypoint pts[] = {{0, 0, 0}, {std::abs(distance), 0, 0}};
   candidate = new TrajectoryCandidate();
   pathfinder_prepare(pts, 2, 
         FIT_HERMITE_CUBIC, 
         PATHFINDER_SAMPLES_FAST, 
-        0.02, PathfinderMaxVelocity, 10, 50, candidate);
+        0.02, maxV, maxA, maxJ, candidate);
   length = candidate->length;
   pathfinder_generate(candidate, baseTrajectory);
-  pathfinder_modify_tank(baseTrajectory, length, leftTrajectory, rightTrajectory, 0.6223);
+  pathfinder_modify_tank(baseTrajectory, length, leftTrajectory, rightTrajectory, WheelbaseWidth);
 
   if(distance < 0){
     // Drive with back of robot in reverse order
@@ -55,7 +56,7 @@ void DriveDistanceCommand::Execute() {
   double r = pathfinder_follow_encoder(rightConfig, &rightFollower, rightTrajectory, length, 
                   T_PER_REV * Robot::driveBase.getRightOutputPosition());
 
-  Robot::driveBase.driveTankVelocity(l * MaxVelocity, r * MaxVelocity);
+  Robot::driveBase.driveTankVelocity(l * maxRPM, r * maxRPM);
 
   std::cout << "Executing..." << std::endl;
 }

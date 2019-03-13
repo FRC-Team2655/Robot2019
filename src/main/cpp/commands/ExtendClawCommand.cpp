@@ -22,6 +22,7 @@ void ExtendClawCommand::Initialize() {
     shouldExtend = false;
   }
 
+  std::cout << "Extending claw..." << std::endl;
   if (shouldExtend) {
     Robot::hatchPanelClaw.extendClaw();
   }else{
@@ -31,7 +32,6 @@ void ExtendClawCommand::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void ExtendClawCommand::Execute() {
-  std::cout << "Extending claw..." << std::endl;
 }
 
 // Make this return true when this Command no longer needs to run execute()
