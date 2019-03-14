@@ -45,7 +45,7 @@ OI::OI() {
   triangleBtn->WhenPressed(new SetAtRocketHeightCommand(true));
   xBtn->WhenPressed(new MoveIntakeArmCommand(BallIntakeUpPos));
   xBtn->WhenPressed(new SetAtRocketHeightCommand(false));
-  circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.255));
+  circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.265));
   circleBtn->WhenPressed(new SetAtRocketHeightCommand(false));
   l2Btn->WhenPressed(new JoystickBallIntakeDriveCommand());
   l2Btn->WhenPressed(new SetAtRocketHeightCommand(false));

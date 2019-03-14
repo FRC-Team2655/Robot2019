@@ -80,21 +80,6 @@ void Robot::AutonomousInit() {
     //frc::Command *cmd = new PlaceHatchPanelCG();
     //cmd->Start();
 
-    //frc::Command *cmd = new DriveDistanceCommand(-12);
-    //cmd->Start();
-    /*frc::Command *cmd1 = new ExtendClawCommand(true);
-    cmd1->Start();
-    frc::Command *cmd2 = new CloseClawCommand(false);
-    cmd2->Start();*/
-    //frc::Command *cmd3 = new frc::WaitCommand(3);
-    //cmd3->Start();
-    //hatchPanelClaw.openClaw();
-    //frc::Command *cmd4 = new DriveDistanceCommand(12);
-    //cmd4->Start();
-
-    //frc::Command *cmd = new PlaceHatchPanelCG();
-    //cmd->Start();
-
     std::cout << hatchPanelClaw.extenderSolenoidDirection() << std::endl;
 }
 

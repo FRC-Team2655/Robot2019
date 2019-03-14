@@ -22,7 +22,6 @@ void ExtendClawCommand::Initialize() {
     shouldExtend = false;
   }
 
-  std::cout << "Extending claw..." << std::endl;
   if (shouldExtend) {
     Robot::hatchPanelClaw.extendClaw();
   }else{

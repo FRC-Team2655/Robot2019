@@ -17,7 +17,6 @@ void CloseClawCommand::Initialize() {
     shouldClose = false;
   }
 
-  std::cout << "Closing claw..." << std::endl;
   if (shouldClose) {
     Robot::hatchPanelClaw.closeClaw();
   }else{
