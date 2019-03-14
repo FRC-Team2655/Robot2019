@@ -74,7 +74,7 @@ const double PathfinderMaxRPM = PathfinderMaxVelocity * 60.0 / (WheelDiameter * 
 #endif
 
 //Up
-#define BallIntake_kpUp 0.03
+#define BallIntake_kpUp 0.02
 #define BallIntake_kiUp 0
 #define BallIntake_kdUp 0
 #define BallIntake_kfUp 0
@@ -88,17 +88,17 @@ const double PathfinderMaxRPM = PathfinderMaxVelocity * 60.0 / (WheelDiameter * 
 #define BallIntake_UpPID 0
 
 //Down
-#define BallIntake_kpDown 0.001
-#define BallIntake_kiDown 1e-12
+#define BallIntake_kpDown 0.002
+#define BallIntake_kiDown 2e-12
 #define BallIntake_kdDown 0
 #define BallIntake_kfDown 0
 #define BallIntake_izoneDown 0
-#define BallIntake_minOutDown -0.5
+#define BallIntake_minOutDown -0.7
 #define BallIntake_maxOutDown 1
 #define BallIntake_allowedErrorDown 0
-#define BallIntake_maxAccelDown 750
+#define BallIntake_maxAccelDown 850
 #define BallIntake_minVelocityDown 0
-#define BallIntake_maxVelocityDown 1000
+#define BallIntake_maxVelocityDown 1100
 #define BallIntake_DownPID 1
 
 //Climb
@@ -121,7 +121,7 @@ const double PathfinderMaxRPM = PathfinderMaxVelocity * 60.0 / (WheelDiameter * 
 #define BallIntake_kdLock 0
 #define BallIntake_kfLock 0
 #define BallIntake_izoneLock 0
-#define BallIntake_minOutLock 0.05
+#define BallIntake_minOutLock 0.02
 #define BallIntake_maxOutLock 0.3
 #define BallIntake_allowedErrorLock 0
 #define BallIntake_maxAccelLock 0

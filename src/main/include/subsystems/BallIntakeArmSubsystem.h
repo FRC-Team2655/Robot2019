@@ -12,13 +12,17 @@ private:
   rev::CANEncoder armEncoder = armMotor.GetEncoder();
   rev::CANPIDController armPid = armMotor.GetPIDController();
   frc::DigitalInput topLimitSwitch { LimitSwitchID };
+  bool atRocketHeight = false;
 
 public:
   BallIntakeArmSubsystem();
   void InitDefaultCommand() override;
   void moveArmSpeed(double percentage);
   void moveToPosition(double ticks);
-  
+
+  bool getAtRocketHeight();
+  void setAtRocketHeight(bool atRocketHeight);
+
   void lockPosition();
 
   /**

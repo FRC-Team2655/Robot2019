@@ -71,6 +71,14 @@ BallIntakeArmSubsystem::BallIntakeArmSubsystem() : Subsystem("BallIntakeArmSubsy
   armMotor.BurnFlash();
 }
 
+bool BallIntakeArmSubsystem::getAtRocketHeight(){
+  return atRocketHeight;
+}
+
+void BallIntakeArmSubsystem::setAtRocketHeight(bool atRocketHeight){
+  this->atRocketHeight = atRocketHeight; 
+}
+
 void BallIntakeArmSubsystem::moveArmSpeed(double percentage){
   /*if(Robot::hasEverResetBallIntakeArm){
     double pos = getArmPosition();
@@ -112,7 +120,7 @@ void BallIntakeArmSubsystem::resetPosition() {
 void BallIntakeArmSubsystem::moveToPosition(double revolutions){
   revolutions = restrictPosition(revolutions);
   if ((revolutions / BallIntakeDownDirection) <= 0) {
-    // Moving up
+     //Moving up
     armPid.SetReference(revolutions * BallIntake_gearRatio, rev::ControlType::kPosition, BallIntake_UpPID);
   }else{
     // Moving Down
