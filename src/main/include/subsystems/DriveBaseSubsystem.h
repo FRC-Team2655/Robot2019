@@ -8,16 +8,6 @@
 
 using MotorType = rev::CANSparkMax::MotorType;
 
-class RotatePIDSource : public frc::PIDSource {
-public:
-  double PIDGet() override;
-};
-
-class RotatePIDOutput : public frc::PIDOutput {
-public:
-  void PIDWrite(double output) override;
-};
-
 class DriveBaseSubsystem : public frc::Subsystem {
 public:
   DriveBaseSubsystem();
@@ -74,9 +64,6 @@ public:
   void setBrakeMode();
 
   void resetEncoders();
-  
-  void stopRotatePID();
-  void rotateToHeading(double heading);
 
   void resetIMUForward();
   void resetIMUReverse();
@@ -99,10 +86,6 @@ private:
 
   rev::CANPIDController leftPID = leftMaster.GetPIDController();
   rev::CANPIDController rightPID = rightMaster.GetPIDController();
-
-
-  frc::PIDController rotatePID {Rotate_kp, Rotate_ki, Rotate_kd, new RotatePIDSource(), 
-                                new RotatePIDOutput(), 0.05};
   
   frc::ADIS16470_IMU imu;
 

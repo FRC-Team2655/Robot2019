@@ -24,12 +24,6 @@ public:
 
   void lockPosition();
 
-  /**
-   * ONLY USE WHEN CLIMBING!!! TOO AGRESSIVE FOR NORMAL USE. FOR NORMAL USE USE moveToPosition
-   * Move the ball intake arm to a sepecified position at a high velocity for climbing
-   */
-  void armClimbPosition(double position);
-
   void stopArm();
   double getArmPosition();
   double getArmVelocity();

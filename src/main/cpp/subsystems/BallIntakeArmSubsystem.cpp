@@ -34,21 +34,6 @@ BallIntakeArmSubsystem::BallIntakeArmSubsystem() : Subsystem("BallIntakeArmSubsy
   armPid.SetSmartMotionMaxVelocity(BallIntake_maxVelocityDown, BallIntake_DownPID);
   armPid.SetSmartMotionMinOutputVelocity(BallIntake_minVelocityDown, BallIntake_DownPID);
 
-   // Climb PID Settings
-  armPid.SetP(BallIntake_kpClimb, BallIntake_ClimbPID);
-  armPid.SetI(BallIntake_kiClimb, BallIntake_ClimbPID);
-  armPid.SetD(BallIntake_kdClimb, BallIntake_ClimbPID);
-  armPid.SetFF(BallIntake_kfClimb, BallIntake_ClimbPID);
-  armPid.SetIZone(BallIntake_izoneClimb, BallIntake_ClimbPID);
-  armPid.SetOutputRange(BallIntake_minOutClimb, BallIntake_maxOutClimb, BallIntake_ClimbPID);
-
-  // Setup for Smart Motion
-  armPid.SetSmartMotionAccelStrategy(rev::CANPIDController::AccelStrategy::kTrapezoidal, BallIntake_ClimbPID);
-  armPid.SetSmartMotionAllowedClosedLoopError(BallIntake_allowedErrorClimb, BallIntake_ClimbPID);
-  armPid.SetSmartMotionMaxAccel(BallIntake_maxAccelClimb, BallIntake_ClimbPID);
-  armPid.SetSmartMotionMaxVelocity(BallIntake_maxVelocityClimb, BallIntake_ClimbPID);
-  armPid.SetSmartMotionMinOutputVelocity(BallIntake_minVelocityClimb, BallIntake_ClimbPID);
-
   // Lock PID Settings
   armPid.SetP(BallIntake_kpLock, BallIntake_LockPID);
   armPid.SetI(BallIntake_kiLock, BallIntake_LockPID);
@@ -122,10 +107,6 @@ void BallIntakeArmSubsystem::moveToPosition(double revolutions){
     // Moving Down
     armPid.SetReference(revolutions * BallIntake_gearRatio, rev::ControlType::kSmartMotion, BallIntake_DownPID);
   }
-}
-
-void BallIntakeArmSubsystem::armClimbPosition(double position){
-  armPid.SetReference(position * BallIntake_gearRatio, rev::ControlType::kSmartMotion, BallIntake_ClimbPID);
 }
 
 bool BallIntakeArmSubsystem::isTopLimitSwitchPressed(){

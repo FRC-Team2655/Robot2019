@@ -1,7 +1,7 @@
 #pragma once
 
-
-
+#include <string>
+#include <frc/DoubleSolenoid.h>
 
 
 
@@ -14,168 +14,112 @@
 
 
 
+#define MINVAL(x, y) (((x) > (y)) ? (x) : (y)) // Get the minimum of two values (macro)
+
+
+
 
 
 // SmartDashboard keys
-#define LeftVelocity "LeftVelocity"
-#define RightVelocity "RightVelocity"
-#define ArmPosition "Intake Arm Position"
-#define ArmSpeed "Intake Arm Velocity"
+const extern std::string LeftVelocity;
+const extern std::string RightVelocity;
+const extern std::string ArmPosition;
+const extern std::string ArmSpeed;
 
-#define MINVAL(x, y) (((x) > (y)) ? (x) : (y)) // Get the minimum of two values (macro)
 
-// Drivebase settings (leave in this header because important to pathfinder use)
-#define RMaxVelocity 5800.0 //5950.0      // motor revolutions / min
-#define LMaxVelocity 5700.0 //5580.0      
-#define GearRatio 9.47 / 1.0       // 9.47 motor revolutions to 1 output revolution
-#define WheelDiameter .1524      // wheel diameter in meters (6")
-#define MaxVelocity 5700    // This is capped at the slowest velocity on ANY robot to ensure that paths work the same
-#define PathfinderMaxVelocity 1.20075 //2.4015
-const double PathfinderMaxRPM = PathfinderMaxVelocity * 60.0 / (WheelDiameter * 3.141592) * GearRatio;
-#define DriveRampRate 0.25  // Minimum time (sec) to go from 0 to full
-#define WheelbaseWidth 0.6223
+// Drivebase settings
+const extern double RMaxVelocity;
+const extern double LMaxVelocity;     
+const extern double GearRatio;
+const extern double WheelDiameter;
+const extern double MaxVelocity;
+const extern double PathfinderMaxVelocity;
+const extern double PathfinderMaxRPM;
+const extern double DriveRampRate;
+const extern double WheelbaseWidth;
 
 // SPARK MAX IDs
-#define LMaster 1
-#define LSlave 2
-#define LSlave2 6
-#define RMaster 3
-#define RSlave 4
-#define RSlave2 7
-#define IntakeArmMotor 5
+const extern int LMaster;
+const extern int LSlave;
+const extern int LSlave2;
+const extern int RMaster;
+const extern int RSlave;
+const extern int RSlave2;
+const extern int IntakeArmMotor;
 
 // Talon SRX IDs
-#define BallShooter 1
+const extern int BallShooter;
 
 // Solenoid IDs
-#define ShooterSolenoidA 2
-#define ShooterSolenoidB 3
-#define ClawSolenoidA 4
-#define ClawSolenoidB 5
-#define ExtenderSolenoidA 0
-#define ExtenderSolenoidB 1
-#define ClawLockSolenoidA 6
-#define ClawLockSolenoidB 7
+const extern int ShooterSolenoidA;
+const extern int ShooterSolenoidB;
+const extern int ClawSolenoidA;
+const extern int ClawSolenoidB;
+const extern int ExtenderSolenoidA;
+const extern int ExtenderSolenoidB;
+const extern int ClawLockSolenoidA;
+const extern int ClawLockSolenoidB;
 
-#define LimitSwitchID 0
+// Limit switches
+const extern int LimitSwitchID;
 
 //BallIntake PID values
-#if COMPBOT
-#define BallIntake_gearRatio 62.5 // 50:1 gearbox and 12:15 sprocket
-#else
-#define BallIntake_gearRatio 50.0
-#endif
+const extern double BallIntake_gearRatio;
 
-#define BallIntakeDownDirection -1 // Sign of moving downwards
-#define BallIntakeDownPosLimit 0.5  // Magnitude of downward rotation allowed (do not put sign)
-#define BallIntakeUpPosLimit 0.1 //Magitude of upward rotation allowed (do not put sign)
-#define BallIntakeUpPos 0.05
+const extern int BallIntakeDownDirection;
+const extern double BallIntakeDownPosLimit;
+const extern double BallIntakeUpPosLimit;
+const extern double BallIntakeUpPos;
 
-#if COMPBOT
-    #define BallIntake_LimitSwitchPressed true
-#else
-    #define BallIntake_LimitSwitchPressed false
-#endif
+const extern bool BallIntake_LimitSwitchPressed;
 
 //Up
-#define BallIntake_kpUp 0.02
-#define BallIntake_kiUp 0
-#define BallIntake_kdUp 0
-#define BallIntake_kfUp 0
-#define BallIntake_izoneUp 0
-#define BallIntake_minOutUp -1
-#define BallIntake_maxOutUp 1
-#define BallIntake_allowedErrorUp 0
-#define BallIntake_maxAccelUp 2000
-#define BallIntake_minVelocityUp 0
-#define BallIntake_maxVelocityUp 4000
-#define BallIntake_UpPID 0
+const extern double BallIntake_kpUp;
+const extern double BallIntake_kiUp;
+const extern double BallIntake_kdUp;
+const extern double BallIntake_kfUp;
+const extern double BallIntake_izoneUp;
+const extern double BallIntake_minOutUp;
+const extern double BallIntake_maxOutUp;
+const extern double BallIntake_allowedErrorUp;
+const extern double BallIntake_maxAccelUp;
+const extern double BallIntake_minVelocityUp;
+const extern double BallIntake_maxVelocityUp;
+const extern double BallIntake_UpPID;
 
 //Down
-#define BallIntake_kpDown 0.001
-#define BallIntake_kiDown 1e-12
-#define BallIntake_kdDown 0
-#define BallIntake_kfDown 0
-#define BallIntake_izoneDown 0
-#define BallIntake_minOutDown -0.7
-#define BallIntake_maxOutDown 1
-#define BallIntake_allowedErrorDown 0
-#define BallIntake_maxAccelDown 850
-#define BallIntake_minVelocityDown 0
-#define BallIntake_maxVelocityDown 1100
-#define BallIntake_DownPID 1
-
-//Climb
-#define BallIntake_kpClimb 1
-#define BallIntake_kiClimb 0
-#define BallIntake_kdClimb 0
-#define BallIntake_kfClimb 0
-#define BallIntake_izoneClimb 0
-#define BallIntake_minOutClimb -1
-#define BallIntake_maxOutClimb 1
-#define BallIntake_allowedErrorClimb 0
-#define BallIntake_maxAccelClimb 1800018000
-#define BallIntake_minVelocityClimb 0
-#define BallIntake_maxVelocityClimb 6000
-#define BallIntake_ClimbPID 2
+const extern double BallIntake_kpDown;
+const extern double BallIntake_kiDown;
+const extern double BallIntake_kdDown;
+const extern double BallIntake_kfDown;
+const extern double BallIntake_izoneDown;
+const extern double BallIntake_minOutDown;
+const extern double BallIntake_maxOutDown;
+const extern double BallIntake_allowedErrorDown;
+const extern double BallIntake_maxAccelDown;
+const extern double BallIntake_minVelocityDown;
+const extern double BallIntake_maxVelocityDown;
+const extern double BallIntake_DownPID;
 
 //Lock arm
-#define BallIntake_kpLock 1
-#define BallIntake_kiLock 0
-#define BallIntake_kdLock 0
-#define BallIntake_kfLock 0
-#define BallIntake_izoneLock 0
-#define BallIntake_minOutLock 0.05
-#define BallIntake_maxOutLock 0.3
-#define BallIntake_allowedErrorLock 0
-#define BallIntake_maxAccelLock 0
-#define BallIntake_minVelocityLock 0
-#define BallIntake_maxVelocityLock 0
-#define BallIntake_LockPID 3
+const extern double BallIntake_kpLock;
+const extern double BallIntake_kiLock;
+const extern double BallIntake_kdLock;
+const extern double BallIntake_kfLock;
+const extern double BallIntake_izoneLock;
+const extern double BallIntake_minOutLock;
+const extern double BallIntake_maxOutLock;
+const extern double BallIntake_allowedErrorLock;
+const extern double BallIntake_maxAccelLock;
+const extern double BallIntake_minVelocityLock;
+const extern double BallIntake_maxVelocityLock;
+const extern double BallIntake_LockPID;
 
 //Ball Shooter Subsystem Extend and Retract for the Solenoids
-#if COMPBOT
-#define BallShooter_Extend frc::DoubleSolenoid::Value::kReverse
-#define BallShooter_Retract frc::DoubleSolenoid::Value::kForward
-#else
-#define BallShooter_Extend frc::DoubleSolenoid::Value::kForward
-#define BallShooter_Retract frc::DoubleSolenoid::Value::kReverse
-#endif
+const extern frc::DoubleSolenoid::Value BallShooter_Extend; 
+const extern frc::DoubleSolenoid::Value BallShooter_Retract; 
 
 //Hatch Panel Claw Subsystem Extend, Retract, Open, and Close for the Solenoids
-#if COMPBOT
-#define Claw_Extend frc::DoubleSolenoid::Value::kForward
-#define Claw_Retract frc::DoubleSolenoid::Value::kReverse
-#define Claw_Close frc::DoubleSolenoid::Value::kForward
-#define Claw_Open frc::DoubleSolenoid::Value::kReverse
-#define Claw_Lock frc::DoubleSolenoid::Value::kReverse
-#define Claw_Unlock frc::DoubleSolenoid::Value::kForward
-#else
-#define Claw_Extend frc::DoubleSolenoid::Value::kForward
-#define Claw_Retract frc::DoubleSolenoid::Value::kReverse
-#define Claw_Close frc::DoubleSolenoid::Value::kForward
-#define Claw_Open frc::DoubleSolenoid::Value::kReverse
-#define Claw_Lock frc::DoubleSolenoid::Value::kForward
-#define Claw_Unlock frc::DoubleSolenoid::Value::kReverse
-#endif
-
-//LandingGearArm PID values
-#define LandingGearArm_gearRatio 45.33 / 1.0
-#define LandingGearArm_kp 0
-#define LandingGearArm_ki 0
-#define LandingGearArm_kd 0
-#define LandingGearArm_kf 0
-#define LandingGearArm_izone 0
-#define LandingGearArm_minOut -1
-#define LandingGearArm_maxOut 1
-#define LandingGearArm_allowedError 0
-#define LandingGearArm_maxAccel 0
-#define LandingGearArm_minVelocity 0
-#define LandingGearArm_maxVelocity 0
-
-// Rotate PID
-#define Rotate_kp 0
-#define Rotate_ki 0
-#define Rotate_kd 0
-#define Rotate_minOut -1
-#define Rotate_maxOut 1
+const extern frc::DoubleSolenoid::Value Claw_Extend, Claw_Retract,
+                                        Claw_Open, Claw_Close,
+                                        Claw_Lock, Claw_Unlock;

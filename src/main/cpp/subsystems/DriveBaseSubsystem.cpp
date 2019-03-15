@@ -5,27 +5,9 @@
 
 using IdleMode = rev::CANSparkMax::IdleMode;
 
-
-///////////////////////////////////////////////////////////////
-//// RotatePIDSource
-///////////////////////////////////////////////////////////////
-
-double RotatePIDSource::PIDGet() {
-	return Robot::driveBase.getIMUAngle();
-}
-
-///////////////////////////////////////////////////////////////
-//// RotatePIDOutput
-///////////////////////////////////////////////////////////////
-
-void RotatePIDOutput::PIDWrite(double output) {
-	Robot::driveBase.driveTankVelocity(-output * MaxVelocity, output * MaxVelocity);
-}
-
 //////////////////////////////////////////////////////////////
 /// DriveBaseSubsystem
 //////////////////////////////////////////////////////////////
-
 
 DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {
   leftSlave.Follow(leftMaster);
@@ -48,9 +30,6 @@ DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {
   rightPID.SetIZone(0);
   rightPID.SetOutputRange(-1, 1);
 
-  rotatePID.SetOutputRange(Rotate_minOut, Rotate_maxOut);
-  rotatePID.SetEnabled(false);
-
   rightMaster.SetInverted(true);
 
   leftMaster.SetClosedLoopRampRate(DriveRampRate);
@@ -62,8 +41,6 @@ DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {
   rightMaster.SetInverted(true);
   rightSlave.SetInverted(true);
   rightSlave2.SetInverted(true);
-
-  this->AddChild(rotatePID);
 }
 
 void DriveBaseSubsystem::InitDefaultCommand() {
@@ -195,15 +172,6 @@ void DriveBaseSubsystem::setBrakeMode() {
 void DriveBaseSubsystem::resetEncoders(){
 	leftEnc.SetPosition(0);
 	rightEnc.SetPosition(0);
-}
-
-void DriveBaseSubsystem::stopRotatePID() {
-  rotatePID.SetEnabled(false);
-}
-
-void DriveBaseSubsystem::rotateToHeading(double heading) {
-  rotatePID.SetSetpoint(heading);
-  rotatePID.SetEnabled(true);
 }
 
 void DriveBaseSubsystem::resetIMUForward() {
