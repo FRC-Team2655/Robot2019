@@ -1,8 +1,8 @@
 #include "subsystems/HatchPanelClawSubsystem.h"
 
-#include <iostream>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <commands/LockClawTimeCG.h>
+#include <commands/RetractClawCommandGroup.h>
 
 HatchPanelClawSubsystem::HatchPanelClawSubsystem() : Subsystem("HatchPanelClawSubsystem") {}
 

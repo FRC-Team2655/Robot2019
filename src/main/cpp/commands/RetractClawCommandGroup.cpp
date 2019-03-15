@@ -7,11 +7,11 @@
 
 #include "commands/RetractClawCommandGroup.h"
 #include <commands/UnlockClawCommand.h>
-#include <commands/RetractClawCommand.h>
+#include <commands/ClawExtendCommand.h>
 #include <frc/commands/WaitCommand.h>
 
 RetractClawCommandGroup::RetractClawCommandGroup() {
   AddSequential(new UnlockClawCommand());
   AddSequential(new frc::WaitCommand(0.1));
-  AddSequential(new RetractClawCommand());
+  AddSequential(new ClawExtendCommand(false));
 }

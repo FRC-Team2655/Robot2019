@@ -7,7 +7,6 @@
 
 #pragma once
 
-#include <frc/commands/Command.h>
 #include <team2655/autonomous.hpp>
 
 class RunPlaceHatchCommand : public team2655::AutoCommand {

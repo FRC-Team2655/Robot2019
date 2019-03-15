@@ -9,6 +9,7 @@ ToggleClawExtensionCommand::ToggleClawExtensionCommand() {
 // Called just before this Command runs the first time
 void ToggleClawExtensionCommand::Initialize() {
   if(Robot::hatchPanelClaw.isExtended()){
+    // Must use this to time unlock correctly
     frc::Command *cmd = new RetractClawCommandGroup();
     cmd->Start();
   }else{

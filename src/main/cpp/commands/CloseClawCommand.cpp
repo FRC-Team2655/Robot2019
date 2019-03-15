@@ -1,4 +1,5 @@
 #include "commands/CloseClawCommand.h"
+#include <Robot.h>
 
 CloseClawCommand::CloseClawCommand(bool shouldClose) : shouldClose(shouldClose) {
 

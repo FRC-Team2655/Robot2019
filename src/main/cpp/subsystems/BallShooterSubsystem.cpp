@@ -1,7 +1,5 @@
 #include "subsystems/BallShooterSubsystem.h"
 
-#include <iostream>
-
 BallShooterSubsystem::BallShooterSubsystem() : Subsystem("BallShooterSubsystem") {
     ballShooterMotor.SetNeutralMode(NeutralMode::Brake);
 

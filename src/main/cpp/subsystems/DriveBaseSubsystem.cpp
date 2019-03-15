@@ -1,10 +1,7 @@
 #include <subsystems/DriveBaseSubsystem.h>
 #include <RobotMap.h>
 #include <Robot.h>
-
 #include <commands/DriveJoystickCommand.h>
-
-#include <iostream>
 
 using IdleMode = rev::CANSparkMax::IdleMode;
 

@@ -1,4 +1,6 @@
 #include "commands/ClawExtendCommand.h"
+#include <commands/RetractClawCommandGroup.h>
+#include <Robot.h>
 
 ClawExtendCommand::ClawExtendCommand(bool shouldExtend) : shouldExtend(shouldExtend) {
   // Use Requires() here to declare subsystem dependencies
@@ -10,7 +12,9 @@ void ClawExtendCommand::Initialize() {
     if (shouldExtend) {
       Robot::hatchPanelClaw.extendClaw();
     }else {
-        Robot::hatchPanelClaw.retractClaw();
+      // Need to use this to time unlock correctly
+      frc::Command *cmd = new RetractClawCommandGroup();
+      cmd->Start();
     }
 }
 

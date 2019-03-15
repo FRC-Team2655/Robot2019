@@ -6,7 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/LockBallIntakeArmCommand.h"
-
 #include <Robot.h>
 
 LockBallIntakeArmCommand::LockBallIntakeArmCommand() {

@@ -3,7 +3,6 @@
 #include <frc/commands/Subsystem.h>
 #include <rev/CANSparkMax.h>
 #include <adi/ADIS16470_IMU.h>
-#include <adi/ADIS16448_IMU.h>
 #include <RobotMap.h>
 #include <frc/PIDController.h>
 
@@ -106,7 +105,6 @@ private:
                                 new RotatePIDOutput(), 0.05};
   
   frc::ADIS16470_IMU imu;
-  //frc::ADIS16448_IMU imu;
 
   std::array<double, 2> arcadeDrive(double xSpeed, double zRotation);
 };

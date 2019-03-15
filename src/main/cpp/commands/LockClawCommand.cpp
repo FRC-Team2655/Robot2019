@@ -6,7 +6,6 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/LockClawCommand.h"
-
 #include <Robot.h>
 
 LockClawCommand::LockClawCommand() {;

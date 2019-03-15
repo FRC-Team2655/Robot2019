@@ -2,16 +2,14 @@
 
 #include <frc/TimedRobot.h>
 #include <frc/commands/Command.h>
-#include <frc/smartdashboard/SendableChooser.h>
+#include <frc/Compressor.h>
 
 #include <OI.h>
 #include <subsystems/DriveBaseSubsystem.h>
 #include <subsystems/BallIntakeArmSubsystem.h>
-#include <team2655/autonomous.hpp>
 #include <subsystems/BallShooterSubsystem.h>
 #include <subsystems/HatchPanelClawSubsystem.h>
-
-#include <frc/Compressor.h>
+#include <team2655/autonomous.hpp>
 
 class Robot : public frc::TimedRobot {
 public:

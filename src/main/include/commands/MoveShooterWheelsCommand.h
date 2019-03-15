@@ -1,8 +1,6 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include <subsystems/BallShooterSubsystem.h>
-#include <Robot.h>
 
 class MoveShooterWheelsCommand : public frc::Command {
  public:

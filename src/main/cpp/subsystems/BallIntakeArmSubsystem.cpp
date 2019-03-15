@@ -1,9 +1,5 @@
 #include <subsystems/BallIntakeArmSubsystem.h>
-#include <commands/JoystickBallIntakeCommand.h>
 #include <Robot.h>
-#include <subsystems/BallIntakeArmSubsystem.h>
-
-#include <iostream>
 
 BallIntakeArmSubsystem::BallIntakeArmSubsystem() : Subsystem("BallIntakeArmSubsystem") {
   resetPosition();

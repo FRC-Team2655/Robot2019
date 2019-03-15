@@ -1,8 +1,6 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-#include <subsystems/HatchPanelClawSubsystem.h>
-#include <Robot.h>
 #include <team2655/autonomous.hpp>
 
 class CloseClawCommand : public team2655::AutoCommand {

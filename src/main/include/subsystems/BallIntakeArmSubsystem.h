@@ -1,7 +1,6 @@
 #pragma once
 
 #include <frc/commands/Subsystem.h>
-#include <frc/WPILib.h>
 #include <RobotMap.h>
 #include <rev/CANSparkMax.h>
 #include <frc/DigitalInput.h>

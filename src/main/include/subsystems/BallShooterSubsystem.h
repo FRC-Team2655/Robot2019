@@ -3,7 +3,6 @@
 #include <frc/commands/Subsystem.h>
 #include <ctre/Phoenix.h>
 #include <RobotMap.h>
-#include <frc/DoubleSolenoid.h>
 
 class BallShooterSubsystem : public frc::Subsystem {
 public:
@@ -19,5 +18,4 @@ public:
 
 private:
   WPI_TalonSRX ballShooterMotor{BallShooter};
-  //frc::DoubleSolenoid ballShooterSolenoid { ShooterSolenoidA, ShooterSolenoidB };
 };

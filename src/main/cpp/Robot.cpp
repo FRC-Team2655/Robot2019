@@ -4,14 +4,11 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 
 #include <team2655/autonomous.hpp>
-#include <commands/DriveTimeCommand.h>
 #include <commands/ExecutePathCommand.h>
 #include <commands/MoveIntakeArmCommand.h>
 
 #include <commands/ResetIntakeArmPosCG.h>
-#include <commands/ClimbCommandGroup.h>
 #include <commands/WaitAutoCommand.h>
-#include <commands/ExtendClawCommand.h>
 #include <commands/CloseClawCommand.h>
 #include <commands/UnlockClawCommand.h>
 #include <commands/DriveDistanceCommand.h>
@@ -33,16 +30,6 @@ void Robot::RobotInit() {
     autoManager.registerCommand(team2655::CommandCreator<ExecutePathCommand>, false, "PATH");
     autoManager.registerCommand(team2655::CommandCreator<WaitAutoCommand>, false, "WAIT");
     autoManager.registerCommand(team2655::CommandCreator<RunPlaceHatchCommand>, false, "PLACE_HATCH");
-    autoManager.registerCommand(team2655::CommandCreator<ExtendClawCommand>, false, "EXTEND_CLAW");
-    autoManager.registerCommand(team2655::CommandCreator<ExtendClawCommand>, false, "RETRACT_CLAW");
-    autoManager.registerCommand(team2655::CommandCreator<CloseClawCommand>, false, "OPEN_CLAW");
-    autoManager.registerCommand(team2655::CommandCreator<CloseClawCommand>, false, "CLOSE_CLAW");
-    autoManager.registerCommand(team2655::CommandCreator<UnlockClawCommand>, false, "UNLOCK_CLAW");
-    frc::SmartDashboard::PutBoolean("ABCDEFG", false);
-
-    frc::SmartDashboard::PutNumber("P: ", BallIntake_kpDown);
-
-    std::cout << hatchPanelClaw.extenderSolenoidDirection() << std::endl;
 }
 
 void Robot::RobotPeriodic() {

@@ -1,9 +1,7 @@
 #pragma once
 
 #include <frc/commands/Command.h>
-
 #include <pathfinder.h>
-
 #include <RobotMap.h>
 
 

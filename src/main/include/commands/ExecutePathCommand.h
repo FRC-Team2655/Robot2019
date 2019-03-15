@@ -3,6 +3,7 @@
 #include <frc/commands/Command.h>
 #include <pathfinder.h>
 #include <Robot.h>
+#include <team2655/autonomous.hpp>
 
 #define BUFFER_LEN 1024
 

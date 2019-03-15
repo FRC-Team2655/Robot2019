@@ -1,4 +1,5 @@
 #include "commands/MoveShooterWheelsCommand.h"
+#include <Robot.h>
 
 MoveShooterWheelsCommand::MoveShooterWheelsCommand(double percentage, bool intake) : percentage(std::abs(percentage)), intake(intake) {
   Requires(&Robot::ballShooter);
