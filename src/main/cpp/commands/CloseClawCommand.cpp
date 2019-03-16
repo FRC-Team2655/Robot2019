@@ -2,7 +2,6 @@
 #include <Robot.h>
 
 CloseClawCommand::CloseClawCommand(bool shouldClose) : shouldClose(shouldClose) {
-
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
 }

@@ -20,7 +20,7 @@ void PositionBasedShootCommand::Initialize() {}
 // Called repeatedly when this Command is scheduled to run
 void PositionBasedShootCommand::Execute() {
   if(Robot::ballIntakeArm.getAtRocketHeight()){
-    Robot::ballShooter.output(0.2);
+    Robot::ballShooter.output(0.3);
   }else{
     Robot::ballShooter.output(1);
   }

@@ -100,8 +100,6 @@ void Robot::TeleopInit() {
 
     compressor.SetClosedLoopControl(false);
     compressor.SetClosedLoopControl(true);
-
-    std::cout << hatchPanelClaw.extenderSolenoidDirection() << std::endl;
 }
 
 void Robot::TeleopPeriodic() {
@@ -118,13 +116,10 @@ void Robot::TeleopPeriodic() {
 
     int value = oi.js0->GetPOV();
 
-    /*std::cout << value << std::endl;
-
-    if (value == 0 && slowIntakeCmd == nullptr) {
+    /*if (value == 0 && slowIntakeCmd == nullptr) {
         slowIntakeCmd = new MoveShooterWheelsCommand(0.2, false);
         slowIntakeCmd->Start();
 
-        std::cout << "Starting Command..." << std::endl;
     }else if (slowIntakeCmd != nullptr){
         slowIntakeCmd->Cancel();
         slowIntakeCmd = nullptr;

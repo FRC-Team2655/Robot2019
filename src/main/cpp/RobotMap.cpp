@@ -62,7 +62,7 @@ const double BallIntakeUpPos = 0.05;
 #endif
 
 // Up
-const double BallIntake_kpUp = 0.02;
+const double BallIntake_kpUp = 0.025;
 const double BallIntake_kiUp = 0;
 const double BallIntake_kdUp = 0;
 const double BallIntake_kfUp = 0;
@@ -84,9 +84,9 @@ const double BallIntake_izoneDown = 0;
 const double BallIntake_minOutDown = -0.7;
 const double BallIntake_maxOutDown = 1;
 const double BallIntake_allowedErrorDown = 0;
-const double BallIntake_maxAccelDown = 850;
+const double BallIntake_maxAccelDown = 1500;
 const double BallIntake_minVelocityDown = 0;
-const double BallIntake_maxVelocityDown = 1100;
+const double BallIntake_maxVelocityDown = 1300;
 const double BallIntake_DownPID = 1;
 
 //Lock arm
