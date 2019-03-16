@@ -60,10 +60,10 @@ void Robot::AutonomousInit() {
     driveBase.setBrakeMode();
     ballIntakeArm.setCoastMode();
 
-    autoManager.clearCommands();
+    /*autoManager.clearCommands();
     autoManager.loadScript("/auto-scripts/FrontLeft-Center.csv");
     autoCommandPtr = autoManager.getScriptCommand();
-    autoCommandPtr.get()->Start();
+    autoCommandPtr.get()->Start();*/
 
 }
 

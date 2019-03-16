@@ -19,7 +19,6 @@
 
 
 
-
 // SmartDashboard keys
 const extern std::string LeftVelocity;
 const extern std::string RightVelocity;

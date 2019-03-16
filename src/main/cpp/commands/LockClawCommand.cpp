@@ -8,7 +8,7 @@
 #include "commands/LockClawCommand.h"
 #include <Robot.h>
 
-LockClawCommand::LockClawCommand() {;
+LockClawCommand::LockClawCommand() {
   Requires(&Robot::hatchPanelClaw);
 }
 

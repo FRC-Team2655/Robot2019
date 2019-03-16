@@ -1,6 +1,5 @@
 #include "commands/ToggleClawExtensionCommand.h"
 #include <Robot.h>
-#include <commands/RetractClawCommandGroup.h>
 
 ToggleClawExtensionCommand::ToggleClawExtensionCommand() {
   
@@ -10,8 +9,7 @@ ToggleClawExtensionCommand::ToggleClawExtensionCommand() {
 void ToggleClawExtensionCommand::Initialize() {
   if(Robot::hatchPanelClaw.isExtended()){
     // Must use this to time unlock correctly
-    frc::Command *cmd = new RetractClawCommandGroup();
-    cmd->Start();
+    Robot::hatchPanelClaw.retractClaw();
   }else{
     Robot::hatchPanelClaw.extendClaw();
   }

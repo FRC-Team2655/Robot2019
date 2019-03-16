@@ -18,6 +18,7 @@ public:
   void closeClaw();
   void extendClaw();
   void retractClaw();
+  void _retract_action();
   bool isExtended();
   void lock();
   void unlock();

@@ -2,7 +2,9 @@
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <commands/LockClawTimeCG.h>
-#include <commands/RetractClawCommandGroup.h>
+#include <commands/RetractClawTimeCommand.h>
+
+#include <iostream>
 
 HatchPanelClawSubsystem::HatchPanelClawSubsystem() : Subsystem("HatchPanelClawSubsystem") {}
 
@@ -18,12 +20,19 @@ void HatchPanelClawSubsystem::closeClaw(){
 }
 void HatchPanelClawSubsystem::extendClaw(){
   extenderSol.Set(Claw_Extend);
+  std::cout << "Extend" << std::endl;
   frc::Command *cmd = new LockClawTimeCG(0.4);
   cmd->Start();
 }
 void HatchPanelClawSubsystem::retractClaw(){
-  unlock();
   closeClaw();
+  unlock();
+  frc::Command *cmd = new RetractClawTimeCommand(0.2);
+  cmd->Start();
+}
+
+void HatchPanelClawSubsystem::_retract_action(){
+  std::cout << "Retract" << std::endl;
   extenderSol.Set(Claw_Retract);
 }
 
@@ -32,8 +41,7 @@ bool HatchPanelClawSubsystem::isExtended(){
 }
 
 void HatchPanelClawSubsystem::lock(){
-  if(!frc::SmartDashboard::GetBoolean("ABCDEFG", false))
-    lockSolenoid.Set(Claw_Lock);
+  lockSolenoid.Set(Claw_Lock);
 }
 
 void HatchPanelClawSubsystem::unlock(){
