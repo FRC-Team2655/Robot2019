@@ -30,6 +30,10 @@ void Robot::RobotInit() {
     autoManager.registerCommand(team2655::CommandCreator<ExecutePathCommand>, false, "PATH");
     autoManager.registerCommand(team2655::CommandCreator<WaitAutoCommand>, false, "WAIT");
     autoManager.registerCommand(team2655::CommandCreator<RunPlaceHatchCommand>, false, "PLACE_HATCH");
+
+    autoPosition.AddDefault("No Auto", 0);
+    autoPosition.AddObject("Left - Front CS", 1);
+    autoPosition.AddObject("Right - Front CS", 2);
 }
 
 void Robot::RobotPeriodic() {
@@ -39,6 +43,7 @@ void Robot::RobotPeriodic() {
     frc::SmartDashboard::PutBoolean("LimitSwitchPressed", ballIntakeArm.isTopLimitSwitchPressed());
     frc::SmartDashboard::PutNumber("Intake Arm Vecolity: ", ballIntakeArm.getArmVelocity());
     frc::SmartDashboard::PutNumber("IMU Angle: ", driveBase.getIMUAngle());
+    frc::SmartDashboard::PutData("Auto Routine", &autoPosition);
 }
 
 void Robot::DisabledInit() {
@@ -60,10 +65,16 @@ void Robot::AutonomousInit() {
     driveBase.setBrakeMode();
     ballIntakeArm.setCoastMode();
 
-    /*autoManager.clearCommands();
-    autoManager.loadScript("/auto-scripts/FrontLeft-Center.csv");
-    autoCommandPtr = autoManager.getScriptCommand();
-    autoCommandPtr.get()->Start();*/
+    autoManager.clearCommands();
+    if(autoPosition.GetSelected() == 1)
+        autoManager.loadScript("/auto-scripts/MiddleTop.csv");
+    if(autoPosition.GetSelected() == 2)
+        autoManager.loadScript("/auto-scripts/MiddleBottom.csv");
+
+    if(autoPosition.GetSelected() != 0){
+        autoCommandPtr = autoManager.getScriptCommand();
+        autoCommandPtr.get()->Start();
+    }
 
 }
 

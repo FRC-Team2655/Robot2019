@@ -3,6 +3,7 @@
 #include <frc/TimedRobot.h>
 #include <frc/commands/Command.h>
 #include <frc/Compressor.h>
+#include <frc/smartdashboard/SendableChooser.h>
 
 #include <OI.h>
 #include <subsystems/DriveBaseSubsystem.h>
@@ -41,6 +42,8 @@ private:
   std::unique_ptr<frc::CommandGroup> autoCommandPtr = std::unique_ptr<frc::CommandGroup>(nullptr);
   int previousPovValue = -1;
   bool wasPressed = false;
+
+  frc::SendableChooser<int> autoPosition;
 
   frc::Compressor compressor{0};
 };

@@ -16,8 +16,6 @@ void ExecutePathCommand::Initialize() {
 		return;
 	}
 
-	std::cout << "Running path: " << arguments[0] << std::endl;
-
 	// If there are not enough arguments, exit the function.
   	if (arguments.size() < 3) {
     	std::cerr << "Not enough arguments" << std::endl;

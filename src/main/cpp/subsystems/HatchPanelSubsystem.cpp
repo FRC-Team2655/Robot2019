@@ -20,7 +20,6 @@ void HatchPanelClawSubsystem::closeClaw(){
 }
 void HatchPanelClawSubsystem::extendClaw(){
   extenderSol.Set(Claw_Extend);
-  std::cout << "Extend" << std::endl;
   frc::Command *cmd = new LockClawTimeCG(0.4);
   cmd->Start();
 }
@@ -32,7 +31,6 @@ void HatchPanelClawSubsystem::retractClaw(){
 }
 
 void HatchPanelClawSubsystem::_retract_action(){
-  std::cout << "Retract" << std::endl;
   extenderSol.Set(Claw_Retract);
 }
 
