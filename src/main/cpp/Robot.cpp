@@ -15,8 +15,9 @@
 #include <commands/CloseClawCommand.h>
 #include <commands/UnlockClawCommand.h>
 #include <commands/DriveDistanceCommand.h>
-#include <commands/PlaceHatchPanelCG.h>
+#include <commands/RunPlaceHatchCommand.h>
 #include <commands/MoveShooterWheelsCommand.h>
+#include <commands/DrivePercentageTimeCommand.h>
 
 #include <ctime>
 
@@ -31,12 +32,12 @@ void Robot::RobotInit() {
     // Register auto commands
     autoManager.registerCommand(team2655::CommandCreator<ExecutePathCommand>, false, "PATH");
     autoManager.registerCommand(team2655::CommandCreator<WaitAutoCommand>, false, "WAIT");
+    autoManager.registerCommand(team2655::CommandCreator<RunPlaceHatchCommand>, false, "PLACE_HATCH");
     autoManager.registerCommand(team2655::CommandCreator<ExtendClawCommand>, false, "EXTEND_CLAW");
     autoManager.registerCommand(team2655::CommandCreator<ExtendClawCommand>, false, "RETRACT_CLAW");
     autoManager.registerCommand(team2655::CommandCreator<CloseClawCommand>, false, "OPEN_CLAW");
     autoManager.registerCommand(team2655::CommandCreator<CloseClawCommand>, false, "CLOSE_CLAW");
     autoManager.registerCommand(team2655::CommandCreator<UnlockClawCommand>, false, "UNLOCK_CLAW");
-    //autoManager.registerCommand(team2655::CommandCreator<PlaceHatchPanelCG>, false, "PLACE_HATCH_PANEL");
     frc::SmartDashboard::PutBoolean("ABCDEFG", false);
 
     frc::SmartDashboard::PutNumber("P: ", BallIntake_kpDown);
@@ -73,14 +74,10 @@ void Robot::AutonomousInit() {
     ballIntakeArm.setCoastMode();
 
     autoManager.clearCommands();
-    autoManager.loadScript("/auto-scripts/TopSide.csv");
+    autoManager.loadScript("/auto-scripts/FrontLeft-Center.csv");
     autoCommandPtr = autoManager.getScriptCommand();
     autoCommandPtr.get()->Start();
 
-    //frc::Command *cmd = new PlaceHatchPanelCG();
-    //cmd->Start();
-
-    std::cout << hatchPanelClaw.extenderSolenoidDirection() << std::endl;
 }
 
 void Robot::AutonomousPeriodic() { 
@@ -88,7 +85,7 @@ void Robot::AutonomousPeriodic() {
     if(oi.js0->GetRawButton(14) && autoCommandPtr.get() != nullptr)
         autoCommandPtr->Cancel();
     LimitSwitchReset();
-    frc::Scheduler::GetInstance()->Run(); 
+    frc::Scheduler::GetInstance()->Run();
 }
 
 void Robot::TeleopInit() {

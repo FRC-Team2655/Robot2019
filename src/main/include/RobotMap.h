@@ -9,7 +9,7 @@
 /**
  *  MAKE SURE TO SET THIS TO THE CORRECT VALUE BEFORE DEPLOYING CODE!!!
  */
-#define COMPBOT false
+#define COMPBOT true
 
 
 
@@ -60,7 +60,11 @@ const double PathfinderMaxRPM = PathfinderMaxVelocity * 60.0 / (WheelDiameter * 
 #define LimitSwitchID 0
 
 //BallIntake PID values
+#if COMPBOT
+#define BallIntake_gearRatio 62.5 // 50:1 gearbox and 12:15 sprocket
+#else
 #define BallIntake_gearRatio 50.0
+#endif
 
 #define BallIntakeDownDirection -1 // Sign of moving downwards
 #define BallIntakeDownPosLimit 0.5  // Magnitude of downward rotation allowed (do not put sign)

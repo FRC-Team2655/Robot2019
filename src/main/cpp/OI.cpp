@@ -41,11 +41,18 @@ OI::OI() {
 
   l1Btn->WhileHeld(new PositionBasedShootCommand());
 
-  triangleBtn->WhenPressed(new MoveIntakeArmCommand(-0.12));
   triangleBtn->WhenPressed(new SetAtRocketHeightCommand(true));
   xBtn->WhenPressed(new MoveIntakeArmCommand(BallIntakeUpPos));
   xBtn->WhenPressed(new SetAtRocketHeightCommand(false));
+
+#if COMPBOT
+  triangleBtn->WhenPressed(new MoveIntakeArmCommand(-0.12));
+  circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.26));
+#else
+  triangleBtn->WhenPressed(new MoveIntakeArmCommand(-0.12));
   circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.265));
+#endif
+
   circleBtn->WhenPressed(new SetAtRocketHeightCommand(false));
   l2Btn->WhenPressed(new JoystickBallIntakeDriveCommand());
   l2Btn->WhenPressed(new SetAtRocketHeightCommand(false));
