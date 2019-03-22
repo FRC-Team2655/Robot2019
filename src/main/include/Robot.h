@@ -48,11 +48,13 @@ private:
   std::vector<std::string> autoNames = {
     "No Auto",
     "Pos 2 - Front Right",
+    "Pos 2 - Front Left",
     "Test Mode (NEVER RUN ON FIELD)"
   };
   std::vector<std::string> autoScripts = {
     "",
     "/auto-scripts/Pos2R.csv",
+    "/auto-scripts/Pos2L.csv",
     "/auto-scripts/Test.csv"
   };
 
