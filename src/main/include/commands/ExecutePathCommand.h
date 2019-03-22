@@ -13,6 +13,7 @@
  * 0 = path name
  * 1 = FRONT/BACK = Side of robot to follow path with
  * 2 = FORWARD/REVERSE = Order of path (ex. forward=pt1-pt4 reverse=pt4-pt1)
+ * 3 = true/false = heading correction enabled
  */
 class ExecutePathCommand : public team2655::AutoCommand {
 public:
@@ -30,6 +31,7 @@ public:
 
 private:
 
+	bool headingCorrection = true;
 	bool hasEnded = false;
 
 	// Make sure these are all upper case
@@ -40,6 +42,8 @@ private:
 
 	Segment leftTrajectory[BUFFER_LEN];
 	Segment rightTrajectory[BUFFER_LEN];
+
+	bool front, forward;
 
 	int leftLength;
 	int rightLength;

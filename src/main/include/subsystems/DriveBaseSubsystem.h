@@ -68,6 +68,8 @@ public:
   void resetIMUForward();
   void resetIMUReverse();
 
+  double getAvgOutputPos();
+
 private:
   double imuOffSet = 0;
 

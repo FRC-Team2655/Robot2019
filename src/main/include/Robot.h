@@ -43,7 +43,18 @@ private:
   int previousPovValue = -1;
   bool wasPressed = false;
 
-  frc::SendableChooser<int> autoPosition;
+  frc::SendableChooser<int> autoSelector;
+
+  std::vector<std::string> autoNames = {
+    "No Auto",
+    "Pos 2 - Front Right",
+    "Test Mode (NEVER RUN ON FIELD)"
+  };
+  std::vector<std::string> autoScripts = {
+    "",
+    "/auto-scripts/Pos2R.csv",
+    "/auto-scripts/Test.csv"
+  };
 
   frc::Compressor compressor{0};
 };

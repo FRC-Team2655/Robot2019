@@ -8,6 +8,16 @@ ClawExtendCommand::ClawExtendCommand(bool shouldExtend) : shouldExtend(shouldExt
 
 // Called just before this Command runs the first time
 void ClawExtendCommand::Initialize() {
+    if(startedFromAutoManager){
+      std::transform(commandName.begin(), commandName.end(), commandName.begin(), ::tolower);
+      if(commandName == "extend_claw"){
+        shouldExtend = true;
+      }else if(commandName == "retract_claw"){
+        shouldExtend = false;
+      }else{
+        return;
+      }
+    }
     if (shouldExtend) {
       Robot::hatchPanelClaw.extendClaw();
     }else {

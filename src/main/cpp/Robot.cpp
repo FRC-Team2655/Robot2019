@@ -11,10 +11,11 @@
 #include <commands/WaitAutoCommand.h>
 #include <commands/CloseClawCommand.h>
 #include <commands/UnlockClawCommand.h>
-#include <commands/DriveDistanceCommand.h>
 #include <commands/RunPlaceHatchCommand.h>
 #include <commands/MoveShooterWheelsCommand.h>
 #include <commands/DrivePercentageTimeCommand.h>
+#include <commands/ClawExtendCommand.h>
+#include <commands/DriveDistanceCommand.h>
 
 #include <ctime>
 
@@ -29,11 +30,14 @@ void Robot::RobotInit() {
     // Register auto commands
     autoManager.registerCommand(team2655::CommandCreator<ExecutePathCommand>, false, "PATH");
     autoManager.registerCommand(team2655::CommandCreator<WaitAutoCommand>, false, "WAIT");
-    autoManager.registerCommand(team2655::CommandCreator<RunPlaceHatchCommand>, false, "PLACE_HATCH");
+    autoManager.registerCommand(team2655::CommandCreator<CloseClawCommand>, false, std::vector<std::string>{"OPEN_CLAW", "CLOSE_CLAW"});
+    autoManager.registerCommand(team2655::CommandCreator<ClawExtendCommand>, false, std::vector<std::string>{"EXTEND_CLAW", "RETRACT_CLAW"});
+    autoManager.registerCommand(team2655::CommandCreator<DriveDistanceCommand>, false, "DRIVE");
 
-    autoPosition.AddDefault("No Auto", 0);
-    autoPosition.AddObject("Left - Front CS", 1);
-    autoPosition.AddObject("Right - Front CS", 2);
+    for(size_t i = 0; i < autoNames.size(); ++i){
+        autoSelector.AddOption(autoNames[i], i);
+    }
+    autoSelector.SetDefaultOption(autoNames[0], 0);
 }
 
 void Robot::RobotPeriodic() {
@@ -43,7 +47,7 @@ void Robot::RobotPeriodic() {
     frc::SmartDashboard::PutBoolean("LimitSwitchPressed", ballIntakeArm.isTopLimitSwitchPressed());
     frc::SmartDashboard::PutNumber("Intake Arm Vecolity: ", ballIntakeArm.getArmVelocity());
     frc::SmartDashboard::PutNumber("IMU Angle: ", driveBase.getIMUAngle());
-    frc::SmartDashboard::PutData("Auto Routine", &autoPosition);
+    frc::SmartDashboard::PutData("Auto Routine", &autoSelector);
 }
 
 void Robot::DisabledInit() {
@@ -66,18 +70,13 @@ void Robot::AutonomousInit() {
     ballIntakeArm.setCoastMode();
 
     autoManager.clearCommands();
-    if(autoPosition.GetSelected() == 1)
-        autoManager.loadScript("/auto-scripts/MiddleTop.csv");
-    if(autoPosition.GetSelected() == 2)
-        autoManager.loadScript("/auto-scripts/MiddleBottom.csv");
-
-    if(autoPosition.GetSelected() != 0){
+    std::string scriptName = autoScripts[autoSelector.GetSelected()];
+    if(scriptName != ""){
+        autoManager.loadScript(scriptName);
         autoCommandPtr = autoManager.getScriptCommand();
         autoCommandPtr.get()->Start();
     }
-
 }
-
 void Robot::AutonomousPeriodic() { 
     // Giant button kills auto
     if(oi.js0->GetRawButton(14) && autoCommandPtr.get() != nullptr)

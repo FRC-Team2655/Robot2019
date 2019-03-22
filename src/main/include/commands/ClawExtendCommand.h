@@ -3,9 +3,9 @@
 #include <frc/commands/Command.h>
 #include <Robot.h>
 
-class ClawExtendCommand : public frc::Command {
+class ClawExtendCommand : public team2655::AutoCommand {
 public:
-  ClawExtendCommand(bool shouldExtend);
+  ClawExtendCommand(bool shouldExtend = true);
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;

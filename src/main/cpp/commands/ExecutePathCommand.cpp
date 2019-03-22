@@ -17,7 +17,7 @@ void ExecutePathCommand::Initialize() {
 	}
 
 	// If there are not enough arguments, exit the function.
-  	if (arguments.size() < 3) {
+  	if (arguments.size() < 4) {
     	std::cerr << "Not enough arguments" << std::endl;
     	End();
 		return;
@@ -25,7 +25,6 @@ void ExecutePathCommand::Initialize() {
 
 	// front = driving in the direction of the front of the robot
 	// forward = following path in forward order (ex. pt1->pt2->pt3->pt4)
-	bool front, forward;
 	// Convert arguments to upper case
 	std::transform(arguments[1].begin(), arguments[1].end(), arguments[1].begin(), ::toupper);
 	std::transform(arguments[2].begin(), arguments[2].end(), arguments[2].begin(), ::toupper);
@@ -82,13 +81,22 @@ void ExecutePathCommand::Initialize() {
 	leftLength = pathfinder_deserialize_csv(leftFile, leftTrajectory);
 	rightLength = pathfinder_deserialize_csv(rightFile, rightTrajectory);
 
+	std::transform(arguments[3].begin(), arguments[3].end(), arguments[3].begin(), ::tolower);
+	if(arguments[3] == "true"){
+		headingCorrection = true;
+	}else if(arguments[3] == "false"){
+		headingCorrection = false;
+	}else{
+		std::cerr << "Unknown value for heading correction '" << arguments[3] << "'." << std::endl;
+		End();
+		return;
+	}
+
 	fclose(leftFile);
 	fclose(rightFile);
 
 	// If driving with the back of the robot in forward order flip the headings and negate positions
 	if (!front && forward){
-		flipHeading(leftTrajectory, leftLength);
-		flipHeading(rightTrajectory, rightLength);
 		negatePositions(leftTrajectory,leftLength);
 		negatePositions(rightTrajectory, rightLength);
 	}
@@ -102,8 +110,6 @@ void ExecutePathCommand::Initialize() {
 	}
 
 	if (front && !forward){
-		flipHeading(leftTrajectory, leftLength);
-		flipHeading(rightTrajectory, rightLength);
 		reverseTrajectory(leftTrajectory, 0, leftLength);
 		reverseTrajectory(rightTrajectory, 0, rightLength);
 	}
@@ -131,24 +137,35 @@ void ExecutePathCommand::Execute() {
 
 		// Apply angle correction based on the IMU angle
 		double gyro_heading = Robot::driveBase.getIMUAngle();
+
+		if(front && !forward || !front && forward){
+			gyro_heading -= 180;
+		}
+
 		double desired_heading = r2d(leftFollower.heading);
 		double angle_difference = desired_heading - gyro_heading;
-		double turn = 0.8 * (-1.0/80) * angle_difference;
-		
-		//l += turn;
-		//r -= turn;
 
-		Robot::driveBase.driveTankVelocity(l * PathfinderMaxRPM, r * PathfinderMaxRPM);
+		angle_difference = std::fmod(angle_difference, 360.0);
+		if (std::abs(angle_difference) > 180.0) {
+			angle_difference = (angle_difference > 0) ? angle_difference - 360 : angle_difference + 360;
+		} 
+
+		double turn = 0.45 * (-1.0/80) * angle_difference;
+
+		l += turn;
+		r -= turn;
+
+		Robot::driveBase.driveTankVelocity(l * MaxVelocity, r * MaxVelocity);
 	}
 }
 
 // Make this return true when this Command no longer needs to run execute()
 bool ExecutePathCommand::IsFinished() { 
-	if(std::abs(Robot::driveBase.getLeftVelocity()) < 1 && std::abs(Robot::driveBase.getRightVelocity() < 1))
+	if(std::abs(Robot::driveBase.getLeftVelocity()) < 10 && std::abs(Robot::driveBase.getRightVelocity() < 10)){
 		stopCounter++;
-	else
+	}else{
 		stopCounter = 0;
-
+	}
 	return !startedFromAutoManager || hasEnded || stopCounter >= 20;
 }
 

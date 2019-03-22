@@ -7,15 +7,14 @@ const std::string ArmPosition = "Intake Arm Position";
 const std::string ArmSpeed = "Intake Arm Velocity";
 
 // Drivebase Settings
-const double RMaxVelocity = 5800.0;
-const double LMaxVelocity = 5700.0; //5580.0      
+const double RMaxVelocity = 5700.0;
+const double LMaxVelocity = 5600.0;
 const double GearRatio = 9.47 / 1.0;       // 9.47 motor revolutions to 1 output revolution
 const double WheelDiameter = .1524;      // wheel diameter in meters (6")
 const double MaxVelocity = MINVAL(RMaxVelocity, LMaxVelocity);    // This is capped at the slowest velocity on ANY robot to ensure that paths work the same
-const double PathfinderMaxVelocity = 1.20075; // Meters/second
-const double PathfinderMaxRPM = PathfinderMaxVelocity * 60.0 / (WheelDiameter * 3.141592) * GearRatio;
-const double DriveRampRate = 0.25;  // Minimum time (sec) to go from 0 to full
-const double WheelbaseWidth = 0.6223; // Meters
+const double PathfinderMaxVelocity = MaxVelocity / GearRatio / 60.0 * 3.1415926535 * WheelDiameter; // m/second
+const double DriveRampRate = 0;  // Minimum time (sec) to go from 0 to full
+const double WheelbaseWidth = 0.7239; // meters
 
 // SPARK MAX IDs
 const int LMaster = 1;
@@ -84,10 +83,16 @@ const double BallIntake_izoneDown = 0;
 const double BallIntake_minOutDown = -0.7;
 const double BallIntake_maxOutDown = 1;
 const double BallIntake_allowedErrorDown = 0;
-const double BallIntake_maxAccelDown = 1500;
 const double BallIntake_minVelocityDown = 0;
-const double BallIntake_maxVelocityDown = 1300;
 const double BallIntake_DownPID = 1;
+
+#if COMPBOT
+const double BallIntake_maxAccelDown = 1500;
+const double BallIntake_maxVelocityDown = 1300;
+#else
+const double BallIntake_maxAccelDown = 850;
+const double BallIntake_maxVelocityDown = 1000;
+#endif
 
 //Lock arm
 const double BallIntake_kpLock = 1;

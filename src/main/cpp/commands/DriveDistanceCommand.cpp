@@ -7,69 +7,45 @@
 
 #include "commands/DriveDistanceCommand.h"
 #include <Robot.h>
-#include <commands/ExecutePathCommand.h>
 
-#define T_PER_REV 4096 // Pathfinder expects integer ticks. SPARK MAX uses doubles
-
-DriveDistanceCommand::DriveDistanceCommand(double distance) : distance(distance / 39.37) {
+DriveDistanceCommand::DriveDistanceCommand(double distance) : distance(distance) {
+  // Use Requires() here to declare subsystem dependencies
+  // eg. Requires(Robot::chassis.get());
   Requires(&Robot::driveBase);
 }
 
 // Called just before this Command runs the first time
 void DriveDistanceCommand::Initialize() {
-
-  Waypoint pts[] = {{0, 0, 0}, {std::abs(distance), 0, 0}};
-  candidate = new TrajectoryCandidate();
-  pathfinder_prepare(pts, 2, 
-        FIT_HERMITE_CUBIC, 
-        PATHFINDER_SAMPLES_FAST, 
-        0.02, maxV, maxA, maxJ, candidate);
-  length = candidate->length;
-  pathfinder_generate(candidate, baseTrajectory);
-  pathfinder_modify_tank(baseTrajectory, length, leftTrajectory, rightTrajectory, WheelbaseWidth);
-
-  if(distance < 0){
-    // Drive with back of robot in reverse order
-    ExecutePathCommand::reverseTrajectory(leftTrajectory, 0, length);
-		ExecutePathCommand::reverseTrajectory(rightTrajectory, 0, length);
-		ExecutePathCommand::negatePositions(rightTrajectory, length);
-		ExecutePathCommand::negatePositions(leftTrajectory, length);
+  avgStartPos = Robot::driveBase.getAvgOutputPos();
+  if(startedFromAutoManager && arguments.size() >= 1){
+    distance = std::stod(arguments[0]);
+  }else{
+    std::cerr << "Drive distance command not enough arguments" << std::endl;
   }
 
-  double leftStartPos = Robot::driveBase.getLeftOutputPosition();
-	double rightStartPos = Robot::driveBase.getRightOutputPosition();
-
-	// initialEncoderPos, ticksPerRevolutions, WheelCircumference,
-  //  kp, ki, kd, kv, ka
-	leftConfig = {(int)(leftStartPos * T_PER_REV), T_PER_REV, WheelDiameter * 3.141592, 
-					1.0, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
-	rightConfig = {(int)(rightStartPos * T_PER_REV), T_PER_REV, WheelDiameter * 3.141592, 
-					1.0, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
+  endPos = avgStartPos + (distance / (6 * 3.1415926535));
 }
 
 // Called repeatedly when this Command is scheduled to run
 void DriveDistanceCommand::Execute() {
-  double l = pathfinder_follow_encoder(leftConfig, &leftFollower, leftTrajectory, length, 
-										T_PER_REV * Robot::driveBase.getLeftOutputPosition());
-  double r = pathfinder_follow_encoder(rightConfig, &rightFollower, rightTrajectory, length, 
-                  T_PER_REV * Robot::driveBase.getRightOutputPosition());
-
-  Robot::driveBase.driveTankVelocity(l * maxRPM, r * maxRPM);
+  double sign = distance / std::abs(distance);
+  Robot::driveBase.driveTankVelocity(sign * 0.2 * MaxVelocity, sign * 0.2 * MaxVelocity);
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool DriveDistanceCommand::IsFinished() { 
-  if(std::abs(Robot::driveBase.getLeftVelocity()) < 1 && std::abs(Robot::driveBase.getRightVelocity() < 1))
-		stopCounter++;
-	else
-		stopCounter = 0;
-
-  return stopCounter >= 20;
+bool DriveDistanceCommand::IsFinished() {
+  if(distance == 0 ) return true;
+  else if(distance >= 0) return Robot::driveBase.getAvgOutputPos() >= endPos;
+  else return Robot::driveBase.getAvgOutputPos() <= endPos;
 }
 
 // Called once after isFinished returns true
-void DriveDistanceCommand::End() {}
+void DriveDistanceCommand::End() {
+  Robot::driveBase.driveTankPercentage(0, 0);
+}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void DriveDistanceCommand::Interrupted() {}
+void DriveDistanceCommand::Interrupted() {
+  End();
+}
