@@ -49,12 +49,16 @@ private:
     "No Auto",
     "Pos 2 - Front Right",
     "Pos 2 - Front Left",
+    "Pos 1 - Left Side",
+    "Pos 3 - Right Side",
     "Test Mode (NEVER RUN ON FIELD)"
   };
   std::vector<std::string> autoScripts = {
     "",
     "/auto-scripts/Pos2R.csv",
     "/auto-scripts/Pos2L.csv",
+    "/auto-scripts/Pos1L.csv",
+    "/auto-scripts/Pos3R.csv",
     "/auto-scripts/Test.csv"
   };
 
