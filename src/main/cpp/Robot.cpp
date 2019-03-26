@@ -19,6 +19,8 @@
 
 #include <ctime>
 
+#define DisableBrakeKey "Disable Brake Mode"
+
 OI Robot::oi;
 DriveBaseSubsystem Robot::driveBase;
 BallIntakeArmSubsystem Robot::ballIntakeArm;
@@ -33,6 +35,8 @@ void Robot::RobotInit() {
     autoManager.registerCommand(team2655::CommandCreator<CloseClawCommand>, false, std::vector<std::string>{"OPEN_CLAW", "CLOSE_CLAW"});
     autoManager.registerCommand(team2655::CommandCreator<ClawExtendCommand>, false, std::vector<std::string>{"EXTEND_CLAW", "RETRACT_CLAW"});
     autoManager.registerCommand(team2655::CommandCreator<DriveDistanceCommand>, false, "DRIVE");
+
+    frc::SmartDashboard::PutBoolean(DisableBrakeKey, brakeModeOverridePrevious);
 
     for(size_t i = 0; i < autoNames.size(); ++i){
         autoSelector.AddOption(autoNames[i], i);
@@ -51,18 +55,37 @@ void Robot::RobotPeriodic() {
 }
 
 void Robot::DisabledInit() {
-    driveBase.setBrakeMode(); 
+    bool overrideBrake = frc::SmartDashboard::GetBoolean(DisableBrakeKey, false);
+    if (!overrideBrake) {
+        driveBase.setBrakeMode();
+    }else{
+        driveBase.setCoastMode();
+    }
+    
     ballIntakeArm.setBrakeMode();
 }
 
-void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
+void Robot::DisabledPeriodic() { 
+    bool overrideBrake = frc::SmartDashboard::GetBoolean(DisableBrakeKey, false);
+    if(overrideBrake != brakeModeOverridePrevious){
+        if (!overrideBrake) {
+            driveBase.setBrakeMode();
+        }else{
+            driveBase.setCoastMode();
+        }
+    }
+
+    brakeModeOverridePrevious = overrideBrake;
+    
+    frc::Scheduler::GetInstance()->Run(); 
+}
 
 void Robot::AutonomousInit() {
 
     compressor.SetClosedLoopControl(false);
     compressor.SetClosedLoopControl(true);
 
-    driveBase.resetIMUReverse();
+    driveBase.resetIMUForward();
 
     wasPressed = false; // Make sure lock will reengage if limit switch is held when enabled
     DefaultSolonoidState();

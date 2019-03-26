@@ -16,8 +16,10 @@ void ExecutePathCommand::Initialize() {
 		return;
 	}
 
+	Robot::driveBase.setRampRate(0);
+
 	// If there are not enough arguments, exit the function.
-  	if (arguments.size() < 4) {
+  	if (arguments.size() < 3) {
     	std::cerr << "Not enough arguments" << std::endl;
     	End();
 		return;
@@ -81,17 +83,6 @@ void ExecutePathCommand::Initialize() {
 	leftLength = pathfinder_deserialize_csv(leftFile, leftTrajectory);
 	rightLength = pathfinder_deserialize_csv(rightFile, rightTrajectory);
 
-	std::transform(arguments[3].begin(), arguments[3].end(), arguments[3].begin(), ::tolower);
-	if(arguments[3] == "true"){
-		headingCorrection = true;
-	}else if(arguments[3] == "false"){
-		headingCorrection = false;
-	}else{
-		std::cerr << "Unknown value for heading correction '" << arguments[3] << "'." << std::endl;
-		End();
-		return;
-	}
-
 	fclose(leftFile);
 	fclose(rightFile);
 
@@ -120,9 +111,9 @@ void ExecutePathCommand::Initialize() {
 	// initialEncoderPos, ticksPerRevolutions, WheelCircumference,
   	//  kp, ki, kd, kv, ka
 	leftConfig = {(int)(leftStartPos * T_PER_REV), T_PER_REV, WheelDiameter * 3.141592, 
-					1.0, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
+					0.8, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
 	rightConfig = {(int)(rightStartPos * T_PER_REV), T_PER_REV, WheelDiameter * 3.141592, 
-					1.0, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
+					0.8, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -150,10 +141,12 @@ void ExecutePathCommand::Execute() {
 			angle_difference = (angle_difference > 0) ? angle_difference - 360 : angle_difference + 360;
 		} 
 
-		double turn = 0.5 * (-1.0/80) * angle_difference;
+		double turn = 0.8 * (-1.0/80) * angle_difference;
 
 		l += turn;
 		r -= turn;
+
+		std::cout << turn << std::endl;
 
 		Robot::driveBase.driveTankVelocity(l * MaxVelocity, r * MaxVelocity);
 	}
@@ -173,6 +166,7 @@ bool ExecutePathCommand::IsFinished() {
 void ExecutePathCommand::End() {
 	hasEnded = true;
   	Robot::driveBase.driveTankVelocity(0.0, 0.0);
+	Robot::driveBase.setRampRate(DriveRampRate);
 }
 
 // Called when another command which requires one or more of the same

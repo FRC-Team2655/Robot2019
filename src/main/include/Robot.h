@@ -43,6 +43,8 @@ private:
   int previousPovValue = -1;
   bool wasPressed = false;
 
+  bool brakeModeOverridePrevious = false;
+
   frc::SendableChooser<int> autoSelector;
 
   std::vector<std::string> autoNames = {

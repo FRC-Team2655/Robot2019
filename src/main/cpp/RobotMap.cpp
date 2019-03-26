@@ -13,7 +13,7 @@ const double GearRatio = 9.47 / 1.0;       // 9.47 motor revolutions to 1 output
 const double WheelDiameter = .1524;      // wheel diameter in meters (6")
 const double MaxVelocity = MINVAL(RMaxVelocity, LMaxVelocity);    // This is capped at the slowest velocity on ANY robot to ensure that paths work the same
 const double PathfinderMaxVelocity = MaxVelocity / GearRatio / 60.0 * 3.1415926535 * WheelDiameter; // m/second
-const double DriveRampRate = 0;  // Minimum time (sec) to go from 0 to full
+const double DriveRampRate = 0.25;  // Minimum time (sec) to go from 0 to full
 const double WheelbaseWidth = 0.7239; // meters
 
 // SPARK MAX IDs

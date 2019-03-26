@@ -70,6 +70,8 @@ public:
 
   double getAvgOutputPos();
 
+  void setRampRate(double rampRate);
+
 private:
   double imuOffSet = 0;
 

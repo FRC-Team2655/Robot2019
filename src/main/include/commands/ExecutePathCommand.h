@@ -13,7 +13,6 @@
  * 0 = path name
  * 1 = FRONT/BACK = Side of robot to follow path with
  * 2 = FORWARD/REVERSE = Order of path (ex. forward=pt1-pt4 reverse=pt4-pt1)
- * 3 = true/false = heading correction enabled
  */
 class ExecutePathCommand : public team2655::AutoCommand {
 public:
