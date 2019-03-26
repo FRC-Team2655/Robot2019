@@ -16,6 +16,7 @@
 #include <commands/DrivePercentageTimeCommand.h>
 #include <commands/ClawExtendCommand.h>
 #include <commands/DriveDistanceCommand.h>
+#include <commands/ResetIMUCommand.h>
 
 #include <ctime>
 
@@ -35,6 +36,7 @@ void Robot::RobotInit() {
     autoManager.registerCommand(team2655::CommandCreator<CloseClawCommand>, false, std::vector<std::string>{"OPEN_CLAW", "CLOSE_CLAW"});
     autoManager.registerCommand(team2655::CommandCreator<ClawExtendCommand>, false, std::vector<std::string>{"EXTEND_CLAW", "RETRACT_CLAW"});
     autoManager.registerCommand(team2655::CommandCreator<DriveDistanceCommand>, false, "DRIVE");
+    autoManager.registerCommand(team2655::CommandCreator<ResetIMUCommand>, false, std::vector<std::string>{"RESET_FORWARD", "RESET_BACKWARD"});
 
     frc::SmartDashboard::PutBoolean(DisableBrakeKey, brakeModeOverridePrevious);
 
