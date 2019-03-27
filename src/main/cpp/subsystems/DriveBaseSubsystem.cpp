@@ -15,7 +15,6 @@ DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {
   rightSlave.Follow(rightMaster);
   rightSlave2.Follow(rightMaster);
 
-
   leftPID.SetP(2e-5);
   leftPID.SetI(0);
   leftPID.SetD(0);

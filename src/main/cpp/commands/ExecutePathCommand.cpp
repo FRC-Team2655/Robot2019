@@ -150,7 +150,7 @@ void ExecutePathCommand::Execute() {
 			angle_difference = (angle_difference > 0) ? angle_difference - 360 : angle_difference + 360;
 		} 
 
-		double turn = 0.45 * (-1.0/80) * angle_difference;
+		double turn = 0.5 * (-1.0/80) * angle_difference;
 
 		l += turn;
 		r -= turn;
