@@ -22,7 +22,11 @@ void PositionBasedShootCommand::Execute() {
   if(Robot::ballIntakeArm.getAtRocketHeight()){
     Robot::ballShooter.output(0.3);
   }else{
+    #if COMPBOT
     Robot::ballShooter.output(0.9);
+    #else
+    Robot::ballShooter.output(1);
+    #endif
   }
 }
 

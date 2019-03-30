@@ -43,7 +43,7 @@ OI::OI() {
   circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.26));
 #else
   triangleBtn->WhenPressed(new MoveIntakeArmCommand(-0.12));
-  circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.265));
+  circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.27));
 #endif
 
   // Track if at rocket height

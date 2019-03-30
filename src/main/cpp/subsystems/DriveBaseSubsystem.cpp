@@ -15,14 +15,14 @@ DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {
   rightSlave.Follow(rightMaster);
   rightSlave2.Follow(rightMaster);
 
-  leftPID.SetP(2e-4);
+  leftPID.SetP(1e-4);
   leftPID.SetI(0);
   leftPID.SetD(0);
   leftPID.SetFF(1/LMaxVelocity);
   leftPID.SetIZone(0);
   leftPID.SetOutputRange(-1, 1);
 
-  rightPID.SetP(2e-4);
+  rightPID.SetP(1e-4);
   rightPID.SetI(0);
   rightPID.SetD(0);
   rightPID.SetFF(1/RMaxVelocity);

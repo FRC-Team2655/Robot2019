@@ -27,6 +27,8 @@ void ExecutePathCommand::Initialize() {
 
 	// front = driving in the direction of the front of the robot
 	// forward = following path in forward order (ex. pt1->pt2->pt3->pt4)
+	bool front = true, forward = true;
+
 	// Convert arguments to upper case
 	std::transform(arguments[1].begin(), arguments[1].end(), arguments[1].begin(), ::toupper);
 	std::transform(arguments[2].begin(), arguments[2].end(), arguments[2].begin(), ::toupper);
@@ -56,16 +58,8 @@ void ExecutePathCommand::Initialize() {
 	// Load the paths from the roborio.
 	FILE *leftFile, *rightFile;
 
-	// If driving in forward order with back of robot or reverse order with the front or the robot
-	//            left and right trajectories need to be swapped
-	if((!front && forward) || (front && !forward)){
-		// switched left and right paths 
-		rightFile = fopen(("/auto-paths/" + arguments[0] + "_left.csv").c_str(), "r");
-		leftFile = fopen(("/auto-paths/" + arguments[0] + "_right.csv").c_str(), "r");
-	}else{
-		leftFile = fopen(("/auto-paths/" + arguments[0] + "_left.csv").c_str(), "r");
-		rightFile = fopen(("/auto-paths/" + arguments[0] + "_right.csv").c_str(), "r");
-	}
+	leftFile = fopen(("/auto-paths/" + arguments[0] + "_left.csv").c_str(), "r");
+	rightFile = fopen(("/auto-paths/" + arguments[0] + "_right.csv").c_str(), "r");
 
 	// If the files do not exist, exit the function.
 	if(!leftFile) {
@@ -80,59 +74,50 @@ void ExecutePathCommand::Initialize() {
 	}
 
 	// Parse CSVs (load trajectories from pathfinder CSV files.)
-	leftLength = pathfinder_deserialize_csv(leftFile, leftTrajectory);
-	rightLength = pathfinder_deserialize_csv(rightFile, rightTrajectory);
+	int leftLength = pathfinder_deserialize_csv(leftFile, leftTrajectory);
+	int rightLength = pathfinder_deserialize_csv(rightFile, rightTrajectory);
+
+	length = std::min(leftLength, rightLength);
 
 	fclose(leftFile);
 	fclose(rightFile);
 
-	// If driving with the back of the robot in forward order flip the headings and negate positions
-	if (!front && forward){
-		negatePositions(leftTrajectory,leftLength);
-		negatePositions(rightTrajectory, rightLength);
-	}
+	if(front && forward)
+		pfMode = PathfinderMode::FrontForward;
+	else if(front && !forward)
+		pfMode = PathfinderMode::FrontReverse;
+	else if(!front && forward)
+		pfMode = PathfinderMode::BackForward;
+	else if(!front && !forward)
+		pfMode = PathfinderMode::BackReverse; 
 
-	// If 
-	if (!front && !forward){
-		reverseTrajectory(leftTrajectory, 0, leftLength);
-		reverseTrajectory(rightTrajectory, 0, rightLength);
-		negatePositions(rightTrajectory, rightLength);
-		negatePositions(leftTrajectory, leftLength);
-	}
-
-	if (front && !forward){
-		reverseTrajectory(leftTrajectory, 0, leftLength);
-		reverseTrajectory(rightTrajectory, 0, rightLength);
-	}
+	pathfindertools::trajetorySwapByMode(pfMode, &leftTrajectory, &rightTrajectory);
 
 	double leftStartPos = Robot::driveBase.getLeftOutputPosition();
 	double rightStartPos = Robot::driveBase.getRightOutputPosition();
 
 	// initialEncoderPos, ticksPerRevolutions, WheelCircumference,
   	//  kp, ki, kd, kv, ka
-	leftConfig = {(int)(leftStartPos * T_PER_REV), T_PER_REV, WheelDiameter * 3.141592, 
-					0.8, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
-	rightConfig = {(int)(rightStartPos * T_PER_REV), T_PER_REV, WheelDiameter * 3.141592, 
-					0.8, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
+	leftConfig = {(int)(leftStartPos * T_PER_REV), T_PER_REV, WheelDiameter * PI, 
+					1.0, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
+	rightConfig = {(int)(rightStartPos * T_PER_REV), T_PER_REV, WheelDiameter * PI, 
+					1.0, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
+
+	leftFollower = pathfindertools::createEncoderFollower(leftLength, pfMode);
+	rightFollower = pathfindertools::createEncoderFollower(rightLength, pfMode);
 }
 
 // Called repeatedly when this Command is scheduled to run
 void ExecutePathCommand::Execute() {
 	if(!hasEnded){	
-		// Get current power (as percentage) for L and R sides 
-		//       based on current position and calculated trajectories
-		double l = pathfinder_follow_encoder(leftConfig, &leftFollower, leftTrajectory, leftLength, 
-										T_PER_REV * Robot::driveBase.getLeftOutputPosition());
-		double r = pathfinder_follow_encoder(rightConfig, &rightFollower, rightTrajectory, rightLength, 
-										T_PER_REV * Robot::driveBase.getRightOutputPosition());
+		
+		int lenc = Robot::driveBase.getLeftOutputPosition() * T_PER_REV;
+		int renc = Robot::driveBase.getRightOutputPosition() * T_PER_REV;
+		double l = pathfindertools::followEncoder(leftConfig, &leftFollower, leftTrajectory, length, lenc, pfMode);
+		double r = pathfindertools::followEncoder(rightConfig, &rightFollower, rightTrajectory, length, renc, pfMode);
 
 		// Apply angle correction based on the IMU angle
 		double gyro_heading = Robot::driveBase.getIMUAngle();
-
-		if(front && !forward || !front && forward){
-			gyro_heading -= 180;
-		}
-
 		double desired_heading = r2d(leftFollower.heading);
 		double angle_difference = desired_heading - gyro_heading;
 
@@ -142,11 +127,8 @@ void ExecutePathCommand::Execute() {
 		} 
 
 		double turn = 0.8 * (-1.0/80) * angle_difference;
-
 		l += turn;
 		r -= turn;
-
-		std::cout << turn << std::endl;
 
 		Robot::driveBase.driveTankVelocity(l * MaxVelocity, r * MaxVelocity);
 	}
@@ -193,11 +175,5 @@ void ExecutePathCommand::negatePositions(Segment *trajectory, size_t length){
 		trajectory[i].jerk *= -1;
 		trajectory[i].x *= -1;
 		trajectory[i].y *= -1;
-	}
-}
-
-void ExecutePathCommand::flipHeading(Segment *trajectory, size_t length){
-	for (size_t i = 0; i < length; ++i){
-		trajectory[i].heading += PI;
 	}
 }

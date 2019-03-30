@@ -4,6 +4,7 @@
 #include <pathfinder.h>
 #include <Robot.h>
 #include <team2655/autonomous.hpp>
+#include <team2655/pftools.hpp>
 
 #define BUFFER_LEN 1024
 
@@ -25,12 +26,9 @@ public:
 
   static void reverseTrajectory(Segment *trajectory, int start, int end);
   static void negatePositions(Segment *trajectory, size_t length);
-  static void flipHeading(Segment *trajectory, size_t length);
-
 
 private:
 
-	bool headingCorrection = true;
 	bool hasEnded = false;
 
 	// Make sure these are all upper case
@@ -39,13 +37,12 @@ private:
 	const std::string PATH_ORDER_FORWARD = "FORWARD";
 	const std::string PATH_ORDER_REVERSE = "REVERSE";
 
-	Segment leftTrajectory[BUFFER_LEN];
-	Segment rightTrajectory[BUFFER_LEN];
+	Segment *leftTrajectory = new Segment[BUFFER_LEN];
+	Segment *rightTrajectory = new Segment[BUFFER_LEN];
 
-	bool front, forward;
+	PathfinderMode pfMode;
 
-	int leftLength;
-	int rightLength;
+	int length;
 
 	EncoderFollower leftFollower = {0, 0, 0, 0, 0};
 	EncoderFollower rightFollower = {0, 0, 0, 0, 0};
