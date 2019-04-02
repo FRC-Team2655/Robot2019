@@ -98,10 +98,10 @@ void ExecutePathCommand::Initialize() {
 
 	// initialEncoderPos, ticksPerRevolutions, WheelCircumference,
   	//  kp, ki, kd, kv, ka
-	leftConfig = {(int)(leftStartPos * T_PER_REV), T_PER_REV, WheelDiameter * PI, 
-					1.0, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
-	rightConfig = {(int)(rightStartPos * T_PER_REV), T_PER_REV, WheelDiameter * PI, 
-					1.0, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0};
+	leftConfig = pathfindertools::createEncoderConfig((int)(leftStartPos * T_PER_REV), T_PER_REV, WheelDiameter * PI, 
+					1.0, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0, pfMode);
+	rightConfig = pathfindertools::createEncoderConfig((int)(rightStartPos * T_PER_REV), T_PER_REV, WheelDiameter * PI, 
+					1.0, 0.0, 0.0, 1.0 / PathfinderMaxVelocity, 0.0, pfMode);
 
 	leftFollower = pathfindertools::createEncoderFollower(leftLength, pfMode);
 	rightFollower = pathfindertools::createEncoderFollower(rightLength, pfMode);
@@ -127,10 +127,13 @@ void ExecutePathCommand::Execute() {
 		} 
 
 		double turn = 0.8 * (-1.0/80) * angle_difference;
+
 		l += turn;
 		r -= turn;
 
 		Robot::driveBase.driveTankVelocity(l * MaxVelocity, r * MaxVelocity);
+		
+				
 	}
 }
 

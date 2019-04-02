@@ -58,8 +58,12 @@ void DriveBaseSubsystem::driveVelocity(double speed, double rotation) {
 }
 void DriveBaseSubsystem::driveTankPercentage(double leftPercentage, double rightPercentage) {
 	leftMaster.Set(leftPercentage);
+	//leftSlave.Set(leftPercentage);
+	//leftSlave2.Set(leftPercentage);
 
 	rightMaster.Set(rightPercentage);
+	//rightSlave.Set(rightPercentage);
+	//rightSlave2.Set(rightPercentage);
 }
 void DriveBaseSubsystem::driveTankVelocity(double lVel, double rVel) {
 	if (lVel == 0) {
@@ -145,7 +149,7 @@ double DriveBaseSubsystem::getRightOutputVelocity() {
 }
 
 double DriveBaseSubsystem::getIMUAngle() {
-	return (-1 * imu.GetAngleZ()) + imuOffSet;
+	return (imu.GetAngleZ()) + imuOffSet;
 }
 
 void DriveBaseSubsystem::setCoastMode() {

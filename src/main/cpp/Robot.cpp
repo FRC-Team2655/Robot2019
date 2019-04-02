@@ -87,8 +87,6 @@ void Robot::AutonomousInit() {
     compressor.SetClosedLoopControl(false);
     compressor.SetClosedLoopControl(true);
 
-    driveBase.resetIMUForward();
-
     wasPressed = false; // Make sure lock will reengage if limit switch is held when enabled
     DefaultSolonoidState();
     driveBase.setBrakeMode();

@@ -10,7 +10,7 @@ const std::string ArmSpeed = "Intake Arm Velocity";
 // Drivebase Settings
 const double RMaxVelocity = 5700.0;
 const double LMaxVelocity = 5600.0;
-const double GearRatio = 12.27 / 1.0;       // 12.27 motor revolutions to 1 output revolution
+const double GearRatio = 9.471 / 1.0;       // 12.27 motor revolutions to 1 output revolution
 const double WheelDiameter = .1524;      // wheel diameter in meters (6")
 const double MaxVelocity = MINVAL(RMaxVelocity, LMaxVelocity);    // This is capped at the slowest velocity on ANY robot to ensure that paths work the same
 const double PathfinderMaxVelocity = MaxVelocity / GearRatio / 60.0 * PI * WheelDiameter; // m/second
@@ -125,8 +125,8 @@ const double BallIntake_LockPID = 3;
 #else
     const frc::DoubleSolenoid::Value Claw_Extend = frc::DoubleSolenoid::Value::kReverse;
     const frc::DoubleSolenoid::Value Claw_Retract = frc::DoubleSolenoid::Value::kForward;
-    const frc::DoubleSolenoid::Value Claw_Open = frc::DoubleSolenoid::Value::kReverse;
-    const frc::DoubleSolenoid::Value Claw_Close = frc::DoubleSolenoid::Value::kForward;
-    const frc::DoubleSolenoid::Value Claw_Lock = frc::DoubleSolenoid::Value::kForward;
-    const frc::DoubleSolenoid::Value Claw_Unlock = frc::DoubleSolenoid::Value::kReverse;
+    const frc::DoubleSolenoid::Value Claw_Open = frc::DoubleSolenoid::Value::kForward;
+    const frc::DoubleSolenoid::Value Claw_Close = frc::DoubleSolenoid::Value::kReverse;
+    const frc::DoubleSolenoid::Value Claw_Lock = frc::DoubleSolenoid::Value::kReverse;
+    const frc::DoubleSolenoid::Value Claw_Unlock = frc::DoubleSolenoid::Value::kForward;
 #endif
