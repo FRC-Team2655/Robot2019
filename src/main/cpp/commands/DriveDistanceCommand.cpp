@@ -7,6 +7,7 @@
 
 #include "commands/DriveDistanceCommand.h"
 #include <Robot.h>
+#include <team2655/pftools.hpp>
 
 DriveDistanceCommand::DriveDistanceCommand(double distance) : distance(distance) {
   // Use Requires() here to declare subsystem dependencies
@@ -16,6 +17,7 @@ DriveDistanceCommand::DriveDistanceCommand(double distance) : distance(distance)
 
 // Called just before this Command runs the first time
 void DriveDistanceCommand::Initialize() {
+  desired_heading = Robot::driveBase.getIMUAngle();
   avgStartPos = Robot::driveBase.getAvgOutputPos();
   if(startedFromAutoManager && arguments.size() >= 1){
     distance = std::stod(arguments[0]);
@@ -28,8 +30,27 @@ void DriveDistanceCommand::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void DriveDistanceCommand::Execute() {
+
+  double speed = 0.2;
   double sign = distance / std::abs(distance);
-  Robot::driveBase.driveTankVelocity(sign * 0.2 * MaxVelocity, sign * 0.2 * MaxVelocity);
+
+	double gyro_heading = Robot::driveBase.getIMUAngle();
+	double angle_difference = desired_heading - gyro_heading;
+
+	angle_difference = std::fmod(angle_difference, 360.0);
+	if (std::abs(angle_difference) > 180.0) {
+		angle_difference = (angle_difference > 0) ? angle_difference - 360 : angle_difference + 360;
+	} 
+
+	double turn = 0.8 * (-1.0/80) * angle_difference;
+
+  double l = sign * speed;
+  double r = sign * speed;
+
+	l += turn;
+	r -= turn;
+
+  Robot::driveBase.driveTankVelocity(l * MaxVelocity, r * MaxVelocity);
 }
 
 // Make this return true when this Command no longer needs to run execute()

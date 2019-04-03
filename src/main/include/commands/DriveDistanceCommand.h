@@ -25,4 +25,5 @@ private:
   double distance;
   double avgStartPos;
   double endPos;
+  double desired_heading;
 };
