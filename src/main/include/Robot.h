@@ -34,6 +34,8 @@ public:
   void LimitSwitchReset();
   void DefaultSolonoidState();
 
+  void intakeOverride();
+
 private:
 
   const double debounce = 0.5; // Seconds
@@ -44,6 +46,8 @@ private:
   bool wasPressed = false;
 
   bool brakeModeOverridePrevious = false;
+
+  int previousDpad = -1;
 
   frc::SendableChooser<int> autoSelector;
 

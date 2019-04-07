@@ -17,6 +17,7 @@
 #include <commands/ClawExtendCommand.h>
 #include <commands/DriveDistanceCommand.h>
 #include <commands/ResetIMUCommand.h>
+#include <commands/JoystickBallIntakeDriveCommand.h>
 
 #include <ctime>
 
@@ -100,11 +101,22 @@ void Robot::AutonomousInit() {
         autoCommandPtr.get()->Start();
     }
 }
+
+void Robot::intakeOverride(){
+    int dpad = oi.js0->GetPOV();
+    if(!ballIntakeArm.isTopLimitSwitchPressed() && ((dpad == 0 || dpad == 45 || dpad == 315) && !(previousDpad != 0 || previousDpad == 45 || previousDpad == 315))){
+        frc::Command *cmd = new JoystickBallIntakeDriveCommand();
+        cmd->Start();
+    }
+    previousDpad = dpad;
+}
+
 void Robot::AutonomousPeriodic() { 
     // Giant button kills auto
     if(oi.js0->GetRawButton(14) && autoCommandPtr.get() != nullptr)
         autoCommandPtr->Cancel();
     LimitSwitchReset();
+    intakeOverride();
     frc::Scheduler::GetInstance()->Run();
 }
 
@@ -135,6 +147,8 @@ void Robot::TeleopPeriodic() {
     }else{
         driveBase.setCoastMode();
     }*/
+
+    intakeOverride();
 
     int value = oi.js0->GetPOV();
 

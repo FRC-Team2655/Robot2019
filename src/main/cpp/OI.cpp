@@ -7,6 +7,7 @@
 #include <commands/JoystickBallIntakeDriveCommand.h>
 #include <commands/SetAtRocketHeightCommand.h>
 #include <commands/PositionBasedShootCommand.h>
+#include <commands/DropCommandGroup.h>
 #include <RobotMap.h>
 #include <frc/buttons/JoystickButton.h>
 
@@ -40,7 +41,7 @@ OI::OI() {
   l2Btn->WhenPressed(new JoystickBallIntakeDriveCommand());
 #if COMPBOT
   triangleBtn->WhenPressed(new MoveIntakeArmCommand(-0.12));
-  circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.26));
+  circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.255));
 #else
   triangleBtn->WhenPressed(new MoveIntakeArmCommand(-0.12));
   circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.27));

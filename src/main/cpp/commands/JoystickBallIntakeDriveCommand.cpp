@@ -16,7 +16,16 @@ void JoystickBallIntakeDriveCommand::Execute() {
   // PS4 Triggers are -1 by default
   if(val < 0)
     val = 0;
-  Robot::ballIntakeArm.moveArmSpeed(BallIntakeDownDirection * val);
+
+  if(val == 0){
+    int pos = Robot::oi.js0->GetPOV();
+    if((pos == 0 || pos == 45 || pos == 315) && !Robot::ballIntakeArm.isTopLimitSwitchPressed())
+      Robot::ballIntakeArm.moveArmSpeed(BallIntakeDownDirection * -1 * 0.3);
+    else
+      Robot::ballIntakeArm.moveArmSpeed(0);
+  }else{
+      Robot::ballIntakeArm.moveArmSpeed(BallIntakeDownDirection * val);
+  }
 }
 
 // Make this return true when this Command no longer needs to run execute()

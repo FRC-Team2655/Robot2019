@@ -9,7 +9,7 @@
 /**
  *  MAKE SURE TO SET THIS TO THE CORRECT VALUE BEFORE DEPLOYING CODE!!!
  */
-#define COMPBOT false
+#define COMPBOT true
 
 
 
