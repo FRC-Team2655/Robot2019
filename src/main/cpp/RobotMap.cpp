@@ -41,6 +41,7 @@ const int ClawLockSolenoidB = 7;
 
 // Limit switches
 const int LimitSwitchID = 0;
+const int SecondLimitSwitchId = 1;
 
 // Ball Intake Settings
 const double BallIntake_gearRatio = 96; // 64:1 gearbox and 10:15 sprockets
@@ -53,6 +54,7 @@ const double BallIntakeUpPos = 0.06;
 // Limit switch pressed position (true = closed, false = open)
 #if COMPBOT
     const bool BallIntake_LimitSwitchPressed = true;
+    const bool BallIntake_SecondSwitchPressed = false;
 #else
     const bool BallIntake_LimitSwitchPressed = false;
 #endif

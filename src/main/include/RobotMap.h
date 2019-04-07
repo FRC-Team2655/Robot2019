@@ -61,6 +61,7 @@ const extern int ClawLockSolenoidB;
 
 // Limit switches
 const extern int LimitSwitchID;
+const extern int SecondLimitSwitchId;
 
 //BallIntake PID values
 const extern double BallIntake_gearRatio;
@@ -71,6 +72,7 @@ const extern double BallIntakeUpPosLimit;
 const extern double BallIntakeUpPos;
 
 const extern bool BallIntake_LimitSwitchPressed;
+const extern bool BallIntake_SecondSwitchPressed;
 
 //Up
 const extern double BallIntake_kpUp;

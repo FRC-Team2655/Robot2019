@@ -10,6 +10,7 @@
 #include <commands/DropCommandGroup.h>
 #include <RobotMap.h>
 #include <frc/buttons/JoystickButton.h>
+#include <commands/MoveIntakeArmPercentageCmd.h>
 
 using namespace team2655;
 
@@ -37,7 +38,9 @@ OI::OI() {
   /////////////////////////////////////////////
   /// Ball Intake arm control
   /////////////////////////////////////////////
-  xBtn->WhenPressed(new MoveIntakeArmCommand(BallIntakeUpPos));
+
+  //xBtn->WhenPressed(new MoveIntakeArmCommand(BallIntakeUpPos));
+  xBtn->WhenPressed(new MoveIntakeArmPercentageCmd(-1 * BallIntakeDownDirection * 0.3, 10));
   l2Btn->WhenPressed(new JoystickBallIntakeDriveCommand());
 #if COMPBOT
   triangleBtn->WhenPressed(new MoveIntakeArmCommand(-0.12));

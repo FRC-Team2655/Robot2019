@@ -11,6 +11,7 @@ private:
   rev::CANEncoder armEncoder = armMotor.GetEncoder();
   rev::CANPIDController armPid = armMotor.GetPIDController();
   frc::DigitalInput topLimitSwitch { LimitSwitchID };
+  frc::DigitalInput topSecondarySwitch { SecondLimitSwitchId };
   bool atRocketHeight = false;
 
 public:

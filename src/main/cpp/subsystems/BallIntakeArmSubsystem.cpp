@@ -110,7 +110,7 @@ void BallIntakeArmSubsystem::moveToPosition(double revolutions){
 }
 
 bool BallIntakeArmSubsystem::isTopLimitSwitchPressed(){
-  return topLimitSwitch.Get() == BallIntake_LimitSwitchPressed;
+  return topLimitSwitch.Get() == BallIntake_LimitSwitchPressed || topSecondarySwitch.Get() == BallIntake_SecondSwitchPressed;
 }
 
 void BallIntakeArmSubsystem::setCoastMode() {
