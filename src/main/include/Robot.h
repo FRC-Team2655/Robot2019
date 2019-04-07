@@ -53,19 +53,33 @@ private:
 
   std::vector<std::string> autoNames = {
     "No Auto",
-    "Pos 2 - Front Right",
-    "Pos 2 - Front Left",
-    "Pos 1 - Left Side",
-    "Pos 3 - Right Side",
-    "Test Mode (NEVER RUN ON FIELD)"
+    "Pos 2 - Front Right Cargo Ship",
+    "Pos 2 - Front Left Cargo Ship",
+    "Pos 1 - Left Side Cargo Ship",
+    "Pos 1 - Rocket",
+    "Pos 3 - Right Side Cargo Ship",
+    "Pos 3 - Rocket",
+    "Pos 3 Lvl 2 - Right Side Cargo Ship",
+    "Pos 3 Lvl 2 - Rocket",
+    "Pos 1 Lvl 2 - Left Side Cargo Ship",
+    "Pos 1 Lvl 2 - Rocket",
+    "Test Mode (NEVER RUN ON FIELD)",
+    "THIS ONE"
   };
   std::vector<std::string> autoScripts = {
     "",
-    "/auto-scripts/Pos2R.csv",
-    "/auto-scripts/Pos2L.csv",
-    "/auto-scripts/Pos1L.csv",
-    "/auto-scripts/Pos3R.csv",
-    "/auto-scripts/Test.csv"
+    "/auto-scripts/Pos2R-CS.csv",
+    "/auto-scripts/Pos2L-CS.csv",
+    "/auto-scripts/Pos1L-CS.csv",
+    "/auto-scripts/Pos1L-R.csv",
+    "/auto-scripts/Pos3R-CS.csv",
+    "/auto-scripts/Pos3R-R.csv",
+    "/auto-scripts/Pos3R-CS-L2.csv",
+    "/auto-scripts/Pos3R-R-L2.csv",
+    "/auto-scripts/Pos1L-CS-L2.csv",
+    "/auto-scripts/Pos1L-R-L2.csv",
+    "/auto-scripts/Test.csv",
+    "/auto-scripts/Elim.csv"
   };
 
   frc::Compressor compressor{0};
