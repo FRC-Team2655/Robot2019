@@ -2,6 +2,8 @@
 #include <RobotMap.h>
 #include <iostream>
 
+#include <frc/smartdashboard/SmartDashboard.h>
+
 #define T_PER_REV 4096 // Pathfinder expects integer ticks. SPARK MAX uses doubles
 // Need to convert to a "fraction" that pathfinder can work with
 
@@ -122,18 +124,17 @@ void ExecutePathCommand::Execute() {
 		double angle_difference = desired_heading - gyro_heading;
 
 		angle_difference = std::fmod(angle_difference, 360.0);
+
 		if (std::abs(angle_difference) > 180.0) {
 			angle_difference = (angle_difference > 0) ? angle_difference - 360 : angle_difference + 360;
 		} 
 
-		double turn = 0.8 * (-1.0/80) * angle_difference;
+		double turn = 0.7 * (-1.0/80) * angle_difference;
 
 		l += turn;
 		r -= turn;
 
 		Robot::driveBase.driveTankVelocity(l * MaxVelocity, r * MaxVelocity);
-		
-				
 	}
 }
 

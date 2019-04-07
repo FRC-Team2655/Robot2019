@@ -8,11 +8,11 @@ const std::string ArmPosition = "Intake Arm Position";
 const std::string ArmSpeed = "Intake Arm Velocity";
 
 // Drivebase Settings
-const double RMaxVelocity = 5700.0;
-const double LMaxVelocity = 5600.0;
-const double GearRatio = 9.471 / 1.0;       // 12.27 motor revolutions to 1 output revolution
+const double RMaxVelocity = 5800.0;
+const double LMaxVelocity = 5700.0;
+const double GearRatio = 9.47 / 1.0;       // 9.47 motor revolutions to 1 output revolution
 const double WheelDiameter = .1524;      // wheel diameter in meters (6")
-const double MaxVelocity = MINVAL(RMaxVelocity, LMaxVelocity);    // This is capped at the slowest velocity on ANY robot to ensure that paths work the same
+const double MaxVelocity = 5500;    // This is capped at the slowest velocity on ANY robot to ensure that paths work the same
 const double PathfinderMaxVelocity = MaxVelocity / GearRatio / 60.0 * PI * WheelDiameter; // m/second
 const double DriveRampRate = 0.35;  // Minimum time (sec) to go from 0 to full
 const double WheelbaseWidth = 0.7239; // meters
