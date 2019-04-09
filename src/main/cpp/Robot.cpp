@@ -30,6 +30,19 @@ BallShooterSubsystem Robot::ballShooter;
 HatchPanelClawSubsystem Robot::hatchPanelClaw;
 bool Robot::hasEverResetBallIntakeArm = false;
 
+std::vector<AutoOption> Robot::autoOptions{
+  {"No Auto", ""},
+  {"Pos1 - Left CS 1", "/auto-scripts/Pos1-LeftCS1.csv"},
+  {"Pos1 - Front Left CS", "/auto-scripts/Pos1-FrontLeftCS.csv"},
+  {"Pos1 - Rocket", "/auto-scripts/Pos1-Rocket.csv"},
+  {"Pos2 - Front Left CS", "/auto-scripts/Pos2-FrontLeftCS.csv"},
+  {"Pos2 - Front Right CS", "/auto-scripts/Pos2-FrontRightCS.csv"},
+  {"Pos3 - Right CS 1", "/auto-scripts/Pos3-RightCS1.csv"},
+  {"Pos3 - Front Right CS", "/auto-scripts/Pos3-FrontRightCS.csv"},
+  {"Pos3 - Rocket", "/auto-scripts/Pos3-Rocket.csv"},
+  {"Test Mode - DO NOT RUN ON FIELD", "/auto-scripts/Test.csv"}
+};
+
 void Robot::RobotInit() {
     // Register auto commands
     autoManager.registerCommand(team2655::CommandCreator<ExecutePathCommand>, false, "PATH");
@@ -41,10 +54,10 @@ void Robot::RobotInit() {
 
     frc::SmartDashboard::PutBoolean(DisableBrakeKey, brakeModeOverridePrevious);
 
-    for(size_t i = 0; i < autoNames.size(); ++i){
-        autoSelector.AddOption(autoNames[i], i);
+    for(size_t i = 0; i < autoOptions.size(); ++i){
+        autoSelector.AddOption(autoOptions[i].displayName, i);
     }
-    autoSelector.SetDefaultOption(autoNames[0], 0);
+    autoSelector.SetDefaultOption(autoOptions[0].displayName, 0);
 }
 
 void Robot::RobotPeriodic() {
@@ -94,7 +107,7 @@ void Robot::AutonomousInit() {
     ballIntakeArm.setCoastMode();
 
     autoManager.clearCommands();
-    std::string scriptName = autoScripts[autoSelector.GetSelected()];
+    std::string scriptName = autoOptions[autoSelector.GetSelected()].scriptName;
     if(scriptName != ""){
         autoManager.loadScript(scriptName);
         autoCommandPtr = autoManager.getScriptCommand();

@@ -12,6 +12,11 @@
 #include <subsystems/HatchPanelClawSubsystem.h>
 #include <team2655/autonomous.hpp>
 
+struct AutoOption{
+  std::string displayName;
+  std::string scriptName;
+};
+
 class Robot : public frc::TimedRobot {
 public:
   static OI oi;
@@ -51,36 +56,7 @@ private:
 
   frc::SendableChooser<int> autoSelector;
 
-  std::vector<std::string> autoNames = {
-    "No Auto",
-    "Pos 2 - Front Right Cargo Ship",
-    "Pos 2 - Front Left Cargo Ship",
-    "Pos 1 - Left Side Cargo Ship",
-    "Pos 1 - Rocket",
-    "Pos 3 - Right Side Cargo Ship",
-    "Pos 3 - Rocket",
-    "Pos 3 Lvl 2 - Right Side Cargo Ship",
-    "Pos 3 Lvl 2 - Rocket",
-    "Pos 1 Lvl 2 - Left Side Cargo Ship",
-    "Pos 1 Lvl 2 - Rocket",
-    "Test Mode (NEVER RUN ON FIELD)",
-    "THIS ONE"
-  };
-  std::vector<std::string> autoScripts = {
-    "",
-    "/auto-scripts/Pos2R-CS.csv",
-    "/auto-scripts/Pos2L-CS.csv",
-    "/auto-scripts/Pos1L-CS.csv",
-    "/auto-scripts/Pos1L-R.csv",
-    "/auto-scripts/Pos3R-CS.csv",
-    "/auto-scripts/Pos3R-R.csv",
-    "/auto-scripts/Pos3R-CS-L2.csv",
-    "/auto-scripts/Pos3R-R-L2.csv",
-    "/auto-scripts/Pos1L-CS-L2.csv",
-    "/auto-scripts/Pos1L-R-L2.csv",
-    "/auto-scripts/Test.csv",
-    "/auto-scripts/Elim.csv"
-  };
+  static std::vector<AutoOption> autoOptions;
 
   frc::Compressor compressor{0};
 };
