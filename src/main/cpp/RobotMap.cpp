@@ -57,6 +57,7 @@ const double BallIntakeUpPos = 0.06;
     const bool BallIntake_SecondSwitchPressed = false;
 #else
     const bool BallIntake_LimitSwitchPressed = false;
+    const bool BallIntake_SecondSwitchPressed = false;
 #endif
 
 // Up

@@ -22,7 +22,7 @@ DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {
   leftPID.SetIZone(0);
   leftPID.SetOutputRange(-1, 1);
 
-  rightPID.SetP(1e-4);
+  rightPID.SetP(5e-5);
   rightPID.SetI(0);
   rightPID.SetD(0);
   rightPID.SetFF(1/RMaxVelocity);
