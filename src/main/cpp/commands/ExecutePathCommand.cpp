@@ -129,7 +129,19 @@ void ExecutePathCommand::Execute() {
 			angle_difference = (angle_difference > 0) ? angle_difference - 360 : angle_difference + 360;
 		} 
 
-		double turn = 0.7 * (-1.0/80) * angle_difference;
+		const double allowedError = 1;
+		// Do not correct until past allowed error
+		if(std::abs(angle_difference) < allowedError){
+			angle_difference = 0;
+		}else{
+			if(angle_difference > 0){
+				angle_difference -= allowedError;
+			}else{
+				angle_difference += allowedError;
+			}
+		}
+
+		double turn = 0.8 * (-1.0/80) * angle_difference;
 
 		l += turn;
 		r -= turn;
