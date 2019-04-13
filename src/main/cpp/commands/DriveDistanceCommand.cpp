@@ -55,7 +55,13 @@ void DriveDistanceCommand::Execute() {
 
 // Make this return true when this Command no longer needs to run execute()
 bool DriveDistanceCommand::IsFinished() {
-  if(distance == 0 ) return true;
+  if(std::abs(Robot::driveBase.getLeftVelocity()) < 10 && std::abs(Robot::driveBase.getRightVelocity() < 10)){
+		stopCounter++;
+	}else{
+		stopCounter = 0;
+	}
+
+  if(distance == 0 || stopCounter >= 20) return true;
   else if(distance >= 0) return Robot::driveBase.getAvgOutputPos() >= endPos;
   else return Robot::driveBase.getAvgOutputPos() <= endPos;
 }

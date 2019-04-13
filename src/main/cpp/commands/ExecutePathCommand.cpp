@@ -129,10 +129,13 @@ void ExecutePathCommand::Execute() {
 			angle_difference = (angle_difference > 0) ? angle_difference - 360 : angle_difference + 360;
 		} 
 
+
 		double turn = 0.8 * (-1.0/80) * angle_difference;
 
 		l += turn;
 		r -= turn;
+
+		std::cout << "l: " << l << "," << " r: " << r << std::endl;
 
 		Robot::driveBase.driveTankVelocity(l * MaxVelocity, r * MaxVelocity);
 	}

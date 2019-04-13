@@ -26,4 +26,5 @@ private:
   double avgStartPos;
   double endPos;
   double desired_heading;
+  int stopCounter = 0;
 };
