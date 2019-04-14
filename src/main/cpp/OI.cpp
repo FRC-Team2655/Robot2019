@@ -11,6 +11,7 @@
 #include <RobotMap.h>
 #include <frc/buttons/JoystickButton.h>
 #include <commands/MoveIntakeArmPercentageCmd.h>
+#include <commands/RotateCommand.h>
 
 using namespace team2655;
 

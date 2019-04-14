@@ -6,6 +6,18 @@
 #include <RobotMap.h>
 #include <frc/PIDController.h>
 
+#include <frc/PIDController.h>
+#include <frc/PIDSource.h>
+#include <frc/PIDOutput.h>
+
+class RotatePIDSource : public frc::PIDSource{
+  double PIDGet() override;
+};
+
+class RotatePIDOutput : public frc::PIDOutput{
+  void PIDWrite(double output) override;
+};
+
 using MotorType = rev::CANSparkMax::MotorType;
 
 class DriveBaseSubsystem : public frc::Subsystem {
@@ -70,6 +82,9 @@ public:
 
   double getAvgOutputPos();
 
+  void enableRotatePID(double setpoint);
+  void disableRotatePID();
+
   void setRampRate(double rampRate);
 
 private:
@@ -92,6 +107,8 @@ private:
   rev::CANPIDController rightPID = rightMaster.GetPIDController();
   
   frc::ADIS16470_IMU imu;
+
+  frc::PIDController rotatePIDController {.007, 0.000000005, 0.000000016, new RotatePIDSource(), new RotatePIDOutput(), 0.01};
 
   std::array<double, 2> arcadeDrive(double xSpeed, double zRotation);
 };

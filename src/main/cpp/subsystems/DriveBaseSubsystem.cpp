@@ -5,6 +5,14 @@
 
 using IdleMode = rev::CANSparkMax::IdleMode;
 
+double RotatePIDSource::PIDGet(){
+	return Robot::driveBase.getIMUAngle();
+}
+
+void RotatePIDOutput::PIDWrite(double output){
+	Robot::driveBase.driveTankVelocity(-output * MaxVelocity, output * MaxVelocity);
+}
+
 //////////////////////////////////////////////////////////////
 /// DriveBaseSubsystem
 //////////////////////////////////////////////////////////////
@@ -50,6 +58,9 @@ DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {
   rightMaster.SetInverted(true);
   rightSlave.SetInverted(true);
   rightSlave2.SetInverted(true);
+
+	AddChild(rotatePIDController);
+
 }
 
 void DriveBaseSubsystem::InitDefaultCommand() {
@@ -105,6 +116,15 @@ double DriveBaseSubsystem::getLeftVelocity() {
 
 double DriveBaseSubsystem::getRightVelocity() {
 	return rightEnc.GetVelocity();
+}
+
+void DriveBaseSubsystem::enableRotatePID(double setpoint){
+	rotatePIDController.SetSetpoint(setpoint);
+	rotatePIDController.Enable();
+}
+
+void DriveBaseSubsystem::disableRotatePID(){
+	rotatePIDController.Disable();
 }
 
 std::array<double, 2> DriveBaseSubsystem::arcadeDrive(double xSpeed, double zRotation) {
