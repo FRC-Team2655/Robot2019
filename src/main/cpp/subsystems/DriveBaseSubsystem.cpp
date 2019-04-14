@@ -34,6 +34,16 @@ DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {
   leftMaster.SetClosedLoopRampRate(DriveRampRate);
   rightMaster.SetClosedLoopRampRate(DriveRampRate);
 
+  // Current limiting
+  const int stallLimit = 30, freeLimit = 60, limitRPM = 2000;
+  leftMaster.SetSmartCurrentLimit(stallLimit, freeLimit, limitRPM);
+  leftSlave.SetSmartCurrentLimit(stallLimit, freeLimit, limitRPM);
+  leftSlave2.SetSmartCurrentLimit(stallLimit, freeLimit, limitRPM);
+  rightMaster.SetSmartCurrentLimit(stallLimit, freeLimit, limitRPM);
+  rightSlave.SetSmartCurrentLimit(stallLimit, freeLimit, limitRPM);
+  rightSlave2.SetSmartCurrentLimit(stallLimit, freeLimit, limitRPM);
+
+
   leftMaster.BurnFlash();
   rightMaster.BurnFlash();
 
