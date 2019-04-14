@@ -11,18 +11,18 @@
 
 RotateCommand::RotateCommand(double heading) : heading(heading) {
   Requires(&Robot::driveBase);
-
-  if(startedFromAutoManager){
-    if(arguments.size() < 1){
-      heading = Robot::driveBase.getIMUAngle();
-    }else{
-      heading = std::stod(arguments[0]);
-    }
-  }
 }
 
 // Called just before this Command runs the first time
 void RotateCommand::Initialize() {
+  if(startedFromAutoManager){
+    if(arguments.size() < 1){
+      this->heading = Robot::driveBase.getIMUAngle();
+    }else{
+      this->heading = std::stod(arguments[0]);
+    }
+  }
+
   Robot::driveBase.enableRotatePID(heading);
   SetTimeout(2);
 }

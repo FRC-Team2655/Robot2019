@@ -108,7 +108,7 @@ private:
   
   frc::ADIS16470_IMU imu;
 
-  frc::PIDController rotatePIDController {.007, 0.000000005, 0.000000016, new RotatePIDSource(), new RotatePIDOutput(), 0.01};
+  frc::PIDController rotatePIDController {.0075, 0.000000005, 0.000000016, new RotatePIDSource(), new RotatePIDOutput(), 0.01};
 
   std::array<double, 2> arcadeDrive(double xSpeed, double zRotation);
 };

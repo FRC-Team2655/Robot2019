@@ -135,8 +135,6 @@ void ExecutePathCommand::Execute() {
 		l += turn;
 		r -= turn;
 
-		std::cout << "l: " << l << "," << " r: " << r << std::endl;
-
 		Robot::driveBase.driveTankVelocity(l * MaxVelocity, r * MaxVelocity);
 	}
 }
