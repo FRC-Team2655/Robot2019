@@ -17,17 +17,13 @@ VisionAlignCommand::VisionAlignCommand() {
 void VisionAlignCommand::Initialize() {
   quit = false;
   stopCounter = 0;
-  if(std::abs(Robot::visionManager.getRelativeTapeHeading()) <= 2) {
-    End();
-    return; 
-  }
   if(Robot::visionManager.isTapeDetected()){
-    heading = Robot::driveBase.getIMUAngle() + Robot::visionManager.getRelativeTapeHeading();
+    heading = Robot::driveBase.getIMUAngle() - Robot::visionManager.getRelativeTapeHeading();
     Robot::driveBase.enableRotatePID(heading, true);
   }else{
     End();
   }
-  SetTimeout(1.1);
+  SetTimeout(0.8);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -38,12 +34,15 @@ bool VisionAlignCommand::IsFinished() {
   if(quit)
     return true;
 
-  if(std::abs(Robot::driveBase.getIMUAngle() - heading) < 1.5)
-      stopCounter++;
-  else
-    stopCounter = 0;
+  double h = Robot::driveBase.getIMUAngle();
+  if(std::abs(Robot::visionManager.getRelativeTapeHeading()) < 2 && std::abs(h - lastHeading) <= 2){
+    headingStopCounter++;
+  }else{
+    headingStopCounter = 0;
+  }
+  lastHeading = h;
 
-  return stopCounter >= 3 || IsTimedOut();
+  return headingStopCounter >= 5 || stopCounter >= 5 || IsTimedOut();
 }
 
 // Called once after isFinished returns true

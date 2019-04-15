@@ -21,4 +21,6 @@ class RotateCommand : public team2655::AutoCommand {
 private:
   double heading;
   int stopCounter = 0;
+  int headingChangeCounter = 0;
+  double lastHeading = 0;
 };

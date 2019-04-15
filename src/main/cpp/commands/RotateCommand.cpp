@@ -23,6 +23,7 @@ void RotateCommand::Initialize() {
     }
   }
 
+  lastHeading = Robot::driveBase.getIMUAngle();
   Robot::driveBase.enableRotatePID(heading);
   SetTimeout(2);
 }
@@ -33,13 +34,21 @@ void RotateCommand::Execute() {}
 // Make this return true when this Command no longer needs to run execute()
 bool RotateCommand::IsFinished() { 
   
-  if(std::abs(Robot::driveBase.getIMUAngle() - heading) <= 1)
+  if(std::abs(Robot::driveBase.getIMUAngle() - heading) <= 3)
     stopCounter++;
-  else
+  else{
     stopCounter = 0;
-  
+  }
 
-  return stopCounter >= 20 || IsTimedOut();
+  double h = Robot::driveBase.getIMUAngle();
+  if((std::abs(h - lastHeading) < 2) && (std::abs(Robot::driveBase.getIMUAngle() - heading) <= 7)){
+    headingChangeCounter++;
+  }else{
+    headingChangeCounter = 0;
+  }
+  lastHeading = h;
+  
+  return (stopCounter >= 12) || (headingChangeCounter >= 5) || IsTimedOut();
 }
 
 // Called once after isFinished returns true

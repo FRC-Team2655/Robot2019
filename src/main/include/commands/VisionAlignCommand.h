@@ -22,4 +22,6 @@ private:
   double heading = 0;
   bool quit = false;
   int stopCounter = 0;
+  double lastHeading = 0;
+  int headingStopCounter = 0;
 };

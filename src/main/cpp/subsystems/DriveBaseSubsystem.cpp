@@ -9,13 +9,16 @@ double RotatePIDSource::PIDGet(){
 	return Robot::driveBase.getIMUAngle();
 }
 
+RotatePIDOutput::RotatePIDOutput(bool visionMode) : visionMode(visionMode){
+
+}
+
 void RotatePIDOutput::PIDWrite(double output){
 
-	if(std::abs(output) < 0.005 && std::abs(output) >= 0.001)
+	/*if(std::abs(output) < 0.005 && std::abs(output) >= 0.001)
 		output = std::copysign(0.005, output);
 	else if(std::abs(output) < 0.001)
-		output = 0;
-	
+		output = 0;*/
 
 	Robot::driveBase.driveTankVelocity(-output * MaxVelocity, output * MaxVelocity);
 }

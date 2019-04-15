@@ -29,7 +29,7 @@ OI::OI() {
   frc::JoystickButton *shareBtn = new frc::JoystickButton(js0, 9);
   frc::JoystickButton *l2Btn = new frc::JoystickButton(js0, 7);
 
-  shareBtn->WhenPressed(new VisionAlignCommand());
+  optionBtn->WhenPressed(new VisionAlignCommand());
 
   squareBtn->WhenPressed(new ToggleClawExtensionCommand());
   r2Btn->WhenPressed(new CloseClawCommand(false));

@@ -15,7 +15,11 @@ class RotatePIDSource : public frc::PIDSource{
 };
 
 class RotatePIDOutput : public frc::PIDOutput{
+public:
+  RotatePIDOutput(bool visionMode);
   void PIDWrite(double output) override;
+private:
+  bool visionMode;
 };
 
 using MotorType = rev::CANSparkMax::MotorType;
@@ -108,8 +112,8 @@ private:
   
   frc::ADIS16470_IMU imu;
 
-  frc::PIDController rotatePIDController {.0075, 0.00000001, 0.000000016, new RotatePIDSource(), new RotatePIDOutput(), 0.01};
-  frc::PIDController visionPIDController {.01, 0.0000018, 0.00000002, new RotatePIDSource(), new RotatePIDOutput(), 0.01};
+  frc::PIDController rotatePIDController {.008, 0.00000002, 0.000000064, new RotatePIDSource(), new RotatePIDOutput(false), 0.01};
+  frc::PIDController visionPIDController {.015, 0.0000018, 0.00000002, new RotatePIDSource(), new RotatePIDOutput(true), 0.01};
 
   std::array<double, 2> arcadeDrive(double xSpeed, double zRotation);
 };
