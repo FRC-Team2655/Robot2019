@@ -10,6 +10,13 @@ double RotatePIDSource::PIDGet(){
 }
 
 void RotatePIDOutput::PIDWrite(double output){
+
+	if(std::abs(output) < 0.005 && std::abs(output) >= 0.001)
+		output = std::copysign(0.005, output);
+	else if(std::abs(output) < 0.001)
+		output = 0;
+	
+
 	Robot::driveBase.driveTankVelocity(-output * MaxVelocity, output * MaxVelocity);
 }
 
@@ -118,13 +125,19 @@ double DriveBaseSubsystem::getRightVelocity() {
 	return rightEnc.GetVelocity();
 }
 
-void DriveBaseSubsystem::enableRotatePID(double setpoint){
-	rotatePIDController.SetSetpoint(setpoint);
-	rotatePIDController.Enable();
+void DriveBaseSubsystem::enableRotatePID(double setpoint, bool visionMode){
+	if(visionMode){
+		visionPIDController.SetSetpoint(setpoint);
+		visionPIDController.Enable();
+	}else{
+		rotatePIDController.SetSetpoint(setpoint);
+		rotatePIDController.Enable();
+	}
 }
 
 void DriveBaseSubsystem::disableRotatePID(){
 	rotatePIDController.Disable();
+	visionPIDController.Disable();
 }
 
 std::array<double, 2> DriveBaseSubsystem::arcadeDrive(double xSpeed, double zRotation) {

@@ -11,6 +11,7 @@
 #include <subsystems/BallShooterSubsystem.h>
 #include <subsystems/HatchPanelClawSubsystem.h>
 #include <team2655/autonomous.hpp>
+#include <VisionManager.h>
 
 struct AutoOption{
   std::string displayName;
@@ -25,6 +26,7 @@ public:
   static BallShooterSubsystem ballShooter;
   static HatchPanelClawSubsystem hatchPanelClaw;
   static bool hasEverResetBallIntakeArm;
+  static VisionManager visionManager;
   //frc::Command *slowIntakeCmd = nullptr;
 
   void RobotInit() override;

@@ -12,6 +12,7 @@
 #include <frc/buttons/JoystickButton.h>
 #include <commands/MoveIntakeArmPercentageCmd.h>
 #include <commands/RotateCommand.h>
+#include <commands/VisionAlignCommand.h>
 
 using namespace team2655;
 
@@ -27,6 +28,8 @@ OI::OI() {
   frc::JoystickButton *circleBtn = new frc::JoystickButton(js0, 3);
   frc::JoystickButton *shareBtn = new frc::JoystickButton(js0, 9);
   frc::JoystickButton *l2Btn = new frc::JoystickButton(js0, 7);
+
+  shareBtn->WhenPressed(new VisionAlignCommand());
 
   squareBtn->WhenPressed(new ToggleClawExtensionCommand());
   r2Btn->WhenPressed(new CloseClawCommand(false));

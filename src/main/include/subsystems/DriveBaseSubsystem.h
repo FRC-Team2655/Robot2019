@@ -82,7 +82,7 @@ public:
 
   double getAvgOutputPos();
 
-  void enableRotatePID(double setpoint);
+  void enableRotatePID(double setpoint, bool visionMode = false);
   void disableRotatePID();
 
   void setRampRate(double rampRate);
@@ -108,7 +108,8 @@ private:
   
   frc::ADIS16470_IMU imu;
 
-  frc::PIDController rotatePIDController {.0075, 0.000000005, 0.000000016, new RotatePIDSource(), new RotatePIDOutput(), 0.01};
+  frc::PIDController rotatePIDController {.0075, 0.00000001, 0.000000016, new RotatePIDSource(), new RotatePIDOutput(), 0.01};
+  frc::PIDController visionPIDController {.01, 0.0000018, 0.00000002, new RotatePIDSource(), new RotatePIDOutput(), 0.01};
 
   std::array<double, 2> arcadeDrive(double xSpeed, double zRotation);
 };

@@ -19,6 +19,7 @@
 #include <commands/ResetIMUCommand.h>
 #include <commands/JoystickBallIntakeDriveCommand.h>
 #include <commands/RotateCommand.h>
+#include <commands/VisionAlignCommand.h>
 
 #include <ctime>
 
@@ -30,6 +31,7 @@ BallIntakeArmSubsystem Robot::ballIntakeArm;
 BallShooterSubsystem Robot::ballShooter;
 HatchPanelClawSubsystem Robot::hatchPanelClaw;
 bool Robot::hasEverResetBallIntakeArm = false;
+VisionManager Robot::visionManager;
 
 std::vector<AutoOption> Robot::autoOptions{
   {"No Auto", ""},
@@ -45,6 +47,10 @@ std::vector<AutoOption> Robot::autoOptions{
 };
 
 void Robot::RobotInit() {
+
+    visionManager.setGetAngleFunc(std::bind(&DriveBaseSubsystem::getIMUAngle, &driveBase));
+    visionManager.enableTape();
+
     // Register auto commands
     autoManager.registerCommand(team2655::CommandCreator<ExecutePathCommand>, false, "PATH");
     autoManager.registerCommand(team2655::CommandCreator<WaitAutoCommand>, false, "WAIT");
@@ -53,6 +59,7 @@ void Robot::RobotInit() {
     autoManager.registerCommand(team2655::CommandCreator<DriveDistanceCommand>, false, "DRIVE");
     autoManager.registerCommand(team2655::CommandCreator<ResetIMUCommand>, false, std::vector<std::string>{"RESET_FORWARD", "RESET_REVERSE"});
     autoManager.registerCommand(team2655::CommandCreator<RotateCommand>, false, "ROTATE");
+    autoManager.registerCommand(team2655::CommandCreator<VisionAlignCommand>, false, "VISION_ALIGN");
 
     frc::SmartDashboard::PutBoolean(DisableBrakeKey, brakeModeOverridePrevious);
 
@@ -111,6 +118,7 @@ void Robot::AutonomousInit() {
     autoManager.clearCommands();
     std::string scriptName = autoOptions[autoSelector.GetSelected()].scriptName;
     if(scriptName != ""){
+        std::cout << "Auto Script: " << scriptName << std::endl;
         autoManager.loadScript(scriptName);
         autoCommandPtr = autoManager.getScriptCommand();
         autoCommandPtr.get()->Start();
