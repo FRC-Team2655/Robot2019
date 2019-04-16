@@ -61,7 +61,7 @@ bool DriveDistanceCommand::IsFinished() {
 		stopCounter = 0;
 	}
 
-  if(distance == 0 || stopCounter >= 20) return true;
+  if(distance == 0 || stopCounter >= 10) return true;
   else if(distance >= 0) return Robot::driveBase.getAvgOutputPos() >= endPos;
   else return Robot::driveBase.getAvgOutputPos() <= endPos;
 }

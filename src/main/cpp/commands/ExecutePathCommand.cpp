@@ -146,7 +146,7 @@ bool ExecutePathCommand::IsFinished() {
 	}else{
 		stopCounter = 0;
 	}
-	return !startedFromAutoManager || hasEnded || stopCounter >= 20;
+	return !startedFromAutoManager || hasEnded || stopCounter >= 20 || (leftFollower.finished && rightFollower.finished);
 }
 
 // Called once after isFinished returns true
