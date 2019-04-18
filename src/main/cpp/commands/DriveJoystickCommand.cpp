@@ -14,6 +14,12 @@ void DriveJoystickCommand::Initialize() {
 void DriveJoystickCommand::Execute() {
   double power = -1 * jshelper::getAxisValue(Robot::oi.driveAxisConfig, Robot::oi.js0->GetRawAxis(1));
 	double rotate = .4 * jshelper::getAxisValue(Robot::oi.rotateAxisConfig, Robot::oi.js0->GetRawAxis(2));
+
+  // Option button
+  /*if(Robot::oi.js0->GetRawButton(10) && Robot::visionManager.isTapeDetected()){
+    rotate =  0.5 * (1.0/80) * Robot::visionManager.getRelativeTapeHeading();
+  }*/
+
 	Robot::driveBase.driveVelocity(power, rotate);
 }
 

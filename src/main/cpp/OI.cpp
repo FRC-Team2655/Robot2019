@@ -20,7 +20,7 @@ OI::OI() {
   js0 = new frc::Joystick(0);
   frc::JoystickButton *xBtn = new frc::JoystickButton(js0, 2);
   frc::JoystickButton *squareBtn = new frc::JoystickButton(js0, 1);
-  frc::JoystickButton *optionBtn = new frc::JoystickButton(js0, 10);
+  frc::JoystickButton *r3Btn = new frc::JoystickButton(js0, 12);
   frc::JoystickButton *r2Btn = new frc::JoystickButton(js0, 8);
   frc::JoystickButton *l1Btn = new frc::JoystickButton(js0, 5);
   frc::JoystickButton *r1Btn = new frc::JoystickButton(js0, 6);
@@ -29,7 +29,7 @@ OI::OI() {
   frc::JoystickButton *shareBtn = new frc::JoystickButton(js0, 9);
   frc::JoystickButton *l2Btn = new frc::JoystickButton(js0, 7);
 
-  optionBtn->WhenPressed(new VisionAlignCommand());
+  r3Btn->WhenPressed(new VisionAlignCommand());
 
   squareBtn->WhenPressed(new ToggleClawExtensionCommand());
   r2Btn->WhenPressed(new CloseClawCommand(false));
