@@ -27,4 +27,6 @@ private:
   double endPos;
   double desired_heading;
   int stopCounter = 0;
+  double leftStartPos;
+  double rightStartPos;
 };
