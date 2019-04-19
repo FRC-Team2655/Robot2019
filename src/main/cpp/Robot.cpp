@@ -36,14 +36,22 @@ VisionManager Robot::visionManager;
 std::vector<AutoOption> Robot::autoOptions{
   {"No Auto", ""},
   {"Pos1 - Left CS 1", "/auto-scripts/Pos1-LeftCS1.csv"},
+  {"Pos1 - Left CS 1 - Lvl2", "/auto-scripts/Pos1-LeftCS1-Lvl2.csv"},
   {"Pos1 - Front Left CS", "/auto-scripts/Pos1-FrontLeftCS.csv"},
+  {"Pos1 - Front Left CS - Lvl2", "/auto-scripts/Pos1-FrontLeftCS-Lvl2.csv"},
   {"Pos1 - Rocket", "/auto-scripts/Pos1-Rocket.csv"},
+  {"Pos1 - Rocket - Lvl2", "/auto-scripts/Pos1-Rocket-Lvl2.csv"},
   {"Pos2 - Front Left CS", "/auto-scripts/Pos2-FrontLeftCS.csv"},
+  {"Pos2 - Front Left CS - Lvl2", "/auto-scripts/Pos2-FrontLeftCS-Lvl2.csv"},
   {"Pos2 - Front Right CS", "/auto-scripts/Pos2-FrontRightCS.csv"},
+  {"Pos2 - Front Right CS - Lvl2", "/auto-scripts/Pos2-FrontRightCS-Lvl2.csv"},
   {"Pos3 - Right CS 1", "/auto-scripts/Pos3-RightCS1.csv"},
-  {"Pos3 - Front Right CS", "/auto-scripts/Pos3-FrontRightCS.csv"},
+  {"Pos3 - Right CS 1 - Lvl2", "/auto-scripts/Pos3-RightCS1-Lvl2.csv"},
+  {"Pos3 - Front Right CS", "/auto-scri pts/Pos3-FrontRightCS.csv"},
+  {"Pos3 - Front Right CS - Lvl2", "/auto-scripts/Pos3-FrontRightCS-Lvl2.csv"},
   {"Pos3 - Rocket", "/auto-scripts/Pos3-Rocket.csv"},
-  {"Test Mode - DO NOT RUN ON FIELD", "/auto-scripts/Test.csv"}
+  {"Pos3 - Rocket - Lvl2", "/auto-scripts/Pos3-Rocket-Lvl2.csv"},
+  {"Test Mode - DO NOT RUN ON FIELD", "/auto-scripts/Test.csv"},
 };
 
 void Robot::RobotInit() {
@@ -145,6 +153,9 @@ void Robot::AutonomousPeriodic() {
 
 void Robot::TeleopInit() {
 
+    if(autoCommandPtr != nullptr)
+        autoCommandPtr->Cancel();
+
     if (hatchPanelClaw.isExtended()) {
         hatchPanelClaw.lock();
     }
@@ -160,6 +171,9 @@ void Robot::TeleopInit() {
 }
 
 void Robot::TeleopPeriodic() {
+
+    if(oi.js0->GetRawButton(14) && autoCommandPtr.get() != nullptr)
+        autoCommandPtr->Cancel();
 
     frc::Scheduler::GetInstance()->Run();
     

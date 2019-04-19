@@ -13,6 +13,7 @@
 #include <commands/MoveIntakeArmPercentageCmd.h>
 #include <commands/RotateCommand.h>
 #include <commands/VisionAlignCommand.h>
+#include <commands/PositionBasedRaiseCG.h>
 
 using namespace team2655;
 
@@ -44,7 +45,7 @@ OI::OI() {
   /////////////////////////////////////////////
 
   //xBtn->WhenPressed(new MoveIntakeArmCommand(BallIntakeUpPos));
-  xBtn->WhenPressed(new MoveIntakeArmPercentageCmd(-1 * BallIntakeDownDirection * 0.3, 10));
+  xBtn->WhenPressed(new PositionBasedRaiseCG());
   l2Btn->WhenPressed(new JoystickBallIntakeDriveCommand());
 #if COMPBOT
   triangleBtn->WhenPressed(new MoveIntakeArmCommand(-0.12));
@@ -58,6 +59,6 @@ OI::OI() {
   triangleBtn->WhenPressed(new SetAtRocketHeightCommand(true));
   circleBtn->WhenPressed(new SetAtRocketHeightCommand(false));
   l2Btn->WhenPressed(new SetAtRocketHeightCommand(false));
-  xBtn->WhenPressed(new SetAtRocketHeightCommand(false));
+  //xBtn->WhenPressed(new SetAtRocketHeightCommand(false));
 
 }

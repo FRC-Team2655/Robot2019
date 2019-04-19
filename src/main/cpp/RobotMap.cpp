@@ -75,7 +75,7 @@ const double BallIntake_maxVelocityUp = 4000;
 const double BallIntake_UpPID = 0;
 
 //Down
-const double BallIntake_kpDown = 0.001;
+const double BallIntake_kpDown = 0.00068;
 const double BallIntake_kiDown = 0;
 const double BallIntake_kdDown = 0;
 const double BallIntake_kfDown = 0;
@@ -87,7 +87,7 @@ const double BallIntake_minVelocityDown = 0;
 const double BallIntake_DownPID = 1;
 
 #if COMPBOT
-const double BallIntake_maxAccelDown = 1800;
+const double BallIntake_maxAccelDown = 3800;
 const double BallIntake_maxVelocityDown = 4000;
 #else
 const double BallIntake_maxAccelDown = 1800;
