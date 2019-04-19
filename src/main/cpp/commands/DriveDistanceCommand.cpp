@@ -49,15 +49,16 @@ void DriveDistanceCommand::Execute() {
   double distanceTraveled = (leftDistanceTraveled + rightDistanceTraveled) / 2.0;
   double distanceLeft = endPos - distanceTraveled;
   const double rampupThreshold = 2.0;
-  const double rampdownThreshold = 6.0;
+  const double rampdownThreshold = 4.0;
 
   // [distance from start or end] / threshold + minSpeed
   double rampup = std::abs(endPos - distanceLeft) / rampupThreshold + 0.3;
-  double rampdown = std::abs(distanceLeft) / rampdownThreshold + 0.1;
-  
-  double speed = std::copysign(MINVAL(1.0, MINVAL(rampup, rampdown)) , distanceLeft);
+  double rampdown = std::abs(distanceLeft) / rampdownThreshold + 0.15;  
+  double speed = std::copysign(std::min(1.0, std::min(rampup, rampdown)) , distanceLeft);
 
   Robot::driveBase.driveTankVelocity((speed + turn) * MaxVelocity, (speed - turn) * MaxVelocity);
+
+  std::cout << speed << std::endl;
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -66,19 +67,22 @@ bool DriveDistanceCommand::IsFinished() {
   double rightDistanceTraveled = Robot::driveBase.getRightOutputPosition() - rightStartPos;
   double distanceTraveled = (leftDistanceTraveled + rightDistanceTraveled) / 2.0;
 
-  if (distance == 0) {
+  if (distance == 0)
     return true;
-  }
 
-  if (Robot::driveBase.getLeftVelocity() < 10 && Robot::driveBase.getRightVelocity() < 10) {
+  if (std::abs(Robot::driveBase.getLeftVelocity()) < 10 && std::abs(Robot::driveBase.getRightVelocity()) < 10)
     stopCounter++;
-  }else{
+  else
     stopCounter = 0;
-  }
 
-   if (distanceTraveled >= endPos || stopCounter >= 10) {
+   if (stopCounter >= 10)
     return true;
-  } 
+
+  if (distance > 0 && distanceTraveled >= endPos)
+    return true;
+
+  if (distance < 0 && distanceTraveled <= endPos)
+    return true;
 }
 
 // Called once after isFinished returns true
