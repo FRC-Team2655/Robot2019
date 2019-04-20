@@ -19,6 +19,7 @@
 #include <commands/ResetIMUCommand.h>
 #include <commands/JoystickBallIntakeDriveCommand.h>
 #include <commands/RotateCommand.h>
+#include <commands/PathfinderDriveDistanceCommand.h>
 #include <commands/VisionAlignCommand.h>
 
 #include <ctime>
@@ -64,7 +65,7 @@ void Robot::RobotInit() {
     autoManager.registerCommand(team2655::CommandCreator<WaitAutoCommand>, false, "WAIT");
     autoManager.registerCommand(team2655::CommandCreator<CloseClawCommand>, false, std::vector<std::string>{"OPEN_CLAW", "CLOSE_CLAW"});
     autoManager.registerCommand(team2655::CommandCreator<ClawExtendCommand>, false, std::vector<std::string>{"EXTEND_CLAW", "RETRACT_CLAW"});
-    autoManager.registerCommand(team2655::CommandCreator<DriveDistanceCommand>, false, "DRIVE");
+    autoManager.registerCommand(team2655::CommandCreator<PathfinderDriveDistanceCommand>, false, "DRIVE");
     autoManager.registerCommand(team2655::CommandCreator<ResetIMUCommand>, false, std::vector<std::string>{"RESET_FORWARD", "RESET_REVERSE"});
     autoManager.registerCommand(team2655::CommandCreator<RotateCommand>, false, "ROTATE");
     autoManager.registerCommand(team2655::CommandCreator<VisionAlignCommand>, false, "VISION_ALIGN");
