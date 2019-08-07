@@ -49,7 +49,8 @@ OI::OI() {
   l2Btn->WhenPressed(new JoystickBallIntakeDriveCommand());
 #if COMPBOT
   triangleBtn->WhenPressed(new MoveIntakeArmCommand(-0.12));
-  circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.255));
+  //-0.255
+  circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.26));
 #else
   triangleBtn->WhenPressed(new MoveIntakeArmCommand(-0.12));
   circleBtn->WhenPressed(new MoveIntakeArmCommand(-0.27));

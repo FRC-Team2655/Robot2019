@@ -69,8 +69,7 @@ DriveBaseSubsystem::DriveBaseSubsystem() : Subsystem("DriveBaseSubsystem") {
   rightSlave.SetInverted(true);
   rightSlave2.SetInverted(true);
 
-	AddChild(rotatePIDController);
-
+  AddChild(rotatePIDController);
 }
 
 void DriveBaseSubsystem::InitDefaultCommand() {
